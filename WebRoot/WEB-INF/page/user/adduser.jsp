@@ -243,7 +243,7 @@ boolpassWord2=false;
 				</li>
 
 				<li>
-					<img src="images/login.gif" onClick="check()">
+					<img src="images/save.gif" onClick="check()">
 				</li>
 			</ul>
 		
