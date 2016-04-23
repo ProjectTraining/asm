@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="t_user")
 public class User implements java.io.Serializable {
 
-	private String userID;  
+	private String userId;  
 	private String deptId;       
 	private String roleId;    
 	private String userName;     
@@ -23,15 +23,16 @@ public class User implements java.io.Serializable {
 	@Id
 	@GeneratedValue(generator="userUUID")
 	@GenericGenerator(name="userUUID", strategy="uuid")
-	public String getUserID() {
-		return userID;
+	public String getUserId() {
+		return userId;
 	}
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getDeptId() {
 		return deptId;
 	}
+	
 	public void setDeptId(String deptId) {
 		this.deptId = deptId;
 	}
