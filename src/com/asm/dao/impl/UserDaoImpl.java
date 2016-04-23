@@ -28,4 +28,13 @@ public class UserDaoImpl extends CommonDaoImpl<User> implements UserDao {
 		else 
 			return null;
 	}
+	@Override
+	public boolean checkUserExistByName(String username) {
+		String hql = "from User u where u.userName=?";
+		List<User> list=(List<User>)find(hql, new String[]{username});
+		if(list.size()>0)
+			return true;
+		else 
+			return false;
+	}
 }

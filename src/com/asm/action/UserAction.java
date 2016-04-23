@@ -19,8 +19,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.asm.domain.User;
 import com.asm.service.UserService;
 import com.asm.util.MD5;
+import com.asm.util.ResponseUtil;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+
 
 /**  
 * @description:用户action
@@ -38,15 +40,23 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	private UserService userService;
 	
 	private Map<String, Object> session;
+	private List<User> userList;
 	private int pageNow = 1;
 	private int pageSize = 10;
 	private JSONObject rows;
 	private String storeId;
 	private int state;
-	private String userId;
+	private String uId;
 	private String Id;
 	private JSONObject data;
 	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override 
 	public User getModel() {
 		// TODO Auto-generated method stub
@@ -57,9 +67,7 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 
 	
 
-	public String getUserId() {
-		return userId;
-	}
+	
 	
 	public JSONObject getData() {
 		return data;
@@ -67,9 +75,27 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	public void setData(JSONObject data) {
 		this.data = data;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	
+
+	public String getuId() {
+		return uId;
 	}
+
+
+
+
+
+
+
+	public void setuId(String uId) {
+		this.uId = uId;
+	}
+
+
+
+
+
+
 
 	public String getId() {
 		return Id;
@@ -96,6 +122,12 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	}
 
 	
+	
+
+
+
+
+
 	public int getPageNow() {
 		return pageNow;
 	}
@@ -144,12 +176,90 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		this.session = session;
 	}
 	
-	public String storeManagePage(){
-		return "storemanagepage";
+	public String homePage(){
+		return "userlistpage";
 	}
-	
-	
-	
+	public String addPage(){
+		return "addpage";
+	}
+	public String CheckUsername() throws Exception {
+		boolean flag = false;
+		if (userService.checkUserExistByName(user.getUserName())) {
+			flag = true;
+			ResponseUtil.write1(flag);
+		} else {
+			ResponseUtil.write1(flag);
+		}
+		return null;
+	}
+	public String register() throws Exception{
+		System.out.println("sdaf"+user.getUserName());
+		boolean flag = true;
+		try {
+			System.out.println("sdaf"+user.getUserName());
+			userService.saveUser(user);
+			ResponseUtil.write1(flag);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			flag = false;
+			e.printStackTrace();
+			ResponseUtil.write1(flag);
+		}
+		return null;
+	}
+	public String listUser() {
+		System.out.println("begin");
+		userList = userService.listUser();
+		HashMap<String, Object> maps = new HashMap<String, Object>();
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		for (User  user: userList) {
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("userId", user.getUserId());
+			hashMap.put("roleId", user.getUserName());
+			hashMap.put("deptId", user.getUserName());
+			hashMap.put("userName", user.getUserName());
+			hashMap.put("state", user.getState());
+			hashMap.put("sex", user.getSex());
+			list.add(hashMap);
+		}
+		maps.put("Rows", list);
+		System.out.println(maps.size());
+		rows = JSONObject.parseObject(JSON.toJSONString(maps));
+		System.out.println(rows.toJSONString());
+		return "userlist";
+	}
+	public String remove() throws Exception {
+		System.out.println(uId);
+		System.out.println(user.getUserId());
+		boolean flag = false;
+		if (userService.remove(user.getUserId())) {
+			flag = true;
+			ResponseUtil.write1(flag);
+		} else {
+			ResponseUtil.write1(flag);
+		}
+		return null;
+	}
+	public String listInfo(){
+		System.out.println(uId);
+		user=userService.findUser(user.getUserId());
+		
+		return "listuserinfo";
+	}
+	public String editUser() throws Exception {
+		boolean flag = true;
+		try {
+			System.out.println(user.getUserId());
+			userService.updateUser(user);
+			ResponseUtil.write1(flag);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			flag = false;
+			e.printStackTrace();
+			ResponseUtil.write1(flag);
+		}
+		return null;
+	}
 	
 	
 }

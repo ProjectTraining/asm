@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <base href="<%=basePath%>">
 
-<title>居自在管理员登陆</title>
+<title>管理员登陆</title>
 <link href="css/admin_login.css" rel="stylesheet" type="text/css" />
 <script src="script/jquery-1.9.1.min.js" type="text/javascript"></script>
 <meta http-equiv="pragma" content="no-cache">
