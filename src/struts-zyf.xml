@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="zyf" namespace="/" extends="struts-default,json-default">
+		
+		<action name="userAction_*" class="userAction"
+			method="{1}">
+			<result name="home">/WEB-INF/page/menu/menuhome.jsp</result>
+			<result name="login">/WEB-INF/page/user/userlogin.jsp</result>
+			<result name="userlistpage">/WEB-INF/page/user/userlist.jsp</result>
+			<result name="addpage">/WEB-INF/page/user/adduser.jsp</result>
+			<result name="listuserinfo">/WEB-INF/page/user/edituser.jsp</result>
+			<result type="json" name="userlist">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="menuAction_*" class="menuAction"
+			method="{1}">
+			<result name="login">/WEB-INF/page/user/userlogin.jsp</result>
+			<result name="menuhead">/WEB-INF/page/menu/menuhead.jsp</result>
+			<result name="manageleft">/WEB-INF/page/menu/menuleft.jsp</result>
+			<result name="manageinfo">/WEB-INF/page/menu/menuinfo.jsp</result>
+			
+		</action> 
+		<!-- 赵楠部门配置 -->
+		<action name="deptAction_*"  class="deptAction" method="{1}">
+		    <result name="input">/WEB-INF/page/dept/Register.jsp</result>  
+			<result name="success">/WEB-INF/Success.jsp</result>
+			<result name="error">/WEB-INF/Fail.jsp</result>
+			<result name="list">/WEB-INF/page/dept/deptmain.jsp</result>
+			<result name="register">/WEB-INF/page/dept/Register.jsp</result>
+			<result name="menuhead">/WEB-INF/page/menu/menuhead.jsp</result>
+			<result name="manageleft">/WEB-INF/page/menu/menuleft.jsp</result>
+			<result name="manageinfo">/WEB-INF/page/menu/menuinfo.jsp</result>
+
+		</action>
+	</package>
+</struts>
