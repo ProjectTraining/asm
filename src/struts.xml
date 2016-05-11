@@ -13,9 +13,10 @@
 	
 	 <include file="struts-zyf.xml"/>
 	<include file="struts-zcb.xml"/> 
+	<!--  
 	 <include file="struts-zn.xml"/>
 	 <include file="struts-zyj.xml"/>
 	 <include file="struts-hw.xml"/>
-	 <include file="struts-zjw.xml"/>
+	 <include file="struts-zjw.xml"/>-->
 </struts>
 	

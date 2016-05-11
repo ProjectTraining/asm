@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="zcb" namespace="/" extends="struts-default,json-default">
+<action name="assetSortAction_*" class="assetSortAction" method="{1}">
+			<result name="home">/WEB-INF/page/assetSort/list.jsp</result>
+			<result name="add">/WEB-INF/page/assetSort/addAssetSort.jsp</result>
+			<result name="change">/WEB-INF/page/assetSort/changeAssetSort.jsp</result>
+			<result name="delete">/WEB-INF/page/assetSort/delAssetSort.jsp</result>
+		</action>
+</package>
+</struts>

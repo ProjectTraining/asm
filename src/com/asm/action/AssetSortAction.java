@@ -37,15 +37,17 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 //		for(int i=0;i<assetList.size();i++){
 //			System.out.println(assetList.get(i).getAssetCode());
 //		}
-		return "list";
+		return "home";
 	}
 
 	public void addSort() {
 		boolean a = assetService.addSort(asset);
-
+		
 	}
 	
-	
+	public void delSort(){
+		System.out.println(asset.getAssetId());
+	}
 
 	public AssetSortService getAssetService() {
 		return assetService;
