@@ -1,10 +1,15 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-     <link href="LigerUI/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
+
+
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<link href="css/main.css" rel="stylesheet" type="text/css" />
+    <link href="LigerUI/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" type="text/css" />
     <link href="LigerUI/ligerUI/skins/Gray/css/all.css" rel="stylesheet" type="text/css" />
     <link href="LigerUI/ligerUI/skins/ligerui-icons.css" rel="stylesheet" type="text/css" />
     <link href="css/adddelmod.css" rel="stylesheet" type="text/css" />
@@ -93,6 +98,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
   </head>
   <body>  
-    <div id="MainGrid" keyname="userId"></div>  
+  <div position="top" title="" style="padding-left:10px;">
+            	<!-- 查询条件部分 -->
+            	<div>
+            		<form id="searchForm" name="searchForm" class="l-form liger-form" action="search" method="post">
+		            	<table id="searchTable" class="searchTable">
+		            		<tr>
+		            			<th>
+					            	用户名：
+					            </th>
+		            			<td>
+					            	<input type="text" name="staffName" id="staffName"/>
+					            </td>
+					            <th>
+					            	部门：
+					            	<select id="selectDept" name="selectDept">
+31: 								<c:forEach items="${requestScope.deptList} " var="item">
+32: 									<option value="${item.id}">${item.name}</option>
+33: 								</c:forEach>
+34:									 </select>
+					            </th>
+		            			<td>
+					            	<input type="text" name="userId" id="userId" style="width:100px;"/>
+					            </td>
+					            <th>
+					            	员工状态：
+					            </th>
+		            			<td>
+					            	
+					            </td>
+					            <th class="opt">
+					           		
+					            	<div title="查询" class='l-icon-search' style="cursor:hand" data-click="SubmitQuery" data-width="60" icon="search">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp查询</div>
+					            </th>
+				            </tr>
+				         </table>
+			         </form>
+			     </div>
+            </div>
+            <div position="center" title="">
+            	<!-- 数据集部分 -->
+				  <div id="MainGrid" keyname="userId"></div>  
+            </div>
+  
 </body>  
 </html>
