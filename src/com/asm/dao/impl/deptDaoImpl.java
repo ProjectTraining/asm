@@ -12,7 +12,7 @@ import com.asm.domain.Dept;
 import com.asm.domain.User;
 
 
-@Repository("deptDao")
+@Repository("deptDao")  // @Repository对应数据访问层Bean,注解是告诉Spring，让Spring创建一个名字叫“deptDao”的DeptDaoImpl实例
 public class deptDaoImpl extends CommonDaoImpl<Dept> implements deptDao{
 
 	@Override
@@ -42,6 +42,24 @@ public class deptDaoImpl extends CommonDaoImpl<Dept> implements deptDao{
 		dept = (Dept) this.getHibernateTemplate().get(Dept.class, id);
 		return dept;
 	}
-
+	@Override
+	public Dept getDept(String deptName) {
+		// TODO Auto-generated method stub
+		String hql = "from Dept d where d.deptName=?";
+		List<Dept> list=(List<Dept>)find(hql, new String[]{deptName});
+		if(list.size()>0)
+			return list.get(0);
+		else 
+			return null;
+	}
+	@Override
+	public boolean checkDeptExistByName(String username) {
+		String hql = "from Dept d where d.deptName=?";
+		List<Dept> list=(List<Dept>)find(hql, new String[]{username});
+		if(list.size()>0)
+			return true;
+		else 
+			return false;
+	}
 	
 }

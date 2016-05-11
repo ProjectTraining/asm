@@ -10,12 +10,12 @@
     <body>  
       
         <s:form action="deptAction_Register"  namespace="/" >  
-           <%--  <s:textfield name="dept.deptId" label="部门号："></s:textfield> --%>  
-            <s:password name="dept.deptName" label="部门名称："></s:password>  
+           <%-- 密码的状态栏  <s:password name="dept.deptId" label="部门号："></s:password> --%>  
+            <s:textfield name="dept.deptName" label="部门名称：" ></s:textfield>  
             <s:submit value="增加部门"></s:submit> 
         </s:form>  
         
         <s:a href="deptAction_ListData.action">查看所有的数据库数据</s:a> 
-        
+         <s:a href="deptAction_Test.action">测试按钮</s:a> 
     </body>  
     </html>  
