@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -26,12 +26,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
  	<c:forEach items="${assetList}" var="asset" varStatus="vs">  
         <tr> 
-      
-             <td align = "center">${asset.assetCode}</td>  
-             <td align = "center">${asset.assetName}</td>  
+             <td align = "center">${asset.assetSortCode}</td>  
+             <td align = "center">${asset.assetSortName}</td>  
              <td align = "center">${asset.parentId}</td>  
-             <td align = "center">${asset.parentName}</td>  
-              
+             <td align = "center">${asset.parentName}</td>  <br>
          </tr>  
 	</c:forEach>  
   </body>
