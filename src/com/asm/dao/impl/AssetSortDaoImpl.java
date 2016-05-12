@@ -20,7 +20,7 @@ public class AssetSortDaoImpl extends CommonDaoImpl<AssetSort> implements AssetS
 	@Override
 	public boolean delSort(AssetSort asset) {
 		// TODO Auto-generated method stub
-		this.deleteObjectByIds(asset.getAssetId());
+		this.deleteObjectByIds();
 		return true;
 	}
 

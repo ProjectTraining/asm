@@ -11,9 +11,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name="t_assetSort")
 public class AssetSort implements java.io.Serializable{
 	
-	private String assetId;
-	private String assetCode;
-	private String assetName;
+	private String assetSortId;
+	private String assetSortCode;
+	private String assetSortName;
 	private String parentId;
 	private String parentName;
 	
@@ -22,10 +22,10 @@ public class AssetSort implements java.io.Serializable{
 	}
 
 	/** full constructor */
-	public AssetSort(String assetCode, String assetName, String parentId,
+	public AssetSort(String assetSortCode, String assetSortName, String parentId,
 			String parentName) {
-		this.assetCode = assetCode;
-		this.assetName = assetName;
+		this.assetSortCode=assetSortCode;
+		this.assetSortName=assetSortName;
 		this.parentId = parentId;
 		this.parentName = parentName;
 	}
@@ -33,27 +33,33 @@ public class AssetSort implements java.io.Serializable{
 	@Id
 	@GeneratedValue(generator="userUUID")
 	@GenericGenerator(name="userUUID", strategy="uuid")
-	public String getAssetId() {
-		return assetId;
-	}
-	public void setAssetId(String assetId) {
-		this.assetId = assetId;
-	}
-	public String getAssetCode() {
-		return assetCode;
-	}
-	public void setAssetCode(String assetCode) {
-		this.assetCode = assetCode;
-	}
-	public String getAssetName() {
-		return assetName;
-	}
-	public void setAssetName(String assetName) {
-		this.assetName = assetName;
-	}
 	public String getParentId() {
 		return parentId;
 	}
+	public String getAssetSortId() {
+		return assetSortId;
+	}
+
+	public void setAssetSortId(String assetSortId) {
+		this.assetSortId = assetSortId;
+	}
+
+	public String getAssetSortCode() {
+		return assetSortCode;
+	}
+
+	public void setAssetSortCode(String assetSortCode) {
+		this.assetSortCode = assetSortCode;
+	}
+
+	public String getAssetSortName() {
+		return assetSortName;
+	}
+
+	public void setAssetSortName(String assetSortName) {
+		this.assetSortName = assetSortName;
+	}
+
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}

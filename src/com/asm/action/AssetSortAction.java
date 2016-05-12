@@ -15,7 +15,7 @@ import com.opensymphony.xwork2.ModelDriven;
  * @description:资产类别action
  * @Author: 郑成斌（作者）
  * @Version: V1.02 （版本号）
- * @Create Date: 2016-5-8 （创建日期）
+ * @Create Date: 2016-5-12 （创建日期）
  */
 @SuppressWarnings("serial")
 @Controller("assetSortAction")
@@ -26,9 +26,9 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 
 	private List<AssetSort> assetList;
 	private AssetSort asset = new AssetSort();
-	private String assetId;
-	private String assetCode;
-	private String assetName;
+	private String assetSortId;
+	private String assetSortCode;
+	private String assetSortName;
 	private String parentId;
 	private String parentName;
 	
@@ -46,6 +46,30 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 	}
 	
 	
+
+	public String getAssetSortId() {
+		return assetSortId;
+	}
+
+	public void setAssetSortId(String assetSortId) {
+		this.assetSortId = assetSortId;
+	}
+
+	public String getAssetSortCode() {
+		return assetSortCode;
+	}
+
+	public void setAssetSortCode(String assetSortCode) {
+		this.assetSortCode = assetSortCode;
+	}
+
+	public String getAssetSortName() {
+		return assetSortName;
+	}
+
+	public void setAssetSortName(String assetSortName) {
+		this.assetSortName = assetSortName;
+	}
 
 	public AssetSortService getAssetService() {
 		return assetService;
@@ -72,29 +96,7 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 	}
 
 
-	public String getAssetId() {
-		return assetId;
-	}
-
-	public void setAssetId(String assetId) {
-		this.assetId = assetId;
-	}
-
-	public String getAssetCode() {
-		return assetCode;
-	}
-
-	public void setAssetCode(String assetCode) {
-		this.assetCode = assetCode;
-	}
-
-	public String getAssetName() {
-		return assetName;
-	}
-
-	public void setAssetName(String assetName) {
-		this.assetName = assetName;
-	}
+	
 
 	public String getParentId() {
 		return parentId;
