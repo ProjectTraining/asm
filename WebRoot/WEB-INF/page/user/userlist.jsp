@@ -113,10 +113,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					            <th>
 					            	部门：
 					            	<select id="selectDept" name="selectDept">
-31: 								<c:forEach items="${requestScope.deptList} " var="item">
-32: 									<option value="${item.id}">${item.name}</option>
-33: 								</c:forEach>
-34:									 </select>
+								<c:forEach items="${requestScope.deptList} " var="item">
+									<option value="${item.id}">${item.name}</option>
+								</c:forEach>
+								 </select>
 					            </th>
 		            			<td>
 					            	<input type="text" name="userId" id="userId" style="width:100px;"/>
