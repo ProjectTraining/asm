@@ -213,6 +213,7 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	public String listUser() {
 		System.out.println("begin");
 		deptList =deptService.findAllUsers();
+		System.out.println(deptList.size());
 		userList = userService.listUser();
 		HashMap<String, Object> maps = new HashMap<String, Object>();
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
