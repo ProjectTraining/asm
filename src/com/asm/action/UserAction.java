@@ -15,7 +15,9 @@ import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.asm.domain.Dept;
 import com.asm.domain.User;
+import com.asm.service.DeptService;
 import com.asm.service.UserService;
 import com.asm.util.MD5;
 import com.asm.util.ResponseUtil;
@@ -37,9 +39,11 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	private User user=new User();
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private DeptService	deptService;
 	private Map<String, Object> session;
 	private List<User> userList;
+	private List<Dept> deptList;
 	private int pageNow = 1;
 	private int pageSize = 10;
 	private JSONObject rows;
@@ -208,6 +212,7 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	}
 	public String listUser() {
 		System.out.println("begin");
+		deptList =deptService.findAllUsers();
 		userList = userService.listUser();
 		HashMap<String, Object> maps = new HashMap<String, Object>();
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
