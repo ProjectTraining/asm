@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>添加商品入库</title>
+    <title>My JSP 'updateSort.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -23,29 +23,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-     <form name="form1" method="post" action="assetSortAction_addSort.action" >
+     <form name="form1" method="post" action="assetSortAction_updateSort.action?assetSort.assetSortId=${assetSort.assetSortId}" >
      	<ul class="name_items">
      	<li><label for="pwd">资产编号：</label> 
-			<input type="text" placeholder="请输入资产编号"
+			<input type="text" value="${assetSort.assetSortCode}"
 				name="assetSortCode"  id="assetSortCode"  size="40"
 				  /></li>
 			<li><label for="user">资产名：</label> 
-			<input type="text" placeholder="请输入资产名" 
+			<input type="text" value="${assetSort.assetSortName}" 
 			name="assetSortName"  id="assetSortName" size="40"
 				 /></li>
 			<li><label for="pwd">上级资产编号：</label> 
-			<input type="text" placeholder="请输入上级资产编号"
+			<input type="text" value="${assetSort.parentId}"
 				name="parentId"  id="parentId"  size="40"
 				  /></li>
 			<li><label for="user">上级资产名：</label> 
-			<input type="text" placeholder="请输入上级资产名" 
+			<input type="text" value="${assetSort.parentName}"
 			name="parentName"  id="parentName" size="40"
 				 /></li>
 			
-				<li><input type="submit" tabindex="3"  value="添加资产"
+				<li><input type="submit" tabindex="3"  value="修改资产类型"
 			 /></li>
 		</ul>
 
      </form>
+    
   </body>
 </html>
