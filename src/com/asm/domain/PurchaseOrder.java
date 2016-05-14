@@ -1,10 +1,16 @@
 package com.asm.domain;
 
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,11 +24,12 @@ public class PurchaseOrder implements java.io.Serializable {
 	// Fields
 
 	private String purchaseId;
-	private String purchaseUserId;
+	private User user;
 	private String purchaseDeptId;
+	//private String purchaseUserId;
 	private Date purchaseDate;
 	private String purchasePurpose;
-
+	private int state;
 
 	@Id
 	@GeneratedValue(generator="purchaseOrderUUID")
@@ -35,13 +42,32 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.purchaseId = purchaseId;
 	}
 
-	public String getPurchaseUserId() {
-		return this.purchaseUserId;
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	@ManyToOne(cascade=CascadeType.REFRESH,optional=true)  
+    @JoinColumn(name = "purchaseUserId",referencedColumnName="userId") 
+	 public User getUser() {
+	  return user;
+	 }
+	
+	public void setUser(User user) {
+		this.user = user;
+
+	}
+
+/*	public String getPurchaseUserId() {
+		return purchaseUserId;
 	}
 
 	public void setPurchaseUserId(String purchaseUserId) {
 		this.purchaseUserId = purchaseUserId;
-	}
+	}*/
 
 	public String getPurchaseDeptId() {
 		return this.purchaseDeptId;
