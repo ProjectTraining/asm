@@ -210,6 +210,14 @@ function selectProduct(id,name,title) {
 	};
 	showDialogWithOptions('productAction_selectProductPage.action', options);
 }
+function SubmitQuery(){
+	var deptId= $("#deptId").val();
+	var userName= $("#userName").val();
+	var roleId= $("#roleId").val();
+	var stateStr= $("#stateStr").val();
+	MainGrid.set({url:'userAction_listUser.action?deptId='+deptId+'&userName='+userName+'&roleId=' +roleId+'&stateStr='+stateStr});
+	MainGrid.loadData(true);
 
+}
 
 

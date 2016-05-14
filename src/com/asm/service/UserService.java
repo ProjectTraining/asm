@@ -8,7 +8,7 @@ public interface UserService {
 
 	public abstract User checkUserExist(String userName, String passWord);
 
-	public abstract List<User> listUser();
+	public abstract List<User> listUser(String userId,String deptId,String roleId,String state);
 
 	public abstract boolean checkUserExistByName(String userName);
 
