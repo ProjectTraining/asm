@@ -33,9 +33,6 @@ public class AssetSort implements java.io.Serializable{
 	@Id
 	@GeneratedValue(generator="userUUID")
 	@GenericGenerator(name="userUUID", strategy="uuid")
-	public String getParentId() {
-		return parentId;
-	}
 	public String getAssetSortId() {
 		return assetSortId;
 	}
@@ -43,7 +40,9 @@ public class AssetSort implements java.io.Serializable{
 	public void setAssetSortId(String assetSortId) {
 		this.assetSortId = assetSortId;
 	}
-
+	public String getParentId() {
+		return parentId;
+	}
 	public String getAssetSortCode() {
 		return assetSortCode;
 	}

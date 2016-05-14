@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.asm.dao.AssetSortDao;
 import com.asm.domain.AssetSort;
 import com.asm.service.AssetSortService;
-@Transactional(readOnly=true)
+//@Transactional(readOnly=true)
 @Service("assetSortService")
 public class AssetSortServiceImpl implements AssetSortService{
 	@Autowired
@@ -27,9 +28,22 @@ public class AssetSortServiceImpl implements AssetSortService{
 	}
 
 	@Override
-	public boolean delSort(AssetSort tasset) {
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
+	public boolean delSort(AssetSort assetSort) {
 		// TODO Auto-generated method stub
-		return this.assetdao.delSort(tasset);
+		return this.assetdao.delSort(assetSort);
+	}
+
+	@Override
+	public boolean updateSort(AssetSort assetSort) {
+		// TODO Auto-generated method stub
+		return this.assetdao.updateSort(assetSort);
+	}
+
+	@Override
+	public AssetSort findSort(String assetSortId) {
+		// TODO Auto-generated method stub
+		return this.assetdao.findSort(assetSortId);
 	}
 
 }

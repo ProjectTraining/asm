@@ -24,8 +24,8 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 	@Autowired
 	private AssetSortService assetService;
 
-	private List<AssetSort> assetList;
-	private AssetSort asset = new AssetSort();
+	private List<AssetSort> assetSortList;
+	private AssetSort assetSort = new AssetSort();
 	private String assetSortId;
 	private String assetSortCode;
 	private String assetSortName;
@@ -33,19 +33,47 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 	private String parentName;
 	
 	public String home() {
-		assetList = this.assetService.findList();
-//		for(int i=0;i<assetList.size();i++){
-//			System.out.println(assetList.get(i).getAssetCode());
-//		}
+		assetSortList = this.assetService.findList();
 		return "list";
 	}
-
-	public void addSort() {
-		boolean a = assetService.addSort(asset);
-
+	public String addPage(){
+		return "add";
 	}
-	
-	
+	public String addSort() {
+		boolean a = assetService.addSort(assetSort);
+		if(a){
+			assetSortList = this.assetService.findList();
+			return "list";
+		}else{
+			return "error";
+		}
+	}
+	public String delSort(){
+		System.out.println(assetSort.getAssetSortId());
+		boolean a=this.assetService.delSort(assetSort);
+		System.out.println(a);
+		if(a){
+			assetSortList = this.assetService.findList();
+			return "list";
+		}else{
+			return "error";
+		}
+	}
+	public String updatePage() {
+		assetSort = this.assetService.findSort(assetSort.getAssetSortId());
+		return "update";
+	}
+	public String updateSort(){
+		System.out.println(assetSort.getAssetSortId()+" "+assetSort.getAssetSortCode());
+		boolean a=this.assetService.updateSort(assetSort);
+		if(a){
+			assetSortList = this.assetService.findList();
+			return "list";
+		}else{
+			return "error";
+		}
+		
+	}
 
 	public String getAssetSortId() {
 		return assetSortId;
@@ -79,22 +107,7 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 		this.assetService = assetService;
 	}
 
-	public AssetSort getAsset() {
-		return asset;
-	}
-
-	public void setAsset(AssetSort asset) {
-		this.asset = asset;
-	}
-
-	public List<AssetSort> getAssetList() {
-		return assetList;
-	}
-
-	public void setAssetList(List<AssetSort> assetList) {
-		this.assetList = assetList;
-	}
-
+	
 
 	
 
@@ -117,7 +130,25 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 	@Override
 	public AssetSort getModel() {
 		// TODO Auto-generated method stub
-		return null;
+		return assetSort;
 	}
 
+	public List<AssetSort> getAssetSortList() {
+		return assetSortList;
+	}
+
+	public void setAssetSortList(List<AssetSort> assetSortList) {
+		this.assetSortList = assetSortList;
+	}
+
+	public AssetSort getAssetSort() {
+		return assetSort;
+	}
+
+	public void setAssetSort(AssetSort assetSort) {
+		this.assetSort = assetSort;
+	}
+	
+	
+	
 }

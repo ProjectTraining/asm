@@ -6,6 +6,8 @@ import com.asm.domain.AssetSort;
 
 public interface AssetSortService {
 	public abstract List<AssetSort> findList();  
-	public abstract boolean addSort(AssetSort asset);
-	public abstract boolean delSort(AssetSort asset);
+	public abstract boolean addSort(AssetSort assetSort);
+	public abstract boolean delSort(AssetSort assetSort);
+	public abstract boolean updateSort(AssetSort assetSort); 
+	public abstract AssetSort findSort(String assetSortId);
 }
