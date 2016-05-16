@@ -42,47 +42,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 <script type="text/javascript"> 
     $(function(){  
+    	var purchaseId=$('#purchaseOrderId').val();
         MainGrid=$("#MainGrid").ligerGrid({  
                  
                     columns:[  
-                        {display:"主键",name:"purchaseId",hide:"hidden"},
+                        {display:"主键",name:"purchaseItemId",hide:"hidden"},
                         { display: '操作', isAllowHide:false,width: 80,minWidth:60,render: function (row)
 							    {
 									var html = "";
-									html += "&nbsp;&nbsp;<span title='编辑采购单' class='l-icon-view grid-line-btn' onclick=\"viewPurchaseItem('"+row.purchaseId+"')\">&nbsp;</span>";
-										html += "<span title='确认入库' class='l-icon-ok grid-line-btn'  onclick=\"changeState('"+row.purchaseId+"','确认入库成功！','purchaseOrderAction_changeState.action?purchaseId=',2)\">&nbsp;</span>";
-										html += "<span title='编辑' class='l-icon-edit grid-line-btn'  onclick=\"edit('"+row.purchaseId+"')\">&nbsp;</span>";
+									
+										html += "<span title='详细与编辑' class='l-icon-view grid-line-btn'  onclick=\"edit('"+row.purchaseItemId+"')\">&nbsp;</span>";
 								
-									 	html += "<span title='作废' class='l-icon-delete grid-line-btn' onclick=\"changeState('"+row.purchaseId+"','作废成功！','purchaseOrderAction_changeState.action?purchaseId=',0)\">&nbsp;</span>";
+									 	html += "<span title='删除' class='l-icon-delete grid-line-btn' onclick=\"changeState('"+row.purchaseItemId+"','作废成功！','purchaseOrderAction_changeState.action?purchaseItemId=',0)\">&nbsp;</span>";
 									
 							        return html;
 							    }
 							},   
-                        {display:"采购日期",name:"purchaseDate"},  
-                        {display:"采购部门",name:"deptName"},
-                        {display:"采购人",name:"purchaseUserId"},
-                        {display:"用途",name:"purchasePurpose"},
-                        { display: '状态',   name:'state',render:function(row){
-										if(row.state == '1'){
-                                  			 return "<span style='color:#009900;font-weight:bold;'>未确认</span>";
-                               			 }if(row.state == '2'){
-                               			 return "<span style='color:#009900;font-weight:bold;'>确认</span>";
-                               			 }
-                               			 else{
-                                   			return "<span style='color:#FF0000;font-weight:bold;'>作废</span>";
-                                		}
-									}}
-									
-						
-						
+                        {display:"资产名称",name:"assettName"},  
+                        {display:"资产型号",name:"assetType"},
+                        {display:"数量",name:"num"},
+                        {display:"单位",name:"unit"},
+                        {display:"价格",name:"price"}	
                     ], 
                     toolbar:{ items: [
-				                  { text: '增加采购单', click: addNewRecord,icon:'add'},
+				                  { text: '增加采购单明细', click: addNewRecord,icon:'add'},
 				                  { line:true },
 			                  ]}, 
                     //data:docData,  
-                    url:'purchaseOrderAction_listPurchaseOrder.action',  
-                    sortName: 'purchaseId',  
+                    url:'purchaseItemAction_listPurchaseItem.action?purchaseOrderId='+purchaseId,  
+                    sortName: 'purchaseItemId',  
                     width:"100%",height:"96%",  
                     pagesizeParmName:"pageSize",  
                     pageParmName:"pageNow",  
@@ -91,14 +79,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     rownumbers:true,usePager:true
         });  
     });  
-    var viewPurchaseItem = function(purchaseId){
-		 	location.href = " <%=request.getContextPath()%>/purchaseItemAction_home.action?purchaseOrderId="+purchaseId;
+    var viewPurchaseItem = function(purchaseItemId){
+		 	location.href = " <%=request.getContextPath()%>/manageAction_loginPage.action";
  };
-     var edit = function(purchaseId){
-		 	showDialog('purchaseOrderAction_listInfo.action?purchaseId='+purchaseId,'修改采购单',750,500);
+     var edit = function(purchaseItemId){
+		 	showDialog('purchaseItemAction_editPage.action?purchaseItemId='+purchaseItemId,'修改采购单',750,500);
  };
   var addNewRecord = function(){
-		 	showDialog('purchaseOrderAction_addPage.action','添加采购单',750,500);
+var purchaseId=$('#purchaseOrderId').val();
+		 showDialog('purchaseItemAction_addPage.action?purchaseOrderId='+purchaseId,'添加采购单明细',750,500);
 		 };
 </script>
 
@@ -122,39 +111,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div position="top" title="" style="padding-left:10px;">
             	<!-- 查询条件部分 -->
             	<div>
+            	<input type="hidden" name="purchaseOrderId"
+					id="purchaseOrderId" value="${purchaseItem.purchaseOrderId}" />
             		<form id="searchForm" name="searchForm" class="l-form liger-form" action="userAction_homePage.action" method="post">
 		            	<table id="searchTable" class="searchTable">
 		            		<tr>
 		            	<th>
-					            	采购日期：
+					            	资产名称：
 					            </th>
 		            			<td>
-					            	<input type="text"  style="margin-top:20" value="2016-05-12 00:00" id="datetimepicker1"  name="startTime"/><br><br>
+					            	<input type="text" name="assettName" id="assettName"/>
 					            </td>
-					            <th>
-					            	至
-					            </th>
-		            			<td>
-					            	<input type="text" style="margin-top:20"  value="2016-05-15 00:00" id="datetimepicker2"  name="endTime"/><br><br>
-					            </td> 
-					            
-					           <td>&nbsp&nbsp
-					            	部门：
-	
-								 
-								 	
-					<select id="deptId" name="deptId">
-									<option value=""></option>
-									<s:iterator value="deptList" var="item">
-									
-									<option value="${item.deptId}">${item.deptName}</option>		
-									</s:iterator>
-									</select> 
-					
-					            </td>
-					            
 		            			
-					            
+					            <th class="opt">
+					            	<div title="返回" class='l-icon-back' style="cursor:hand" onClick="back()"   data-width="100" icon="back">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp返回</div>
+					            </th>
 					            
 					            <th class="opt">
 					            	<div title="查询" class='l-icon-search' style="cursor:hand" onClick="SubmitQueryPO()"   data-width="100" icon="search">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp查询</div>
@@ -166,24 +137,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div> 
             <div position="center" title="">
             	<!-- 数据集部分 -->
-				  <div id="MainGrid" keyname="purchaseId"></div>  
+				  <div id="MainGrid" keyname="purchaseItemId"></div>  
             </div>
   
 </body> 
 
-<script src="script/jquery.datetimepicker.js"></script>
 <script>
-$('#datetimepicker1').datetimepicker({value:'2015-01-01 00:00:00',step:10,lang:"ch",
-      format:"Y-m-d H:i:00"});
-     $('#datetimepicker2').datetimepicker({value:'2016-12-31 00:00:00',step:10,lang:"ch",
-      format:"Y-m-d H:i:00"});
 
 function SubmitQueryPO(){
-	var deptId= $("#deptId").val();
-	var startTime= $("#datetimepicker1").val();
-	var endTime= $("#datetimepicker2").val();
-	MainGrid.set({url:'purchaseOrderAction_listPurchaseOrder.action?purchaseDeptId='+deptId+'&startTime='+startTime+'&endTime=' +endTime});
+	var assettName= $("#assettName").val();
+	var purchaseId=$('#purchaseOrderId').val();
+	MainGrid.set({url:'purchaseItemAction_listPurchaseItem.action?purchaseOrderId='+purchaseId+'&assettName='+assettName});
 	MainGrid.loadData(true);
+
+}
+function back(){
+location.href = " <%=request.getContextPath()%>/purchaseOrderAction_home.action";
 
 }
 </script>
