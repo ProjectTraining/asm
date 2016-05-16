@@ -28,8 +28,17 @@
 			method="{1}">
 			<result name="purchaseOrderlistpage">/WEB-INF/page/purchase/purchaseorderlist.jsp</result>
 			<result name="addpage">/WEB-INF/page/purchase/addpurchaseorder.jsp</result>
-			<result name="listuserinfo">/WEB-INF/page/purchase/editpurchaseorder.jsp</result>
+			<result name="listpurchaseOrderinfo">/WEB-INF/page/purchase/editpurchaseorder.jsp</result>
 			<result type="json" name="purchaseOrderlist">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="purchaseItemAction_*" class="purchaseItemAction"
+			method="{1}">
+			<result name="purchaseItemlistpage">/WEB-INF/page/purchaseitem/purchaseitemlist.jsp</result>
+			<result name="addpage">/WEB-INF/page/purchaseitem/addpurchaseitem.jsp</result>
+			<result name="editPage">/WEB-INF/page/purchaseitem/editpurchaseitem.jsp</result>
+			<result type="json" name="purchaseItemlist">  
        			 <param name="root" >rows</param>  
    			 </result> 
 		</action> 

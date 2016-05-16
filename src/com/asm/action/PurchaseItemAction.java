@@ -6,51 +6,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.asm.domain.AssetSort;
 import com.asm.domain.Dept;
-import com.asm.domain.PurchaseOrder;
+import com.asm.domain.PurchaseItem;
 import com.asm.domain.User;
 import com.asm.service.DeptService;
-import com.asm.service.PurchaseOrderService;
+import com.asm.service.PurchaseItemService;
 import com.asm.service.UserService;
-import com.asm.util.MD5;
 import com.asm.util.ResponseUtil;
-import com.asm.util.StringHelper;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
-
-
-/**  
-* @description:用户action
-* @Author: 张毓峰（作者）
-* @Version: V1.00 （版本号）
-* @Create Date: 2016-4-8 （创建日期）
-*/
 @SuppressWarnings("serial")
-@Controller("purchaseOrderAction")
+@Controller("purchaseItemAction")
 @Scope("prototype")
-public class PurchaseOrderAction extends ActionSupport implements ModelDriven<PurchaseOrder> {
+public class PurchaseItemAction extends ActionSupport implements ModelDriven<PurchaseItem> {
 
-	private PurchaseOrder purchaseOrder=new PurchaseOrder();
+	private PurchaseItem purchaseItem=new PurchaseItem();
 	@Autowired
-	private PurchaseOrderService purchaseOrderService;
+	private PurchaseItemService purchaseItemService;
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private DeptService	deptService;
 	private Map<String, Object> session;
-	private List<PurchaseOrder> purchaseOrderList;
+	private List<PurchaseItem> purchaseItemList;
 	private List<Dept> deptList;
 	private List<User> userList;
+	private List<AssetSort> assetSortList;
 	private String userId;
 	private int pageNow = 1;
 	private int pageSize = 10;
@@ -58,27 +47,20 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 	private String storeId;
 	private JSONObject data;
 	private String stateStr;
-	private Date startTime,endTime;
+
 	
-	public Date getStartTime() {
-		return startTime;
+	
+	public List<AssetSort> getAssetSortList() {
+		return assetSortList;
 	}
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
+	public void setAssetSortList(List<AssetSort> assetSortList) {
+		this.assetSortList = assetSortList;
 	}
-	
-	
 	public String getUserId() {
 		return userId;
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-	public Date getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
 	}
 	HashMap<String, String> deptMap = new HashMap<String, String>();
 	public String getStateStr() {
@@ -87,11 +69,11 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 	public void setStateStr(String stateStr) {
 		this.stateStr = stateStr;
 	}
-	public PurchaseOrder getPurchaseOrder() {
-		return purchaseOrder;
+	public PurchaseItem getPurchaseItem() {
+		return purchaseItem;
 	}
-	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
+	public void setPurchaseItem(PurchaseItem purchaseItem) {
+		this.purchaseItem = purchaseItem;
 	}
 	
 	public List<Dept> getDeptList() {
@@ -99,9 +81,9 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 	}
 
 	@Override 
-	public PurchaseOrder getModel() {
+	public PurchaseItem getModel() {
 		// TODO Auto-generated method stub
-		return purchaseOrder;
+		return purchaseItem;
 	}
 	
 
@@ -150,23 +132,9 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 		this.rows = rows;
 	}
 	
-	public String changeState() throws Exception {
-		
-		boolean flag = false;
-		int state=purchaseOrder.getState();
-		purchaseOrder=purchaseOrderService.findPurchaseOrder(purchaseOrder.getPurchaseId());
-		purchaseOrder.setState(state);
-		if (purchaseOrderService.updatePurchaseOrder(purchaseOrder)) {
-			flag = true;
-			ResponseUtil.write1(flag);
-		} else {
-			ResponseUtil.write1(flag);
-		}
-		return null;
-	}
 	
 	public String loginPage() {
-		PurchaseOrder employee=(PurchaseOrder) session.get("employee");
+		PurchaseItem employee=(PurchaseItem) session.get("employee");
 		if(employee!=null){
 			return "home";
 		}
@@ -179,11 +147,11 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 		return userList;
 	}
 	public String home(){
-		deptList =deptService.findAllUsers();
-		return "purchaseOrderlistpage";
+		
+		return "purchaseItemlistpage";
 	}
 	public String addPage(){
-		deptList=deptService.findAllUsers();
+		assetSortList=purchaseItemService.findAssertSortList();
 		userList=userService.listUser(null, null, null, null);
 		return "addpage";
 	}
@@ -191,11 +159,7 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 	public String add() throws Exception{
 		boolean flag = true;
 		try {
-			System.out.println("userId"+userId);
-			User user=userService.findUser(userId);
-			purchaseOrder.setUser(user);
-			//System.out.println(user.getUserId());
-			purchaseOrderService.savePurchaseOrder(purchaseOrder);
+			purchaseItemService.savePurchaseItem(purchaseItem);
 			ResponseUtil.write1(flag);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -212,31 +176,37 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 		}
 	
 	}
-	public String listPurchaseOrder() {
-		
-		getDataMap();
-		purchaseOrderList = purchaseOrderService.listPurchaseOrder(purchaseOrder.getPurchaseDeptId(),startTime,endTime);
+	public String listPurchaseItem() {
+		System.out.println("par  "+purchaseItem.getAssettName()+purchaseItem.getPurchaseOrderId());
+		purchaseItemList = purchaseItemService.listPurchaseItem(purchaseItem.getAssettName(),purchaseItem.getPurchaseOrderId());
 		HashMap<String, Object> maps = new HashMap<String, Object>();
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		for (PurchaseOrder  purchaseOrder: purchaseOrderList) {
+		for (PurchaseItem  purchaseItem: purchaseItemList) {
 			HashMap<String, Object> hashMap = new HashMap<String, Object>();
-			hashMap.put("purchaseId", purchaseOrder.getPurchaseId());
-			hashMap.put("deptName", deptMap.get(purchaseOrder.getPurchaseDeptId()));
-			hashMap.put("purchaseDate", StringHelper.dateTimetoString(purchaseOrder.getPurchaseDate()));
-			hashMap.put("purchasePurpose", purchaseOrder.getPurchasePurpose());
-			hashMap.put("purchaseUserId", purchaseOrder.getUser().getUserName());
-			hashMap.put("state", purchaseOrder.getState());
+			hashMap.put("purchaseItemId", purchaseItem.getPurchaseItemId());
+			hashMap.put("assettName", purchaseItem.getAssettName());
+			hashMap.put("assetSortId", purchaseItem.getAssetSortId());
+			hashMap.put("purchaseOrderId", purchaseItem.getPurchaseOrderId());
+			hashMap.put("preserveUserId", purchaseItem.getPreserveUserId());
+			hashMap.put("parentAssertSortId", purchaseItem.getParentAssertSortId());
+			hashMap.put("remarks", purchaseItem.getRemarks());
+			hashMap.put("manufacturer", purchaseItem.getManufacturer());
+			hashMap.put("supplier", purchaseItem.getSupplier());
+			hashMap.put("assetType", purchaseItem.getAssetType());
+			hashMap.put("unit", purchaseItem.getUnit());
+			hashMap.put("price", purchaseItem.getPrice());
+			hashMap.put("num", purchaseItem.getNum());
 			list.add(hashMap);
 		}
 		maps.put("Rows", list);
 		System.out.println(maps.size());
 		rows = JSONObject.parseObject(JSON.toJSONString(maps));
 		System.out.println(rows.toJSONString());
-		return "purchaseOrderlist";
+		return "purchaseItemlist";
 	}
 	public String remove() throws Exception {
 		boolean flag = false;
-		if (purchaseOrderService.remove(purchaseOrder.getPurchaseId())) {
+		if (purchaseItemService.remove(purchaseItem.getPurchaseItemId())) {
 			flag = true;
 			ResponseUtil.write1(flag);
 		} else {
@@ -244,21 +214,17 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 		}
 		return null;
 	}
-	public String listInfo(){
-		deptList=deptService.findAllUsers();
+	public String editPage(){
+		assetSortList=purchaseItemService.findAssertSortList();
 		userList=userService.listUser(null, null, null, null);
-		purchaseOrder=purchaseOrderService.findPurchaseOrder(purchaseOrder.getPurchaseId());
+		purchaseItem=purchaseItemService.findPurchaseItem(purchaseItem.getPurchaseItemId());
 		
-		return "listpurchaseOrderinfo";
+		return "editPage";
 	}
-	public String editPurchaseOrder() throws Exception {
+	public String edit() throws Exception {
 		boolean flag = true;
 		try {
-			System.out.println("user"+userId);
-			User user=userService.findUser(userId);
-			System.out.println("purchaseOrder"+purchaseOrder.getPurchaseId());
-			purchaseOrder.setUser(user);
-			purchaseOrderService.updatePurchaseOrder(purchaseOrder);
+			purchaseItemService.updatePurchaseItem(purchaseItem);
 			ResponseUtil.write1(flag);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
