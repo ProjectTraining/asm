@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 									
 										html += "<span title='详细与编辑' class='l-icon-view grid-line-btn'  onclick=\"edit('"+row.purchaseItemId+"')\">&nbsp;</span>";
 								
-									 	html += "<span title='删除' class='l-icon-delete grid-line-btn' onclick=\"changeState('"+row.purchaseItemId+"','作废成功！','purchaseOrderAction_changeState.action?purchaseItemId=',0)\">&nbsp;</span>";
+									 	html += "<span title='删除' class='l-icon-delete grid-line-btn' onclick=\"deleteObjFromMainGrid('"+row.purchaseItemId+"','"+row.__id+"','purchaseItemAction_remove.action?purchaseItemId=')\">&nbsp;</span>";
 									
 							        return html;
 							    }
@@ -79,9 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     rownumbers:true,usePager:true
         });  
     });  
-    var viewPurchaseItem = function(purchaseItemId){
-		 	location.href = " <%=request.getContextPath()%>/manageAction_loginPage.action";
- };
+
      var edit = function(purchaseItemId){
 		 	showDialog('purchaseItemAction_editPage.action?purchaseItemId='+purchaseItemId,'修改采购单',750,500);
  };
