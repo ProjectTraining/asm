@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	<!-- 配置action的访问路径为.do的形式 -->
+	<constant name="struts.action.extension" value="action"></constant>
+	<!-- 配置struts的开发模式 -->
+	<constant name="struts.devMode" value="true"></constant>
+	<!-- 配置struts的简单模式 -->
+	<constant name="struts.ui.theme" value="simple"></constant>
+	
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	
+	 <include file="struts-zyf.xml"/>
+	<include file="struts-zcb.xml"/> 
+	 <include file="struts-zn.xml"/>
+	 <include file="struts-zyj.xml"/>
+	 <include file="struts-hw.xml"/>
+	 <include file="struts-zjw.xml"/>
+</struts>
+	
