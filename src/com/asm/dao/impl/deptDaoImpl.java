@@ -1,5 +1,6 @@
 package com.asm.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -22,7 +23,7 @@ public class deptDaoImpl extends CommonDaoImpl<Dept> implements deptDao{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Dept> findAllUsers() {
+	public List<Dept> findAll() {
 		String hql = "from Dept d order by d.deptId asc";
 		List<Dept> list = (List<Dept>) this.getHibernateTemplate().find(hql);
 		return list;
@@ -61,5 +62,35 @@ public class deptDaoImpl extends CommonDaoImpl<Dept> implements deptDao{
 		else 
 			return false;
 	}
-	
+	/**   
+	 * 分页查询   
+	 * @param hql  查询条件   
+	 * @param offset  开始记录   
+	 * @param length  一次查询几条记录   
+	 * @return 查询的记录集合   
+	 */    
+	@SuppressWarnings("unchecked")
+	public List<Dept> queryForPage(final String hql, final int offset, final int length) {
+		List<Dept> list = findAll();
+		List<Dept> list1=new ArrayList<Dept>();
+		for(int i=0;i<offset+length;i++){
+			if(i>=offset){
+				list1.add(list.get(i));
+			}
+		}
+		System.out.println("这一页的记录是："+list1.size());
+		return list1;
+	}
+
+	/**
+	 * 查询所有的记录数
+	 * 
+	 * @param hql
+	 *            查询条件
+	 * @return 总记录数
+	 */
+	public int getAllRowCount(String hql) {
+		return this.getHibernateTemplate().find(hql).size();
+	}
+
 }

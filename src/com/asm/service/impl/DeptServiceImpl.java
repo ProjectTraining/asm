@@ -13,6 +13,7 @@ import com.asm.dao.deptDao;
 import com.asm.domain.Dept;
 import com.asm.domain.User;
 import com.asm.service.DeptService;
+import com.asm.util.PageBean;
 
 
 @Transactional(readOnly=false)
@@ -40,7 +41,7 @@ public class DeptServiceImpl implements DeptService {
 	}
 	@Override
     public List<Dept> findAllUsers() {  
-        return this.deptdao.findAllUsers();  
+        return this.deptdao.findAll();  
     }  
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
@@ -64,5 +65,35 @@ public class DeptServiceImpl implements DeptService {
 	public boolean checkDeptExist(String deptName) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	/**   
+	 * 分页查询     
+	 * @param pageSize  每页显示多少记录   
+	 * @param currentPage 当前页   
+	 * @return 封装了分页信息的bean   
+	 */    
+	public PageBean queryForPage(int pageSize, int page) {
+		final String hql = "from Dept d order by d.deptId asc"; // 查询语句
+		int allRow = deptdao.getAllRowCount(hql); // 总记录数
+		int totalPage = PageBean.countTatalPage(pageSize, allRow); // 总页数
+		System.out.println("总共记录数："+totalPage);
+		final int offset = PageBean.countOffset(pageSize, page); // 当前页开始记录
+		final int currentPage = PageBean.countCurrentPage(page); // 当前页
+		int length = 0; // 每页记录数
+		if(currentPage==totalPage){
+			length=allRow-(currentPage-1)*pageSize;
+		}else {
+			length=pageSize;
+		}
+		List<Dept> list = deptdao.queryForPage(hql, offset, length); //得到在分页内的数据
+		// 把分页信息保存到Bean当中
+		PageBean pageBean = new PageBean();
+		pageBean.setPageSize(pageSize);
+		pageBean.setCurrentPage(currentPage);
+		pageBean.setAllRow(allRow);
+		pageBean.setTotalPage(totalPage);
+		pageBean.setList(list);
+		pageBean.init();
+		return pageBean;
 	}
 }
