@@ -11,11 +11,13 @@
 	<!-- 配置struts的简单模式 -->
 	<constant name="struts.ui.theme" value="simple"></constant>
 	
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	
 	 <include file="struts-zyf.xml"/>
-	 <include file="struts-zcb.xml"/> 
+	<include file="struts-zcb.xml"/> 
 	 <include file="struts-zn.xml"/>
-	 <include file="struts-zyj.xml"/>
+<!-- 	 <include file="struts-zyj.xml"/>
 	 <include file="struts-hw.xml"/>
-	 <include file="struts-zjw.xml"/>
+	 <include file="struts-zjw.xml"/> -->
 </struts>
 	
