@@ -15,14 +15,20 @@ import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.asm.domain.Asset;
 import com.asm.domain.Dept;
+import com.asm.domain.Scrap;
 import com.asm.domain.User;
+import com.asm.service.AssetService;
 import com.asm.service.DeptService;
+import com.asm.service.ScrapService;
 import com.asm.service.UserService;
 import com.asm.util.MD5;
 import com.asm.util.ResponseUtil;
+import com.asm.util.StringHelper;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+
 
 
 /**  
@@ -32,25 +38,57 @@ import com.opensymphony.xwork2.ModelDriven;
 * @Create Date: 2016-4-8 （创建日期）
 */
 @SuppressWarnings("serial")
-@Controller("userAction")
+@Controller("scrapAction")
 @Scope("prototype")
-public class UserAction extends ActionSupport implements SessionAware,ModelDriven<User> {
+public class ScrapAction extends ActionSupport implements SessionAware, ModelDriven<Scrap> {
 
-	private User user=new User();
+	private Scrap scrap=new Scrap();
+	@Autowired
+	private ScrapService scrapService;
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private AssetService assetService;
+	@Autowired
 	private DeptService	deptService;
 	private Map<String, Object> session;
-	private List<User> userList;
+	private List<Scrap> scrapList;
 	private List<Dept> deptList;
+	private List<User> userList;
+	private String userId;
 	private int pageNow = 1;
 	private int pageSize = 10;
 	private JSONObject rows;
 	private String storeId;
-	private int state;
 	private JSONObject data;
 	private String stateStr;
+	private Date startTime,endTime;
+	
+	@Override
+	public void setSession(Map<String, Object> session) {
+		// TODO Auto-generated method stub
+		this.session = session;
+	}
+	public Date getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+	
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public Date getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 	HashMap<String, String> deptMap = new HashMap<String, String>();
 	public String getStateStr() {
 		return stateStr;
@@ -58,11 +96,11 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	public void setStateStr(String stateStr) {
 		this.stateStr = stateStr;
 	}
-	public User getUser() {
-		return user;
+	public Scrap getScrap() {
+		return scrap;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setScrap(Scrap scrap) {
+		this.scrap = scrap;
 	}
 	
 	public List<Dept> getDeptList() {
@@ -70,9 +108,9 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	}
 
 	@Override 
-	public User getModel() {
+	public Scrap getModel() {
 		// TODO Auto-generated method stub
-		return user;
+		return scrap;
 	}
 	
 
@@ -96,20 +134,6 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	public void setStoreId(String storeId) {
 		this.storeId = storeId;
 	}
-
-	public int getState() {
-		return state;
-	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
-
-	
-	
-
-
-
 
 
 	public int getPageNow() {
@@ -135,46 +159,16 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		this.rows = rows;
 	}
 	
-	public String loginPage() {
-		User user=(User) session.get("user");
-		System.out.println("dsaf"+user.getUserName()+user.getPassword());
-		if(null!=user){
-			return "home";
-		}
-		return "login";
-	}
-	public String login() {
-
-		if(user.getUserName()==null||user.getPassword()==null){
-			return "login";
-		}
-		user=userService.checkUserExist(user.getUserName(), MD5.getMD5(user.getPassword().getBytes()));
-		if(user==null){
-			return "login";
-		}
-		session.put("user", user);
-		System.out.println(user.getUserName()+user.getPassword());
-		return "home";
-	}
-	@Override
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-		this.session = session;
-	}
-	public Map<String, Object> getSession() {
-		return session;
-	}
-	public String homePage(){
-		deptList =deptService.findAllUsers();
-		System.out.println("deptsize"+deptList.size());
-		return "userlistpage";
-	}
-	public String addPage(){
-		return "addpage";
-	}
-	public String CheckUsername() throws Exception {
+	public String changeState() throws Exception {
+		
 		boolean flag = false;
-		if (userService.checkUserExistByName(user.getUserName())) {
+		int state=scrap.getState();
+		User user=(User) session.get("user");
+		scrap=scrapService.findScrap(scrap.getScrapId());
+		scrap.setState(state);
+		scrap.setAgreeUser(user);
+		scrap.setAgreeDate(new Date());
+		if (scrapService.updateScrap(scrap)) {
 			flag = true;
 			ResponseUtil.write1(flag);
 		} else {
@@ -182,11 +176,22 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		}
 		return null;
 	}
-	public String register() throws Exception{
-		System.out.println("sdaf"+user.getUserName());
+
+
+	public List<User> getUserList() {
+		return userList;
+	}
+	public String listPage(){
+		return "listpage";
+	}
+	public String addPage(){
+		return "addpage";
+	}
+
+	public String add() throws Exception{
 		boolean flag = true;
 		try {
-			userService.saveUser(user);
+			scrapService.saveScrap(scrap);
 			ResponseUtil.write1(flag);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -196,43 +201,37 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		}
 		return null;
 	}
-	private void getDataMap(){
-		deptList=deptService.findAllUsers();
-		for (Dept  dept: deptList) {
-			deptMap.put(dept.getDeptId(), dept.getDeptName());
-		}
 	
-	}
-	public String listUser() {
-		getDataMap();
-		System.out.println(user.getUserName());
-		System.out.println(user.getDeptId());
-		System.out.println(user.getRoleId());
-		System.out.println(stateStr);
-		userList = userService.listUser(user.getUserName(),user.getDeptId(),user.getRoleId(),stateStr);
+	public String list() {
+		System.out.println("size:1111");
+		scrapList = scrapService.listScrap(null, null);
+		System.out.println("size:"+scrapList.size());
 		HashMap<String, Object> maps = new HashMap<String, Object>();
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		for (User  user: userList) {
+		for (Scrap  scrap: scrapList) {
 			HashMap<String, Object> hashMap = new HashMap<String, Object>();
-			hashMap.put("userId", user.getUserId());
-			hashMap.put("userName", user.getUserName());
-			hashMap.put("deptName", deptMap.get(user.getDeptId()));
-			hashMap.put("roleName", user.getUserName());
-			hashMap.put("state", user.getState());
-			hashMap.put("sex", user.getSex());
+			hashMap.put("scrapId", scrap.getScrapId());
+			hashMap.put("assetName", scrap.getAsset().getAssetName());
+			if(null!= scrap.getScrapUser()){
+				hashMap.put("scrapUserName", scrap.getScrapUser().getUserName());
+			}
+			hashMap.put("scrapDate", StringHelper.dateTimetoString(scrap.getScrapDate()));
+			if(null!= scrap.getAgreeUser()){
+				hashMap.put("agreeUserName", scrap.getAgreeUser().getUserName());
+			}
+			hashMap.put("agreeDate", StringHelper.dateTimetoString(scrap.getAgreeDate()));
+			hashMap.put("state", scrap.getState());
 			list.add(hashMap);
 		}
 		maps.put("Rows", list);
 		System.out.println(maps.size());
 		rows = JSONObject.parseObject(JSON.toJSONString(maps));
 		System.out.println(rows.toJSONString());
-		return "userlist";
+		return "list";
 	}
 	public String remove() throws Exception {
-
-		System.out.println(user.getUserId());
 		boolean flag = false;
-		if (userService.remove(user.getUserId())) {
+		if (scrapService.remove(scrap.getScrapId())) {
 			flag = true;
 			ResponseUtil.write1(flag);
 		} else {
@@ -240,16 +239,10 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		}
 		return null;
 	}
-	public String listInfo(){
-		user=userService.findUser(user.getUserId());
-		
-		return "listuserinfo";
-	}
-	public String editUser() throws Exception {
+	public String editScrap() throws Exception {
 		boolean flag = true;
 		try {
-			System.out.println(user.getUserId());
-			userService.updateUser(user);
+			scrapService.updateScrap(scrap);
 			ResponseUtil.write1(flag);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

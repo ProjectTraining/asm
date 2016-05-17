@@ -7,7 +7,7 @@
 
 <script language="javascript"> 
 
-     location.href = " <%=request.getContextPath()%>/menuAction_loginPage.action";
+     location.href = " <%=request.getContextPath()%>/userAction_loginPage.action";
 
 
 </script> 

@@ -42,5 +42,14 @@
        			 <param name="root" >rows</param>  
    			 </result> 
 		</action> 
+		<action name="scrapAction_*" class="scrapAction"
+			method="{1}">
+			<result name="listpage">/WEB-INF/page/scrap/scraplist.jsp</result>
+			<result name="addpage">/WEB-INF/page/scrap/addpurchaseitem.jsp</result>
+			<result name="editPage">/WEB-INF/page/scrap/editpurchaseitem.jsp</result>
+			<result type="json" name="list">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
 	</package>
 </struts>

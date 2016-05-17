@@ -48,7 +48,7 @@ $("#manage").click();
           <li><a href="${pageContext.request.contextPath }/parameterAction_sortHome.action" target="mainFrame"><span class="am-icon-calendar"></span> 资产归还</a></li>
           <li><a href="${pageContext.request.contextPath }/parameterAction_infoHome.action" target="mainFrame"><span class="am-icon-bug"></span> 资产调出</a></li>
           <li><a href="${pageContext.request.contextPath }/roleAction_home.action" class="am-cf" target="mainFrame"><span class="am-icon-check"></span> 资产调入<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
-          <li><a href="${pageContext.request.contextPath }/deptAction_home.action" target="mainFrame"><span class="am-icon-puzzle-piece"></span> 报废审核</a></li>
+          <li><a href="${pageContext.request.contextPath }/scrapAction_listPage.action" target="mainFrame"><span class="am-icon-puzzle-piece"></span> 报废审核</a></li>
           <li><a href="${pageContext.request.contextPath }/assertAction_home.action" target="mainFrame"><span class="am-icon-th"></span> 资产维修<span class="am-badge am-badge-secondary am-margin-right am-fr">24</span></a></li>
           <li><a href="${pageContext.request.contextPath }/parameterAction_sortHome.action" target="mainFrame"><span class="am-icon-calendar"></span>资产移交</a></li>
           <li><a href="${pageContext.request.contextPath }/parameterAction_infoHome.action" target="mainFrame"><span class="am-icon-bug"></span> 资产确认</a></li>
