@@ -16,13 +16,17 @@ import org.springframework.stereotype.Controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.asm.domain.Dept;
+import com.asm.domain.StockTaking;
 import com.asm.domain.User;
 import com.asm.service.DeptService;
+import com.asm.service.StockTakingService;
 import com.asm.service.UserService;
 import com.asm.util.MD5;
 import com.asm.util.ResponseUtil;
+import com.asm.util.StringHelper;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+
 
 
 /**  
@@ -32,25 +36,50 @@ import com.opensymphony.xwork2.ModelDriven;
 * @Create Date: 2016-4-8 （创建日期）
 */
 @SuppressWarnings("serial")
-@Controller("userAction")
+@Controller("stockTakingAction")
 @Scope("prototype")
-public class UserAction extends ActionSupport implements SessionAware,ModelDriven<User> {
+public class StockTakingAction extends ActionSupport implements ModelDriven<StockTaking> {
 
-	private User user=new User();
+	private StockTaking stockTaking=new StockTaking();
+	@Autowired
+	private StockTakingService stockTakingService;
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private DeptService	deptService;
 	private Map<String, Object> session;
-	private List<User> userList;
+	private List<StockTaking> stockTakingList;
 	private List<Dept> deptList;
+	private List<User> userList;
+	private String userId;
 	private int pageNow = 1;
 	private int pageSize = 10;
 	private JSONObject rows;
 	private String storeId;
-	private int state;
 	private JSONObject data;
 	private String stateStr;
+	private Date startTime,endTime;
+	
+	public Date getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+	
+	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public Date getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
 	HashMap<String, String> deptMap = new HashMap<String, String>();
 	public String getStateStr() {
 		return stateStr;
@@ -58,11 +87,11 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	public void setStateStr(String stateStr) {
 		this.stateStr = stateStr;
 	}
-	public User getUser() {
-		return user;
+	public StockTaking getStockTaking() {
+		return stockTaking;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setStockTaking(StockTaking stockTaking) {
+		this.stockTaking = stockTaking;
 	}
 	
 	public List<Dept> getDeptList() {
@@ -70,9 +99,9 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	}
 
 	@Override 
-	public User getModel() {
+	public StockTaking getModel() {
 		// TODO Auto-generated method stub
-		return user;
+		return stockTaking;
 	}
 	
 
@@ -96,20 +125,6 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	public void setStoreId(String storeId) {
 		this.storeId = storeId;
 	}
-
-	public int getState() {
-		return state;
-	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
-
-	
-	
-
-
-
 
 
 	public int getPageNow() {
@@ -135,45 +150,13 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		this.rows = rows;
 	}
 	
-	public String loginPage() {
-		User user=(User) session.get("user");
-		if(null!=user){
-			return "home";
-		}
-		return "login";
-	}
-	public String login() {
-
-		if(user.getUserName()==null||user.getPassword()==null){
-			return "login";
-		}
-		user=userService.checkUserExist(user.getUserName(), MD5.getMD5(user.getPassword().getBytes()));
-		if(user==null){
-			return "login";
-		}
-		session.put("user", user);
-		System.out.println(user.getUserName()+user.getPassword());
-		return "home";
-	}
-	@Override
-	public void setSession(Map<String, Object> session) {
-		// TODO Auto-generated method stub
-		this.session = session;
-	}
-	public Map<String, Object> getSession() {
-		return session;
-	}
-	public String homePage(){
-		deptList =deptService.findAllUsers();
-		System.out.println("deptsize"+deptList.size());
-		return "userlistpage";
-	}
-	public String addPage(){
-		return "addpage";
-	}
-	public String CheckUsername() throws Exception {
+	public String changeState() throws Exception {
+		
 		boolean flag = false;
-		if (userService.checkUserExistByName(user.getUserName())) {
+		int state=stockTaking.getState();
+		stockTaking=stockTakingService.findStockTaking(stockTaking.getStockTakingId());
+		stockTaking.setState(state);
+		if (stockTakingService.updateStockTaking(stockTaking)) {
 			flag = true;
 			ResponseUtil.write1(flag);
 		} else {
@@ -181,11 +164,31 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		}
 		return null;
 	}
-	public String register() throws Exception{
-		System.out.println("sdaf"+user.getUserName());
+	
+
+
+
+	
+	public List<User> getUserList() {
+		return userList;
+	}
+	public String listPage(){
+		return "listpage";
+	}
+	public String addPage(){
+		deptList=deptService.findAllUsers();
+		userList=userService.listUser(null, null, null, null);
+		return "addpage";
+	}
+
+	public String add() throws Exception{
 		boolean flag = true;
 		try {
-			userService.saveUser(user);
+			System.out.println("userId"+userId);
+			User user=userService.findUser(userId);
+			stockTaking.setUser(user);
+			//System.out.println(user.getUserId());
+			stockTakingService.saveStockTaking(stockTaking);
 			ResponseUtil.write1(flag);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -202,36 +205,30 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		}
 	
 	}
-	public String listUser() {
+	public String listStockTaking() {
+		
 		getDataMap();
-		System.out.println(user.getUserName());
-		System.out.println(user.getDeptId());
-		System.out.println(user.getRoleId());
-		System.out.println(stateStr);
-		userList = userService.listUser(user.getUserName(),user.getDeptId(),user.getRoleId(),stateStr);
+		stockTakingList = stockTakingService.listStockTaking(null,null,null);
 		HashMap<String, Object> maps = new HashMap<String, Object>();
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
-		for (User  user: userList) {
+		for (StockTaking  stockTaking: stockTakingList) {
 			HashMap<String, Object> hashMap = new HashMap<String, Object>();
-			hashMap.put("userId", user.getUserId());
-			hashMap.put("userName", user.getUserName());
-			hashMap.put("deptName", deptMap.get(user.getDeptId()));
-			hashMap.put("roleName", user.getUserName());
-			hashMap.put("state", user.getState());
-			hashMap.put("sex", user.getSex());
+			hashMap.put("state", stockTaking.getState());
+			hashMap.put("stockTakingDate", StringHelper.dateTimetoString(stockTaking.getStockTakingDate()));
+			hashMap.put("stockTakingId", stockTaking.getStockTakingId());
+			hashMap.put("userName", stockTaking.getUser().getUserName());
+			
 			list.add(hashMap);
 		}
 		maps.put("Rows", list);
 		System.out.println(maps.size());
 		rows = JSONObject.parseObject(JSON.toJSONString(maps));
 		System.out.println(rows.toJSONString());
-		return "userlist";
+		return "list";
 	}
 	public String remove() throws Exception {
-
-		System.out.println(user.getUserId());
 		boolean flag = false;
-		if (userService.remove(user.getUserId())) {
+		if (stockTakingService.remove(stockTaking.getStockTakingId())) {
 			flag = true;
 			ResponseUtil.write1(flag);
 		} else {
@@ -239,16 +236,21 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		}
 		return null;
 	}
-	public String listInfo(){
-		user=userService.findUser(user.getUserId());
+	public String editPage(){
+		deptList=deptService.findAllUsers();
+		userList=userService.listUser(null, null, null, null);
+		stockTaking=stockTakingService.findStockTaking(stockTaking.getStockTakingId());
 		
-		return "listuserinfo";
+		return "editpage";
 	}
-	public String editUser() throws Exception {
+	public String editStockTaking() throws Exception {
 		boolean flag = true;
 		try {
-			System.out.println(user.getUserId());
-			userService.updateUser(user);
+			System.out.println("user"+userId);
+			User user=userService.findUser(userId);
+			System.out.println("stockTaking"+stockTaking.getStockTakingId());
+			stockTaking.setUser(user);
+			stockTakingService.updateStockTaking(stockTaking);
 			ResponseUtil.write1(flag);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
