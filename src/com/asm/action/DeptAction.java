@@ -1,5 +1,6 @@
 package com.asm.action;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import com.asm.domain.Dept;
 import com.asm.service.DeptService;
+import com.asm.util.PageBean;
 import com.asm.util.ResponseUtil;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -30,6 +32,11 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 	private DeptService deptService;
 	private Map<String, Object> session;
 
+	private PageBean pageBean; //封装了分页信息和数据内容的pageBean    
+	private List<Dept> request;//用于储存pageBean当中被封装的User信息    
+	private int page = 1; //表示从网页中返回的当前页的值  默认为1 表示默认显示第一页内容  
+	
+	
 	@Override
 	public Dept getModel() {
 		return dept;
@@ -52,7 +59,7 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 		try {
 			System.out.println("部门按钮正确");
 			System.out.println("dept:"+dept.getDeptName());
-			return "register";
+			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
@@ -71,19 +78,31 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 	}
 
 	public String ListData() {
-		System.out.println("LIST+++++");
+		System.out.println("读取数据库中的数据反映到列表中");
 		Map request = (Map) ActionContext.getContext().get("request");
 		request.put("list",this.deptService.findAllUsers());
 		return "list";
 	}
+	/**
+	 * 分页的操作，这里主要是针对分页的一些处理
+	 * @return
+	 * @throws Exception
+	 */
+	public String Pageforweb()throws Exception{    
+		this.pageBean = deptService.queryForPage(5, page);//获取封装了分页信息和数据的pageBean    
+		this.request = this.pageBean.getList(); //获取数据   
+		Map request = (Map) ActionContext.getContext().get("request");
+		request.put("list",this.request);
+		return SUCCESS;    
+		} 
 	public String Remove() throws Exception {
 		System.out.println("删除ID是--"+dept.getDeptId());
 		System.out.println("删除部门是--"+dept.getDeptName());
 		//boolean flag = false;
 		String flag=null;
 		if (deptService.delete(dept)) {
-			flag = ListData();    //  调用ListData()函数来使得数据库的数据显示到页面中
-			//ResponseUtil.write1(flag);
+			flag = Pageforweb();    //  调用ListData()函数来使得数据库的数据显示到页面中
+			//ResponseUtil.write1(flag);// 输出标识符到页面上
 		} else {
 			//ResponseUtil.write1(flag);
 		}
@@ -107,12 +126,11 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 			deptService.update(dept);
 			ResponseUtil.write1(flag);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			flag = false;
 			e.printStackTrace();
 			ResponseUtil.write1(flag);
 		}
-		return null;
+		return Pageforweb();
 	}
 	public String CheckDeptname() throws Exception {
 		boolean flag = false;
@@ -124,11 +142,6 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 		}
 		return null;
 	}
-
-	public String Test() {
-		return "ceshi";
-	}
-	
 	
 	public DeptService getDeptService() {
 		return deptService;
@@ -136,5 +149,29 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 
 	public void setDeptService(DeptService deptService) {
 		this.deptService = deptService;
+	}
+
+	public PageBean getPageBean() {
+		return pageBean;
+	}
+
+	public void setPageBean(PageBean pageBean) {
+		this.pageBean = pageBean;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public List<Dept> getRequest() {
+		return request;
+	}
+
+	public void setRequest(List<Dept> request) {
+		this.request = request;
 	}
 }

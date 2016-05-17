@@ -1,5 +1,6 @@
 package com.asm.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -30,10 +31,31 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUser(userName, passWord);
 	}
 	
-	public List<User> listUser() {
-		String hqlWhere = " ";
+	public List<User> listUser(String userName,String deptId,String roleId,String state) {
+		//组织查询条件
+		String hqlWhere = "";
+		List<Object> paramsList = new ArrayList<Object>();
+		if(null!=userName && !"".equals(userName)){
+				hqlWhere += " and o.userName = ? ";
+				paramsList.add(userName);
+		}
+		if(null!=deptId && !"".equals(deptId)){
+			hqlWhere += " and o.deptId = ? ";
+			paramsList.add(deptId);
+		}
+		if(null!=roleId && !"".equals(roleId)){
+			hqlWhere += " and o.roleId = ? ";
+			paramsList.add(roleId);
+		}
+		if(null!=state && !"".equals(state)){
+			hqlWhere += " and o.state =?";
+
+			System.out.println("ffff"+state);
+			paramsList.add(Integer.parseInt(state));
+		}
+		Object [] params = paramsList.toArray();
 		List<User> list = userDao.findCollectionByConditionNopage(
-				hqlWhere, null, null);
+				hqlWhere, params, null);
 		return list;
 	}
 	

@@ -1,11 +1,18 @@
 package com.asm.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+
 
 @Entity
 @Table(name="t_assetSort")
@@ -16,6 +23,8 @@ public class AssetSort implements java.io.Serializable{
 	private String assetSortName;
 	private String parentId;
 	private String parentName;
+	
+	private List<AssetSort> listAssetSort;
 	
 	/** default constructor */
 	public AssetSort() {
@@ -33,9 +42,6 @@ public class AssetSort implements java.io.Serializable{
 	@Id
 	@GeneratedValue(generator="userUUID")
 	@GenericGenerator(name="userUUID", strategy="uuid")
-	public String getParentId() {
-		return parentId;
-	}
 	public String getAssetSortId() {
 		return assetSortId;
 	}
@@ -43,7 +49,9 @@ public class AssetSort implements java.io.Serializable{
 	public void setAssetSortId(String assetSortId) {
 		this.assetSortId = assetSortId;
 	}
-
+	public String getParentId() {
+		return parentId;
+	}
 	public String getAssetSortCode() {
 		return assetSortCode;
 	}
@@ -69,5 +77,18 @@ public class AssetSort implements java.io.Serializable{
 	public void setParentName(String parentName) {
 		this.parentName = parentName;
 	}
+
 	
+	@OneToMany(mappedBy="listAssetSort",
+			cascade={CascadeType.ALL}
+			)
+	@JoinColumn(name="parentId")
+	@OrderBy("assetSortId ASC")
+	public List<AssetSort> getListAssetSort() {
+		return listAssetSort;
+	}
+
+	public void setListAssetSort(List<AssetSort> listAssetSort) {
+		this.listAssetSort = listAssetSort;
+	}
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ taglib uri="/struts-tags" prefix="s" %>
-<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> --%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="LigerUI/ligerUI/js/plugins/ligerResizable.js" type="text/javascript"></script>
     <script src="LigerUI/ligerUI/js/plugins/ligerCheckBox.js" type="text/javascript"></script>
     <script src="LigerUI/ligerUI/js/plugins/ligerToolBar.js" type="text/javascript"></script>
-     <script src="script/list.js" type="text/javascript"></script>
+     <script src="script/list.js?randomId=<%=Math.random()%>" type="text/javascript"></script>
      
      <script src="jBox/jquery.jBox-2.3.min.js" type=text/javascript></script>
 <script src="jBox/jquery.jBox-zh-CN.js" type=text/javascript></script>
@@ -57,6 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							    }
 							},   
                         {display:"用户名",name:"userName"},  
+                        {display:"部门",name:"deptName"},
                         { display: '状态',   name:'state',render:function(row){
 										if(row.state == '1'){
                                   			 return "<span style='color:#009900;font-weight:bold;'>在职</span>";
@@ -101,35 +102,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div position="top" title="" style="padding-left:10px;">
             	<!-- 查询条件部分 -->
             	<div>
-            		<form id="searchForm" name="searchForm" class="l-form liger-form" action="search" method="post">
+            	 <s:debug></s:debug>
+            		<form id="searchForm" name="searchForm" class="l-form liger-form" action="userAction_homePage.action" method="post">
 		            	<table id="searchTable" class="searchTable">
 		            		<tr>
 		            			<th>
 					            	用户名：
 					            </th>
 		            			<td>
-					            	<input type="text" name="staffName" id="staffName"/>
+					            	<input type="text" name="userName" id="userName"/>
 					            </td>
-					            <th>
+					            <td>&nbsp&nbsp
 					            	部门：
-					            	<select id="selectDept" name="selectDept">
-31: 								<c:forEach items="${requestScope.deptList} " var="item">
-32: 									<option value="${item.id}">${item.name}</option>
-33: 								</c:forEach>
-34:									 </select>
-					            </th>
-		            			<td>
-					            	<input type="text" name="userId" id="userId" style="width:100px;"/>
+					     <%--       	<select id="selectDept1" name="selectDept">
+								<c:forEach items="${deptList} " var="item">
+									<option value="${item.deptId}">${item.deptName}</option>
+								</c:forEach>
+								 </select>  --%>
+								 
+								 	
+					<select id="deptId" name="deptId">
+									<option value=""></option>
+									<s:iterator value="deptList" var="item">
+									
+									<option value="${item.deptId}">${item.deptName}</option>		
+									</s:iterator>
+									</select> 
+					
 					            </td>
-					            <th>
+					            
+		            			
+					            <th>&nbsp&nbsp
 					            	员工状态：
 					            </th>
 		            			<td>
-					            	
+		            		
+					            	<select id="stateStr" name="stateStr">
+									<option value=""></option>
+									<option value="1">在职</option>	
+									<option value="0">离职</option>		
+									</select> 
 					            </td>
+					            <th>&nbsp&nbsp
+					            	角色：
+					            </th>
+		            			<td>
+		            		
+					            	<select id="roleId" name="roleId">
+									<option value=""></option>
+									<option value="1">管理员</option>	
+									<option value="0">离职</option>		
+									</select> 
+					            </td>
+					            
 					            <th class="opt">
-					           		
-					            	<div title="查询" class='l-icon-search' style="cursor:hand" data-click="SubmitQuery" data-width="60" icon="search">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp查询</div>
+					            	<div title="查询" class='l-icon-search' style="cursor:hand" onClick="SubmitQuery()"   data-width="100" icon="search">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp查询</div>
 					            </th>
 				            </tr>
 				         </table>
@@ -141,5 +168,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  <div id="MainGrid" keyname="userId"></div>  
             </div>
   
-</body>  
+</body> 
+
 </html>
