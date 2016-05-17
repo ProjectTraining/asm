@@ -51,5 +51,14 @@
        			 <param name="root" >rows</param>  
    			 </result> 
 		</action> 
+		<action name="stockTakingAction_*" class="scrapAction"
+			method="{1}">
+			<result name="listpage">/WEB-INF/page/stocktaking/liststocktaking.jsp</result>
+			<result name="addpage">/WEB-INF/page/stocktaking/addstocktaking.jsp</result>
+			<result name="editPage">/WEB-INF/page/stocktaking/editstocktaking.jsp</result>
+			<result type="json" name="list">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
 	</package>
 </struts>
