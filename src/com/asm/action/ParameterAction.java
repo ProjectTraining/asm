@@ -1,5 +1,6 @@
 package com.asm.action;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,18 +29,16 @@ import com.opensymphony.xwork2.ModelDriven;
 @Scope("prototype")
 public class ParameterAction extends ActionSupport implements SessionAware, ModelDriven<Parameter> {
 	private Parameter parameter = new Parameter();
+	private List<Parameter> parameterList;
 	@Autowired
 	private ParameterService parameterService;
 	
 	private Map<String, Object> session;
-	private int pageNow = 1;
-	private int pageSize = 10;
-	private JSONObject rows;
-	private String storeId;
-	private int state;
 	private String parameterId;
-	private String Id;
-	private JSONObject data;
+	private String parameterName;
+	private String parameterValue;
+	private String groupId;
+	private String groupName;
 
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -53,68 +52,52 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 		return parameter;
 	}
 	
+	public List<Parameter> getParameterList(){
+		return parameterList;
+	}
+	
+	public void setParameterList(List<Parameter> _parameterList){
+		this.parameterList = _parameterList;
+	}
+	
 	public String getParameterId(){
 		return parameterId;
 	}
 	
-	public JSONObject getData() {
-		return data;
+	public void setParameterId(String _parameterId) {
+		this.parameterId = _parameterId;
 	}
-
-	public void setData(JSONObject data) {
-		this.data = data;
+	
+	public String getParameterName(){
+		return parameterName;
 	}
-
-	public void setParameterId(String parameterId) {
-		this.parameterId = parameterId;
+	
+	public void setParameterName(String _parameterName) {
+		this.parameterName = _parameterName;
 	}
-
-	public String getId() {
-		return Id;
+	
+	public String getParameterValue(){
+		return parameterValue;
 	}
-
-	public void setId(String id) {
-		Id = id;
+	
+	public void setParameterValue(String _parameterValue) {
+		this.parameterValue = _parameterValue;
 	}
-
-	public String getStoreId() {
-		return storeId;
+	
+	public String getGroupId(){
+		return groupId;
 	}
-
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
+	
+	public void setGroupId(String _groupId) {
+		this.groupId = _groupId;
 	}
-
-	public int getState() {
-		return state;
+	
+	public String getGroupName(){
+		return groupName;
 	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
-
-	public int getPageNow() {
-		return pageNow;
-	}
-
-	public void setPageNow(int pageNow) {
-		this.pageNow = pageNow;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public JSONObject getRows() {
-		return rows;
-	}
-
-	public void setRows(JSONObject rows) {
-		this.rows = rows;
+	
+	public void setGroupName(String _groupName) {
+		this.groupName = _groupName;
 	}
 	
 	public String storeManagePage() {
@@ -122,19 +105,22 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 	}
 	
 	public String infoHome(){
-		if(null != parameter.getGroupId() && null != parameter.getGroupName() &&
-				null != parameter.getParameterName() && null != parameter.getParameterValue()){
+		if(null != parameter.getGroupName() &&
+				null != parameter.getParameterName() &&
+				null != parameter.getParameterValue()){
 			parameterService.updateParamter(parameter);
 		}
 		return "infoHome";
 	}
 	
-	public void Show(){
-		if(null == parameterService){
-			return;
-		}
-		for(Parameter p : parameterService.scanTable()){
-			System.out.println(p.getParameterName() + ":" + p.getParameterValue());
-		}
+	public String showList(){
+		parameterList = parameterService.scanTable();
+		System.out.println(parameterList.get(0).getParameterName());
+		System.out.println("showList");
+		return "showList";
+	}
+	
+	public String delParameter{
+		System.out.println("--------" + parameter.getParameterID());
 	}
 }

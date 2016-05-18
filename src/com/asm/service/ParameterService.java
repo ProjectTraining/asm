@@ -8,4 +8,5 @@ public interface ParameterService {
 	public abstract Parameter checkparameterExist(String parameterName);
 	public abstract void updateParamter(Parameter parameter);
 	public abstract List<Parameter> scanTable();
+	public abstract boolean delParameter(Parameter parameter);
 }

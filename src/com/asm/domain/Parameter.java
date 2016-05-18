@@ -13,7 +13,7 @@ public class Parameter implements java.io.Serializable {
 	private String parameterId;
 	private String parameterName;
 	private String parameterValue;
-	private String groupId;
+	private int groupId;
 	private String groupName;
 	@Id
 	@GeneratedValue(generator="parameterUUID")
@@ -24,10 +24,10 @@ public class Parameter implements java.io.Serializable {
 	public void setParameterID(String parameterId) {
 		this.parameterId = parameterId;
 	}
-	public String getGroupId() {
+	public int getGroupId() {
 		return groupId;
 	}
-	public void setGroupId(String groupId) {
+	public void setGroupId(int groupId) {
 		this.groupId = groupId;
 	}
 	public String getParameterName() {

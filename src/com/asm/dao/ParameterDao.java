@@ -8,4 +8,5 @@ public interface ParameterDao {
 	public abstract Parameter getParameter(String parameterName);
 	public abstract void save(Parameter parameter);
 	public abstract List<Parameter> scan();
+	public abstract boolean delParameter(Parameter parameter);
 }
