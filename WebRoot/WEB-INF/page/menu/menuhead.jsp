@@ -1,5 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ taglib uri="/struts-tags"prefix="s" %>
+<%@ taglib uri="/struts-tags" prefix="s" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"

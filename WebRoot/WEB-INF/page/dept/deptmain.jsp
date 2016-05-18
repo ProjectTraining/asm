@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>部门管理--部门列表</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="description" content="这是一个 index 页面" />
@@ -32,16 +32,17 @@
                 form.submit();
            }
             function TargetBtn(flag){ 
-            	var form1 = document.getElementById('form1');
+             	var form1 = document.getElementById('form1');
                 form1.action="deptAction_"+flag+".action";  // 
-                form1.submit();
+                form1.submit();  
+            	//window.location.href="/asm/AddDept.jsp";
             }
         </script>
   
 </head>
 <body>
 	<div class="am-g">
-		<div class="am-u-sm-12">
+		<div class="am-u-sm-11">
 		<s:form id="form1" name="form1"  namespace="/" >  
 		 <table class="am-table am-table-bd am-table-striped admin-content-table">
 		  <tr>
@@ -52,7 +53,7 @@
 		  </tr>
 		  <tr>
 		  	 <td style="width:40%">
-		       <input id='aaa' type="button" name="btn1" value="增加部门"  onclick="TargetBtn('home')"></input>
+		       <input id='aaa' type="button" name="btn1" value="增加部门"  onclick="TargetBtn('AddDept')"></input>
 		     </td>
 		     <td style="width:60%">
 		       <s:submit id='bbb' value="查询" onclick="TargetBtn('home')" ></s:submit>
@@ -66,6 +67,8 @@
 					<tr>
 						<th>部门编号</th>
 						<th>部门名称</th>
+						<th>删除操作</th>
+						<th>修改操作</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -82,6 +85,32 @@
                 </tbody>
 			</table>
 		</div>
+	</div>
+	<div class="am-u-sm-12">
+	<s:iterator value="pageBean">    
+        <tr>    
+         <td colspan="6" align="center" bgcolor="#5BA8DE">    
+         共<s:property value="allRow"/>条记录        
+         共<s:property value="totalPage"/>页        
+         当前第<s:property value="currentPage"/>页<br />    
+         <s:if test="%{currentPage == 1}">    
+           第一页  上一页    
+         </s:if>    
+         <!-- currentPage为当前页 -->    
+         <s:else>    
+           <a href="deptAction_Pageforweb.action?page=1">第一页</a>    
+           <a href="deptAction_Pageforweb.action?page=<s:property value="%{currentPage-1}"/>">上一页</a>    
+         </s:else>    
+         <s:if test="%{currentPage != totalPage}">    
+         <a href="deptAction_Pageforweb.action?page=<s:property value="%{currentPage+1}"/>">下一页</a>    
+         <a href="deptAction_Pageforweb.action?page=<s:property value="totalPage"/>">最后一页</a>    
+         </s:if>    
+         <s:else>    
+         下一页  最后一页    
+         </s:else>    
+         </td>    
+        </tr>    
+    </s:iterator>
 	</div>
 </body>
 </html>

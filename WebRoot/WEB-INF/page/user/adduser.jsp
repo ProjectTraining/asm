@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  
 <html>
 <head>
-  <title>注册居自在</title>
+  <title>添加</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="keywords" content="HTML,CSS,XML,JavaScript">

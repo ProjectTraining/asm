@@ -143,9 +143,9 @@ h3 {
 				booldeptName = true;
 				return;
 			}
-		  	if( na.length<4||na.length>20)  
+		  	if( na.length<2||na.length>20)  
 	  		{  	
-	  			divname.innerHTML='<font class="tips_false">长度是4~20个字符</font>';
+	  			divname.innerHTML='<font class="tips_false">长度是2~20个字符</font>';
 	  		    booldeptName = false; 
 	  		}
 	  		else{  
@@ -171,7 +171,7 @@ h3 {
 	 
 	var check = function(){
 		var bool =booldeptName;
-		var deptName = $('#deptName').val();
+		var deptName = $('#deptName').val();  //  根据标签的ID 来获取相应的值，这里的deptName是指标签的ID
 		var deptId = $('#deptId').val();
 		if(bool==true){
 			$.ajax({
@@ -197,10 +197,9 @@ h3 {
 		}
    };
     var SubmitCallback = function(){     
-    
-       	   parent.MainGrid.loadData(true); 
-        	parent.$.jBox.close('id-jbox-dialog');
-        	
+   /*     	parent.MainGrid.loadData(true); 
+        parent.$.jBox.close('id-jbox-dialog'); */
+        window.location.href = "deptAction_Pageforweb.action";
 	};
      
 </script>
@@ -208,14 +207,11 @@ h3 {
 <body>
 	<div class="contact">
 		<form id="form1" name="form1" method="post" action="deptAction_editDept.action">
-			<input type="hidden" id="deptId" name="deptId" value="${dept.deptId}">
-			<input type="hidden" id="orginalname" name="orginalname"
+		<input type="hidden" id="deptId" name="deptId"
+				value="${dept.deptId}">
+		 <input type="hidden" id="orginalname" name="orginalname"
 				value="${dept.deptName}">
 			<ul>
-				<li><label>部门编号：</label> <input type="text" name="deptId"
-					id="deptId" value="<s:property value="dept.deptId"/>"
-					placeholder="请输入编号"  required /><span
-					class="tips" id="divname"></span></li> 
 				<li><label>部门名称：</label> <input type="text" name="deptName"
 					id="deptName" value="<s:property value="dept.deptName"/>"
 					placeholder="请输入部门名称" onblur="checkna()" required /><span

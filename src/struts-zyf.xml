@@ -24,17 +24,41 @@
 			<result name="manageinfo">/WEB-INF/page/menu/menuinfo.jsp</result>
 			
 		</action> 
-		<!-- 赵楠部门配置 -->
-		<action name="deptAction_*"  class="deptAction" method="{1}">
-		    <result name="input">/WEB-INF/page/dept/Register.jsp</result>  
-			<result name="success">/WEB-INF/Success.jsp</result>
-			<result name="error">/WEB-INF/Fail.jsp</result>
-			<result name="list">/WEB-INF/page/dept/deptmain.jsp</result>
-			<result name="register">/WEB-INF/page/dept/Register.jsp</result>
-			<result name="menuhead">/WEB-INF/page/menu/menuhead.jsp</result>
-			<result name="manageleft">/WEB-INF/page/menu/menuleft.jsp</result>
-			<result name="manageinfo">/WEB-INF/page/menu/menuinfo.jsp</result>
-
-		</action>
+		<action name="purchaseOrderAction_*" class="purchaseOrderAction"
+			method="{1}">
+			<result name="purchaseOrderlistpage">/WEB-INF/page/purchase/purchaseorderlist.jsp</result>
+			<result name="addpage">/WEB-INF/page/purchase/addpurchaseorder.jsp</result>
+			<result name="listpurchaseOrderinfo">/WEB-INF/page/purchase/editpurchaseorder.jsp</result>
+			<result type="json" name="purchaseOrderlist">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="purchaseItemAction_*" class="purchaseItemAction"
+			method="{1}">
+			<result name="purchaseItemlistpage">/WEB-INF/page/purchaseitem/purchaseitemlist.jsp</result>
+			<result name="addpage">/WEB-INF/page/purchaseitem/addpurchaseitem.jsp</result>
+			<result name="editPage">/WEB-INF/page/purchaseitem/editpurchaseitem.jsp</result>
+			<result type="json" name="purchaseItemlist">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="scrapAction_*" class="scrapAction"
+			method="{1}">
+			<result name="listpage">/WEB-INF/page/scrap/scraplist.jsp</result>
+			<result name="addpage">/WEB-INF/page/scrap/addpurchaseitem.jsp</result>
+			<result name="editPage">/WEB-INF/page/scrap/editpurchaseitem.jsp</result>
+			<result type="json" name="list">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="stockTakingAction_*" class="scrapAction"
+			method="{1}">
+			<result name="listpage">/WEB-INF/page/stocktaking/liststocktaking.jsp</result>
+			<result name="addpage">/WEB-INF/page/stocktaking/addstocktaking.jsp</result>
+			<result name="editPage">/WEB-INF/page/stocktaking/editstocktaking.jsp</result>
+			<result type="json" name="list">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
 	</package>
 </struts>
