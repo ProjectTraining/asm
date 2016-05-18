@@ -32,10 +32,10 @@
                 form.submit();
            }
             function TargetBtn(flag){ 
-/*             	var form1 = document.getElementById('form1');
+             	var form1 = document.getElementById('form1');
                 form1.action="deptAction_"+flag+".action";  // 
-                form1.submit(); */
-            	window.location.href="WebRoot/WEB-INF/page/dept/AddDept.jsp";
+                form1.submit();  
+            	//window.location.href="/asm/AddDept.jsp";
             }
         </script>
   
@@ -53,7 +53,7 @@
 		  </tr>
 		  <tr>
 		  	 <td style="width:40%">
-		       <input id='aaa' type="button" name="btn1" value="增加部门"  onclick="TargetBtn('Register')"></input>
+		       <input id='aaa' type="button" name="btn1" value="增加部门"  onclick="TargetBtn('AddDept')"></input>
 		     </td>
 		     <td style="width:60%">
 		       <s:submit id='bbb' value="查询" onclick="TargetBtn('home')" ></s:submit>
