@@ -87,7 +87,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     pageParmName:"pageNow",  
                     pageSize:10,  
                     rowHeight:40,  
-                    rownumbers:true,usePager:true
+                    rownumbers:true,
+                    dataAction:'local',
+                    usePager:true
         });  
     });  
      var edit = function(userId){
