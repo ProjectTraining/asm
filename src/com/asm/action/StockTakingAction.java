@@ -47,16 +47,13 @@ public class StockTakingAction extends ActionSupport implements ModelDriven<Stoc
 	private UserService userService;
 	@Autowired
 	private DeptService	deptService;
-	private Map<String, Object> session;
 	private List<StockTaking> stockTakingList;
 	private List<Dept> deptList;
 	private List<User> userList;
 	private String userId;
-	private int pageNow = 1;
-	private int pageSize = 10;
+
 	private JSONObject rows;
 	private String storeId;
-	private JSONObject data;
 	private String stateStr;
 	private Date startTime,endTime;
 	
@@ -109,13 +106,7 @@ public class StockTakingAction extends ActionSupport implements ModelDriven<Stoc
 	
 
 	
-	
-	public JSONObject getData() {
-		return data;
-	}
-	public void setData(JSONObject data) {
-		this.data = data;
-	}
+
 	
 
 	public String getStoreId() {
@@ -127,21 +118,7 @@ public class StockTakingAction extends ActionSupport implements ModelDriven<Stoc
 	}
 
 
-	public int getPageNow() {
-		return pageNow;
-	}
 
-	public void setPageNow(int pageNow) {
-		this.pageNow = pageNow;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
 	public JSONObject getRows() {
 		return rows;
 	}
@@ -219,6 +196,7 @@ public class StockTakingAction extends ActionSupport implements ModelDriven<Stoc
 			list.add(hashMap);
 		}
 		maps.put("Rows", list);
+		maps.put("total", list.size());
 		System.out.println(maps.size());
 		rows = JSONObject.parseObject(JSON.toJSONString(maps));
 		System.out.println(rows.toJSONString());

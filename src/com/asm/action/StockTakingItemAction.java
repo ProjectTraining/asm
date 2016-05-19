@@ -51,12 +51,8 @@ public class StockTakingItemAction extends ActionSupport implements ModelDriven<
 	private List<AssetSort> assetSortList;
 	private String stockTakingId;
 	private String assetId;
-	private int pageNow = 1;
-	private int pageSize = 10;
+
 	private JSONObject rows;
-	private String storeId;
-	private JSONObject data;
-	private String stateStr;
 
 	
 	
@@ -88,12 +84,7 @@ public class StockTakingItemAction extends ActionSupport implements ModelDriven<
 	}
 
 	HashMap<String, String> deptMap = new HashMap<String, String>();
-	public String getStateStr() {
-		return stateStr;
-	}
-	public void setStateStr(String stateStr) {
-		this.stateStr = stateStr;
-	}
+
 	public StockTakingItem getStockTakingItem() {
 		return stockTakingItem;
 	}
@@ -109,45 +100,6 @@ public class StockTakingItemAction extends ActionSupport implements ModelDriven<
 	public StockTakingItem getModel() {
 		// TODO Auto-generated method stub
 		return stockTakingItem;
-	}
-	
-
-
-	
-
-	
-	
-	public JSONObject getData() {
-		return data;
-	}
-	public void setData(JSONObject data) {
-		this.data = data;
-	}
-	
-
-	public String getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
-	}
-
-
-	public int getPageNow() {
-		return pageNow;
-	}
-
-	public void setPageNow(int pageNow) {
-		this.pageNow = pageNow;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
 	}
 	public JSONObject getRows() {
 		return rows;
@@ -218,6 +170,7 @@ public class StockTakingItemAction extends ActionSupport implements ModelDriven<
 			list.add(hashMap);
 		}
 		maps.put("Rows", list);
+		maps.put("total", list.size());
 		rows = JSONObject.parseObject(JSON.toJSONString(maps));
 		return "list";
 	}

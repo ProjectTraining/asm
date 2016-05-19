@@ -88,6 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     pageParmName:"pageNow",  
                     pageSize:10,  
                     rowHeight:40,  
+                    dataAction:'local',
                     rownumbers:true,usePager:true
         });  
     });  
