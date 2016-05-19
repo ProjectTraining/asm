@@ -14,6 +14,8 @@ import com.asm.util.ResponseUtil;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+import com.sun.net.httpserver.Authenticator.Success;
+
 import javassist.compiler.ast.StringL;
 
 @SuppressWarnings("serial")
@@ -65,16 +67,37 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 			return ERROR;
 		}
 	}
-
-	public String Register() {
+	/**
+	 * 点击增加的按钮的时候，跳转到其他页面。
+	 * @return
+	 */
+	public String AddDept() {
 		try {
-			System.out.println("---" + dept.getDeptId() + "---" + dept.getDeptName());
-			deptService.regDept(dept);
-			return SUCCESS;
+			System.out.println("跳转到增加部门页面");
+			return "add";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
+	}
+	/**
+	 * 添加一个部门
+	 * @return
+	 * @throws Exception 
+	 */
+	public String RegisterDept() throws Exception {
+		boolean flag = true;
+		try {
+			System.out.println("---" + dept.getDeptId() + "---" + dept.getDeptName());
+			deptService.regDept(dept);
+			ResponseUtil.write1(flag);
+		} catch (Exception e) {
+			flag = false;
+			e.printStackTrace();
+			ResponseUtil.write1(flag);
+			return ERROR;
+		}
+		return SUCCESS;
 	}
 
 	public String ListData() {
@@ -130,7 +153,7 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 			e.printStackTrace();
 			ResponseUtil.write1(flag);
 		}
-		return Pageforweb();
+		return SUCCESS;
 	}
 	public String CheckDeptname() throws Exception {
 		boolean flag = false;
