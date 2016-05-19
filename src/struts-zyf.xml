@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="zyf" namespace="/" extends="struts-default,json-default">
+		
+		<action name="userAction_*" class="userAction"
+			method="{1}">
+			<result name="home">/WEB-INF/page/menu/menuhome.jsp</result>
+			<result name="login">/WEB-INF/page/user/userlogin.jsp</result>
+			<result name="userlistpage">/WEB-INF/page/user/userlist.jsp</result>
+			<result name="addpage">/WEB-INF/page/user/adduser.jsp</result>
+			<result name="listuserinfo">/WEB-INF/page/user/edituser.jsp</result>
+			<result type="json" name="userlist">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="menuAction_*" class="menuAction"
+			method="{1}">
+			<result name="login">/WEB-INF/page/user/userlogin.jsp</result>
+			<result name="menuhead">/WEB-INF/page/menu/menuhead.jsp</result>
+			<result name="manageleft">/WEB-INF/page/menu/menuleft.jsp</result>
+			<result name="manageinfo">/WEB-INF/page/menu/menuinfo.jsp</result>
+			
+		</action> 
+		<action name="purchaseOrderAction_*" class="purchaseOrderAction"
+			method="{1}">
+			<result name="purchaseOrderlistpage">/WEB-INF/page/purchase/purchaseorderlist.jsp</result>
+			<result name="addpage">/WEB-INF/page/purchase/addpurchaseorder.jsp</result>
+			<result name="listpurchaseOrderinfo">/WEB-INF/page/purchase/editpurchaseorder.jsp</result>
+			<result type="json" name="purchaseOrderlist">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="purchaseItemAction_*" class="purchaseItemAction"
+			method="{1}">
+			<result name="listpage">/WEB-INF/page/purchaseitem/purchaseitemlist.jsp</result>
+			<result name="addpage">/WEB-INF/page/purchaseitem/addpurchaseitem.jsp</result>
+			<result name="editPage">/WEB-INF/page/purchaseitem/editpurchaseitem.jsp</result>
+			<result type="json" name="purchaseItemlist">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="scrapAction_*" class="scrapAction"
+			method="{1}">
+			<result name="listpage">/WEB-INF/page/scrap/scraplist.jsp</result>
+			<result name="addpage">/WEB-INF/page/scrap/addpurchaseitem.jsp</result>
+			<result name="editPage">/WEB-INF/page/scrap/editpurchaseitem.jsp</result>
+			<result type="json" name="list">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="stockTakingAction_*" class="stockTakingAction"
+			method="{1}">
+			<result name="listpage">/WEB-INF/page/stocktaking/liststocktaking.jsp</result>
+			<result name="addpage">/WEB-INF/page/stocktaking/addstocktaking.jsp</result>
+			<result name="editpage">/WEB-INF/page/stocktaking/editstocktaking.jsp</result>
+			<result type="json" name="list">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="stockTakingItemAction_*" class="stockTakingItemAction"
+			method="{1}">
+			<result name="listpage">/WEB-INF/page/stocktakingitem/liststocktakingitem.jsp</result>
+			<result name="addpage">/WEB-INF/page/stocktakingitem/addstocktakingitem.jsp</result>
+			<result name="editpage">/WEB-INF/page/stocktakingitem/editstocktakingitem.jsp</result>
+			<result type="json" name="list">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="chartAction_*" class="chartAction"
+			method="{1}">
+			<result name="homepage">/WEB-INF/page/chart/chart.jsp</result>
+			<result type="json" name="chartdata">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+	</package>
+</struts>
