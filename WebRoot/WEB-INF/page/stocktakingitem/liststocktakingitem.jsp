@@ -42,45 +42,46 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 <script type="text/javascript"> 
     $(function(){  
+    	var stockTakingId=$('#stockTakingId').val();
         MainGrid=$("#MainGrid").ligerGrid({  
                  
                     columns:[  
-                        {display:"主键",name:"stockTakingId",hide:"hidden"},
+                        {display:"主键",name:"stockTakingItemId",hide:"hidden"},
                         { display: '操作', isAllowHide:false,width: 80,minWidth:60,render: function (row)
 							    {
 									var html = "";
-									html += "&nbsp;&nbsp;<span title='编辑盘点明细' class='l-icon-view grid-line-btn' onclick=\"viewPurchaseItem('"+row.stockTakingId+"')\">&nbsp;</span>";
-										html += "<span title='确认盘点' class='l-icon-ok grid-line-btn'  onclick=\"changeState('"+row.stockTakingId+"','确认入库成功！','stockTakingAction_changeState.action?stockTakingId=',2)\">&nbsp;</span>";
-										html += "<span title='编辑' class='l-icon-edit grid-line-btn'  onclick=\"edit('"+row.stockTakingId+"')\">&nbsp;</span>";
+									
+										html += "<span title='详细与编辑' class='l-icon-view grid-line-btn'  onclick=\"edit('"+row.stockTakingItemId+"')\">&nbsp;</span>";
 								
-									 	html += "<span title='作废' class='l-icon-delete grid-line-btn' onclick=\"changeState('"+row.stockTakingId+"','作废成功！','stockTakingAction_changeState.action?stockTakingId=',0)\">&nbsp;</span>";
+									 	html += "<span title='删除' class='l-icon-delete grid-line-btn' onclick=\"deleteObjFromMainGrid('"+row.stockTakingItemId+"','"+row.__id+"','stockTakingItemAction_remove.action?stockTakingItemId=')\">&nbsp;</span>";
 									
 							        return html;
 							    }
 							},   
-                        {display:"盘点发起人",name:"userName"},  
-                        {display:"盘点日期",name:"stockTakingDate"},
-                        { display: '状态',   name:'state',render:function(row){
-										if(row.state == '1'){
-                                  			 return "<span style='color:#009900;font-weight:bold;'>待盘点</span>";
-                               			 }if(row.state == '2'){
-                               			 return "<span style='color:#009900;font-weight:bold;'>盘点完成</span>";
+                        {display:"资产名称",name:"assetName"},  
+                     
+                        {display:"盘点时间",name:"stockTakingDate"},
+                        { display: '状态',   name:'stockTakingResult',render:function(row){
+										if(row.stockTakingResult == '1'){
+                                  			 return "<span style='color:#009900;font-weight:bold;'>帐实相符</span>";
+                               			 }if(row.stockTakingResult == '2'){
+                               			 return "<span style='color:#009900;font-weight:bold;'>调整后帐实相符</span>";
+                               			 }
+                               			 if(row.stockTakingResult == '3'){
+                               			 return "<span style='color:#FF0000;font-weight:bold;'>帐实不符</span>";
                                			 }
                                			 else{
-                                   			return "<span style='color:#FF0000;font-weight:bold;'>作废</span>";
+                                   			return "<span style='color:#FF0000;font-weight:bold;'>调整后帐实不符</span>";
                                 		}
-									}}
-									
-						
-						
+									}}	
                     ], 
                     toolbar:{ items: [
-				                  { text: '增加盘点', click: addNewRecord,icon:'add'},
+				                  { text: '增加盘点明细', click: addNewRecord,icon:'add'},
 				                  { line:true },
 			                  ]}, 
                     //data:docData,  
-                    url:'stockTakingAction_list.action',  
-                    sortName: 'stockTakingId',  
+                    url:'stockTakingItemAction_list.action?stockTakingId='+stockTakingId,  
+                    sortName: 'stockTakingItemId',  
                     width:"100%",height:"96%",  
                     pagesizeParmName:"pageSize",  
                     pageParmName:"pageNow",  
@@ -89,14 +90,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     rownumbers:true,usePager:true
         });  
     });  
-    var viewPurchaseItem = function(stockTakingId){
-		 	location.href = " <%=request.getContextPath()%>/stockTakingItemAction_listPage.action?stockTakingId="+stockTakingId;
- };
-     var edit = function(stockTakingId){
-		 	showDialog('stockTakingAction_editPage.action?stockTakingId='+stockTakingId,'修改盘点',750,500);
+
+     var edit = function(stockTakingItemId){
+		 	showDialog('stockTakingItemAction_editPage.action?stockTakingItemId='+stockTakingItemId,'修改盘点明细',750,500);
  };
   var addNewRecord = function(){
-		 	showDialog('stockTakingAction_addPage.action','添加盘点',750,500);
+var stockTakingId=$('#stockTakingId').val();
+		 showDialog('stockTakingItemAction_addPage.action?stockTakingId='+stockTakingId,'添加盘点明细',750,500);
 		 };
 </script>
 
@@ -120,26 +120,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div position="top" title="" style="padding-left:10px;">
             	<!-- 查询条件部分 -->
             	<div>
+            	<input type="hidden" name="stockTakingId"
+					id="stockTakingId" value="${stockTakingId}" />
             		<form id="searchForm" name="searchForm" class="l-form liger-form" action="userAction_homePage.action" method="post">
 		            	<table id="searchTable" class="searchTable">
 		            		<tr>
 		            	<th>
-					            	盘点日期：
+					            	资产名称：
 					            </th>
 		            			<td>
-					            	<input type="text"  style="margin-top:20" value="2016-05-12 00:00" id="datetimepicker1"  name="startTime"/><br><br>
+					            	<input type="text" name="assettName" id="assettName"/>
 					            </td>
-					            <th>
-					            	至
-					            </th>
-		            			<td>
-					            	<input type="text" style="margin-top:20"  value="2016-05-15 00:00" id="datetimepicker2"  name="endTime"/><br><br>
-					            </td> 
-					            
-					           
-					            
 		            			
-					            
+					            <th class="opt">
+					            	<div title="返回" class='l-icon-back' style="cursor:hand" onClick="back()"   data-width="100" icon="back">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp返回</div>
+					            </th>
 					            
 					            <th class="opt">
 					            	<div title="查询" class='l-icon-search' style="cursor:hand" onClick="SubmitQueryPO()"   data-width="100" icon="search">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp查询</div>
@@ -151,23 +146,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div> 
             <div position="center" title="">
             	<!-- 数据集部分 -->
-				  <div id="MainGrid" keyname="stockTakingId"></div>  
+				  <div id="MainGrid" keyname="stockTakingItemId"></div>  
             </div>
   
 </body> 
 
-<script src="script/jquery.datetimepicker.js"></script>
 <script>
-$('#datetimepicker1').datetimepicker({value:'2015-01-01 00:00:00',step:10,lang:"ch",
-      format:"Y-m-d H:i:00"});
-     $('#datetimepicker2').datetimepicker({value:'2016-12-31 00:00:00',step:10,lang:"ch",
-      format:"Y-m-d H:i:00"});
 
 function SubmitQueryPO(){
-	var startTime= $("#datetimepicker1").val();
-	var endTime= $("#datetimepicker2").val();
-	MainGrid.set({url:'stockTakingAction_list.action?startTime='+startTime+'&endTime=' +endTime});
+	var assettName= $("#assettName").val();
+	var stockTakingId=$('#stockTakingId').val();
+	MainGrid.set({url:'stockTakingItemAction_list.action?stockTakingId='+stockTakingId+'&assettName='+assettName});
 	MainGrid.loadData(true);
+
+}
+function back(){
+location.href = " <%=request.getContextPath()%>/stockTakingAction_listPage.action";
 
 }
 </script>

@@ -28,7 +28,7 @@ public class StockTakingItemServiceImpl implements StockTakingItemService {
 	private AssetSortDao assetSortDao;
 	
 	@Override
-	public List<StockTakingItem> listStockTakingItem(String assettName,String purchaseId) {
+	public List<StockTakingItem> listStockTakingItem(String assettName,String stockTakingId) {
 		// TODO Auto-generated method stub
 		// 组织查询条件
 		String hqlWhere = "";
@@ -38,9 +38,9 @@ public class StockTakingItemServiceImpl implements StockTakingItemService {
 			hqlWhere += " and o.assettName like ?";
 			paramsList.add("%"+assettName+"%");
 		}
-		if (null != purchaseId && !"".equals(purchaseId)) {
-			hqlWhere += " and o.purchaseOrderId =?";
-			paramsList.add(purchaseId);
+		if (null != stockTakingId && !"".equals(stockTakingId)) {
+			hqlWhere += " and o.stockTaking.stockTakingId =?";
+			paramsList.add(stockTakingId);
 		}
 		
 		Object[] params = paramsList.toArray();

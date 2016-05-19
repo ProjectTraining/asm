@@ -124,30 +124,53 @@ h3 {
 	color: red;
 }
 </style>
-
-
+<script>
+$(function (){
+var options;
+ $("#cat").change(
+        function () {
+        options=$("#cat option:selected"); 
+        //options.val()
+        $(".secondselect").hide();
+        $("#secondselect"+options.val()).show();
+        var categoryId=$("#secondselect"+options.val()).find("option:selected").val();
+      
+       $('#assetSortId').val(categoryId);
+        $("#secondselect"+options.val()).change(
+        function () {
+        var categoryId= $("#secondselect"+options.val()).find("option:selected").val();
+        $('#assetSortId').val(categoryId);
+      
+       // $('#form1').attr('action','storeAction_addProduct.action?categoryId='+categoryId);
+     });
+     });
+ });
+</script>
 <script type="text/javascript">
-	
+
 	var check = function() {
-		var stockTakingDate=$('#stockTakingDate').val();
-		var userId=$('#userId').val();
-		var state = $('#state').val();
-		var stockTakingId = $('#stockTakingId').val();
+	var stockTakingId=$('#stockTakingId').val();
+	var stockTakingItemId=$('#stockTakingItemId').val();
+	var stockTakingDate=$('#stockTakingDate').val();
+	var assetId=$('#assetId').val();
+	var stockTakingResult=$('#stockTakingResult').val();
+	
 	$.ajax({
 				cache : false,
 				async : false,
 				type : "POST",
 				dataType : "json",
 				data : {
-				stockTakingId:stockTakingId,
-					stockTakingDate : stockTakingDate,
-					userId : userId,
-					state:state
+				stockTakingItemId:stockTakingItemId ,
+					stockTakingId:stockTakingId ,
+					stockTakingDate:stockTakingDate ,
+					assetId:assetId ,
+					stockTakingResult:stockTakingResult				
 				},
-				url : "stockTakingAction_edit.action",
+				url : "stockTakingItemAction_edit.action",
 				success : function(flag) {
 					if (flag) {
-						$.jBox.tip('添加成功！');
+						$.jBox.tip('修改成功！');
 						setTimeout(SubmitCallback, 700);
 					}
 				}
@@ -163,28 +186,66 @@ h3 {
 <body>
 	<div class="contact">
 		<form name="form1" method="post" action="userAction_register.action">
-			<h3>增加盘点</h3>
-			<ul>
-			<input type="hidden" id="state" name="state" value="${stockTaking.state}"/>
-			<input type="hidden" id="stockTakingId" name="stockTakingId" value="${stockTaking.stockTakingId}"/>
-				<li><label>发起人：</label> <select id="userId" name="userId">
-
-						<s:iterator value="userList" var="item">
-								<s:if test="%{stockTaking.user.userId==#item.userId}">
-					 <option value="${item.userId}" selected="selected">${item.userName}</option>
+			<h3>增加盘点明细</h3>
+			<ul><input type="hidden" name="stockTakingItemId"
+					id="stockTakingItemId" value="${stockTakingItem.stockTakingItemId}" />
+				<input type="hidden" name="stockTakingId"
+					id="stockTakingId" value="${stockTakingItem.stockTaking.stockTakingId}" />
+				
+				<li><label>资产名称：</label> <select id="assetId" name="assetId">					
+						<s:iterator value="assetList" var="item">
+								<s:if test="%{stockTakingItem.asset.assetId==#item.assetId}">
+		
+					 <option value="${item.assetId}" selected="selected">${item.assetName}</option>
 					 </s:if>
 					 <s:else>
-					 <option value="${item.userId}">${item.userName}</option>
+					 <option value="${item.assetId}">${item.assetName}</option>
 					</s:else>	
 						</s:iterator>
+						
+						
+						
+						
+						
 				</select></li>
-				<li><label>发起日期：</label>
-				<input type="text" value="${stockTaking.stockTakingDate}" id="stockTakingDate"  name="stockTakingDate"/><br><br>
+				
+				<li><label>盘点日期：</label>
+				<input type="text" value="${stockTakingItem.stockTakingDate}" id="stockTakingDate"  name="stockTakingDate"/><br><br>
 				
 				</li>
 				
+				<li>
+					<label>盘点结果：</label>
+					<div class="info">
+					<select id="stockTakingResult" name="stockTakingResult" >
+					<s:if test="%{stockTakingItem.stockTakingResult==1}">
+		<option value ="1" selected="selected">帐实相符</option>
+					 </s:if>
+					 <s:else>
+					<option value ="1" >帐实相符</option> 
+					</s:else>
+					<s:if test="%{stockTakingItem.stockTakingResult==2}">
+						 <option value ="2" selected="selected">调整后帐实相符</option>
+					 </s:if>
+					 <s:else>
+					  <option value ="2" >调整后帐实相符</option>
+					</s:else>
+					<s:if test="%{stockTakingItem.stockTakingResult==3}">
+						  <option value ="3" selected="selected">帐实不符</option>
+					 </s:if>
+					 <s:else>
+					  <option value ="3" >帐实不符</option>
+					</s:else>
+					<s:if test="%{stockTakingItem.stockTakingResult==4}">
 
-
+						 <option value ="4" selected="selected">调整后帐实不符</option>
+					 </s:if>
+					 <s:else>
+					  <option value ="4" >调整后帐实不符</option>
+					</s:else>
+					</select>
+					</div>
+				</li> 
 				<li><img src="images/save.gif" onClick="check()"></li>
 			</ul>
 
@@ -197,6 +258,6 @@ h3 {
 
 $('#stockTakingDate').datetimepicker({value:$('#stockTakingDate').val(),step:10,lang:"ch",
       format:"Y-m-d H:i:00"});
-
+    
 </script>
 </html>
