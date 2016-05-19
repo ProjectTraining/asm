@@ -125,26 +125,26 @@ h3 {
 }
 </style>
 
-
 <script type="text/javascript">
-	
+
 	var check = function() {
-		var stockTakingDate=$('#stockTakingDate').val();
-		var userId=$('#userId').val();
-		var state = $('#state').val();
-		var stockTakingId = $('#stockTakingId').val();
+	var stockTakingId=$('#stockTakingId').val();
+	var stockTakingDate=$('#stockTakingDate').val();
+	var assetId=$('#assetId').val();
+	var stockTakingResult=$('#stockTakingResult').val();
+	
 	$.ajax({
 				cache : false,
 				async : false,
 				type : "POST",
 				dataType : "json",
 				data : {
-				stockTakingId:stockTakingId,
-					stockTakingDate : stockTakingDate,
-					userId : userId,
-					state:state
+					stockTakingId:stockTakingId ,
+					stockTakingDate:stockTakingDate ,
+					assetId:assetId ,
+					stockTakingResult:stockTakingResult				
 				},
-				url : "stockTakingAction_edit.action",
+				url : "stockTakingItemAction_add.action",
 				success : function(flag) {
 					if (flag) {
 						$.jBox.tip('添加成功！');
@@ -163,28 +163,35 @@ h3 {
 <body>
 	<div class="contact">
 		<form name="form1" method="post" action="userAction_register.action">
-			<h3>增加盘点</h3>
-			<ul>
-			<input type="hidden" id="state" name="state" value="${stockTaking.state}"/>
-			<input type="hidden" id="stockTakingId" name="stockTakingId" value="${stockTaking.stockTakingId}"/>
-				<li><label>发起人：</label> <select id="userId" name="userId">
+			<h3>修改盘点明细</h3>
+			<ul><input type="hidden" name="stockTakingId"
+					id="stockTakingId" value="${stockTakingId}" />
+				
+				
+				<li><label>资产名称：</label> <select id="assetId" name="assetId">
 
-						<s:iterator value="userList" var="item">
-								<s:if test="%{stockTaking.user.userId==#item.userId}">
-					 <option value="${item.userId}" selected="selected">${item.userName}</option>
-					 </s:if>
-					 <s:else>
-					 <option value="${item.userId}">${item.userName}</option>
-					</s:else>	
+						<s:iterator value="assetList" var="item">
+
+							<option value="${item.assetId}">${item.assetName}</option>
 						</s:iterator>
 				</select></li>
-				<li><label>发起日期：</label>
-				<input type="text" value="${stockTaking.stockTakingDate}" id="stockTakingDate"  name="stockTakingDate"/><br><br>
+				
+				<li><label>盘点日期：</label>
+				<input type="text" value="2016-05-10 00:00" id="stockTakingDate"  name="stockTakingDate"/><br><br>
 				
 				</li>
 				
-
-
+				<li>
+					<label>盘点结果：</label>
+					<div class="info">
+					<select id="stockTakingResult" name="stockTakingResult" >
+						 <option value ="1">帐实相符</option>
+						 <option value ="2">调整后帐实相符</option>
+						  <option value ="3">帐实不符</option>
+						 <option value ="4">调整后帐实不符</option>
+					</select>
+					</div>
+				</li> 
 				<li><img src="images/save.gif" onClick="check()"></li>
 			</ul>
 
@@ -195,7 +202,7 @@ h3 {
 <script src="script/jquery.datetimepicker.js"></script>
 <script>
 
-$('#stockTakingDate').datetimepicker({value:$('#stockTakingDate').val(),step:10,lang:"ch",
+$('#stockTakingDate').datetimepicker({value:'2016-05-08 00:00:00',step:10,lang:"ch",
       format:"Y-m-d H:i:00"});
 
 </script>

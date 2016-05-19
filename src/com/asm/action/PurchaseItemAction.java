@@ -132,14 +132,6 @@ public class PurchaseItemAction extends ActionSupport implements ModelDriven<Pur
 		this.rows = rows;
 	}
 	
-	
-	public String loginPage() {
-		PurchaseItem employee=(PurchaseItem) session.get("employee");
-		if(employee!=null){
-			return "home";
-		}
-		return "login";
-	}
 
 
 	
@@ -148,7 +140,7 @@ public class PurchaseItemAction extends ActionSupport implements ModelDriven<Pur
 	}
 	public String home(){
 		
-		return "purchaseItemlistpage";
+		return "listpage";
 	}
 	public String addPage(){
 		assetSortList=purchaseItemService.findAssertSortList();

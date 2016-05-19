@@ -129,27 +129,21 @@ h3 {
 <script type="text/javascript">
 	
 	var check = function() {
-		var purchaseDeptId=$('#purchaseDeptId').val();
+		var stockTakingDate=$('#stockTakingDate').val();
 		var userId=$('#userId').val();
-		var purchaseDate=$('#purchaseDate').val();
-		var purchasePurpose = $('#purchasePurpose').val();
-		if(purchasePurpose.length<=0){
-			$.jBox.tip('请输入采购用途！');
-			return;
-		}
+		//var state = $('#state').val();
+		
 	$.ajax({
 				cache : false,
 				async : false,
 				type : "POST",
 				dataType : "json",
 				data : {
-					purchaseDeptId : purchaseDeptId,
+					stockTakingDate : stockTakingDate,
 					userId : userId,
-					purchaseDate : purchaseDate,
-					purchasePurpose : purchasePurpose,
 					state:1
 				},
-				url : "purchaseOrderAction_add.action",
+				url : "stockTakingAction_add.action",
 				success : function(flag) {
 					if (flag) {
 						$.jBox.tip('添加成功！');
@@ -168,30 +162,30 @@ h3 {
 <body>
 	<div class="contact">
 		<form name="form1" method="post" action="userAction_register.action">
-			<h3>增加采购单</h3>
+			<h3>增加盘点</h3>
 			<ul>
-				<li><label>采购部门：</label> <select id="purchaseDeptId" name="purchaseDeptId">
-
-						<s:iterator value="deptList" var="item">
-
-							<option value="${item.deptId}">${item.deptName}</option>
-						</s:iterator>
-				</select></li>
-				<li><label>经办人：</label> <select id="userId" name="userId">
+			
+				<li><label>发起人：</label> <select id="userId" name="userId">
 
 						<s:iterator value="userList" var="item">
 
 							<option value="${item.userId}">${item.userName}</option>
 						</s:iterator>
 				</select></li>
-				<li><label>采购日期：</label>
-				<input type="text" value="2016-05-10 00:00" id="purchaseDate"  name="purchaseDate"/><br><br>
+				<li><label>发起日期：</label>
+				<input type="text" value="2016-05-10 00:00" id="stockTakingDate"  name="stockTakingDate"/><br><br>
 				
 				</li>
-				<li><label>采购用途：</label> <input type="text" name="purchasePurpose"
-					id="purchasePurpose" placeholder="请输入采购用途" required />
-					
-				</li>
+<%-- 				<li>
+					<label>盘点状态：</label>
+					<div class="info">
+					<select id="state" name="state" >
+						 <option value ="1">待盘点</option>
+						 <option value ="2">已盘点</option>
+						 <option value ="0">作废</option>
+					</select>
+					</div>
+				</li> --%>
 
 
 				<li><img src="images/save.gif" onClick="check()"></li>
@@ -207,7 +201,7 @@ h3 {
 
 
 
-$('#purchaseDate').datetimepicker({value:'2016-05-08 00:00:00',step:10,lang:"ch",
+$('#stockTakingDate').datetimepicker({value:'2016-05-08 00:00:00',step:10,lang:"ch",
       format:"Y-m-d H:i:00"});
     
 

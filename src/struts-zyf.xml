@@ -35,7 +35,7 @@
 		</action> 
 		<action name="purchaseItemAction_*" class="purchaseItemAction"
 			method="{1}">
-			<result name="purchaseItemlistpage">/WEB-INF/page/purchaseitem/purchaseitemlist.jsp</result>
+			<result name="listpage">/WEB-INF/page/purchaseitem/purchaseitemlist.jsp</result>
 			<result name="addpage">/WEB-INF/page/purchaseitem/addpurchaseitem.jsp</result>
 			<result name="editPage">/WEB-INF/page/purchaseitem/editpurchaseitem.jsp</result>
 			<result type="json" name="purchaseItemlist">  
@@ -51,12 +51,28 @@
        			 <param name="root" >rows</param>  
    			 </result> 
 		</action> 
-		<action name="stockTakingAction_*" class="scrapAction"
+		<action name="stockTakingAction_*" class="stockTakingAction"
 			method="{1}">
 			<result name="listpage">/WEB-INF/page/stocktaking/liststocktaking.jsp</result>
 			<result name="addpage">/WEB-INF/page/stocktaking/addstocktaking.jsp</result>
-			<result name="editPage">/WEB-INF/page/stocktaking/editstocktaking.jsp</result>
+			<result name="editpage">/WEB-INF/page/stocktaking/editstocktaking.jsp</result>
 			<result type="json" name="list">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="stockTakingItemAction_*" class="stockTakingItemAction"
+			method="{1}">
+			<result name="listpage">/WEB-INF/page/stocktakingitem/liststocktakingitem.jsp</result>
+			<result name="addpage">/WEB-INF/page/stocktakingitem/addstocktakingitem.jsp</result>
+			<result name="editpage">/WEB-INF/page/stocktakingitem/editstocktakingitem.jsp</result>
+			<result type="json" name="list">  
+       			 <param name="root" >rows</param>  
+   			 </result> 
+		</action> 
+		<action name="chartAction_*" class="chartAction"
+			method="{1}">
+			<result name="homepage">/WEB-INF/page/chart/chart.jsp</result>
+			<result type="json" name="chartdata">  
        			 <param name="root" >rows</param>  
    			 </result> 
 		</action> 
