@@ -52,12 +52,10 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 	private List<Dept> deptList;
 	private List<User> userList;
 	private String userId;
-	private int pageNow = 1;
-	private int pageSize = 10;
+
 	private JSONObject rows;
 	private String storeId;
-	private JSONObject data;
-	private String stateStr;
+
 	private Date startTime,endTime;
 	
 	public Date getStartTime() {
@@ -81,12 +79,7 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 		this.endTime = endTime;
 	}
 	HashMap<String, String> deptMap = new HashMap<String, String>();
-	public String getStateStr() {
-		return stateStr;
-	}
-	public void setStateStr(String stateStr) {
-		this.stateStr = stateStr;
-	}
+
 	public PurchaseOrder getPurchaseOrder() {
 		return purchaseOrder;
 	}
@@ -108,15 +101,7 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 
 	
 
-	
-	
-	public JSONObject getData() {
-		return data;
-	}
-	public void setData(JSONObject data) {
-		this.data = data;
-	}
-	
+
 
 	public String getStoreId() {
 		return storeId;
@@ -127,21 +112,6 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 	}
 
 
-	public int getPageNow() {
-		return pageNow;
-	}
-
-	public void setPageNow(int pageNow) {
-		this.pageNow = pageNow;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
 	public JSONObject getRows() {
 		return rows;
 	}
@@ -229,6 +199,7 @@ public class PurchaseOrderAction extends ActionSupport implements ModelDriven<Pu
 			list.add(hashMap);
 		}
 		maps.put("Rows", list);
+		maps.put("total", list.size());
 		System.out.println(maps.size());
 		rows = JSONObject.parseObject(JSON.toJSONString(maps));
 		System.out.println(rows.toJSONString());

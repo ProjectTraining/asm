@@ -42,7 +42,6 @@ public class StockTaking  implements java.io.Serializable {
     }
     
 
-    @Column(name="stockTakingDate", length=19)
 
     public Date getStockTakingDate() {
         return this.stockTakingDate;
@@ -52,8 +51,6 @@ public class StockTaking  implements java.io.Serializable {
         this.stockTakingDate = stockTakingDate;
     }
     
-    @Column(name="state")
-
     public Integer getState() {
         return this.state;
     }
