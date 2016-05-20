@@ -61,10 +61,12 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 	}
 	
 	public String getParameterId(){
+		System.out.println("DDDDD" + parameterId);
 		return parameterId;
 	}
 	
 	public void setParameterId(String parameterId) {
+		System.out.println("CCCCCC" + parameterId);
 		this.parameterId = parameterId;
 	}
 	
@@ -122,7 +124,10 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 	}
 	
 	public String delParameter(){
-		System.out.println("--------" + parameterList.get(0).getParameterId());
+		System.out.println(ServletActionContext.getRequest().getParameter("parameter.parameterId"));
+		System.out.println("，，，，，，，" + this.parameterId);
+		System.out.println("，，，，，，，" + parameter.getParameterId());
+		System.out.println("，，，，，，，" + parameterList.get(0).getParameterId());
 		boolean flag = this.parameterService.delParameter(parameterList.get(0));
 		if(flag){
 			parameterList = parameterService.scanTable();
@@ -131,6 +136,7 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 		else{
 			return "error";
 		}
+
 	}
 	
 	public String updateParameter(){
