@@ -33,6 +33,7 @@ public class ParameterServiceImpl implements ParameterService {
 	
 	@Override
 	public boolean delParameter(Parameter parameter){
+		System.err.println("111parameter~~~~" + parameter.getParameterId());
 		return parameterDao.delParameter(parameter);
 	}
 }

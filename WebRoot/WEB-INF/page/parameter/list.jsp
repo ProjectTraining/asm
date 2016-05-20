@@ -15,7 +15,7 @@
 <title>parameter list page</title>
 <script type="text/javascript">  
             function del(){  
-                if(confirm("Are you sure?")){  
+                if(confirm("确定删除?")){  
                     return true;  
                 }  
                 return false;  
@@ -39,6 +39,7 @@
 			<th>参数值</th>
 			<th>参数组别编号</th>
 			<th>参数组别名称</th>
+			<th>操作</th>
 
 		</tr>
 		<c:forEach items="${parameterList}" var="parameter" varStatus="vs">
@@ -48,14 +49,12 @@
 				<td align="center">${parameter.groupId}</td>
 				<td align="center">${parameter.groupName}</td>
 				<td align="center"><a
-					href="assetSortAction_delSort.action?assetSort.assetSortId=${assetSort.assetSortId}"
+					href="parameterAction_delParameter.action?parameter.parameterId=${parameter.parameterId}"
 					onclick="return del()">删除</a> 
-					<a href="assetSortAction_updatePage.action?assetSort.assetSortId=${assetSort.assetSortId}">修改</a>
 				</td>
 				<br>
 			</tr>
 		</c:forEach>
 	</table>
-	
 </body>
 </html>

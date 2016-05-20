@@ -37,7 +37,7 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 	private String parameterId;
 	private String parameterName;
 	private String parameterValue;
-	private String groupId;
+	private int groupId;
 	private String groupName;
 
 	@Override
@@ -56,48 +56,48 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 		return parameterList;
 	}
 	
-	public void setParameterList(List<Parameter> _parameterList){
-		this.parameterList = _parameterList;
+	public void setParameterList(List<Parameter> parameterList){
+		this.parameterList = parameterList;
 	}
 	
 	public String getParameterId(){
 		return parameterId;
 	}
 	
-	public void setParameterId(String _parameterId) {
-		this.parameterId = _parameterId;
+	public void setParameterId(String parameterId) {
+		this.parameterId = parameterId;
 	}
 	
 	public String getParameterName(){
 		return parameterName;
 	}
 	
-	public void setParameterName(String _parameterName) {
-		this.parameterName = _parameterName;
+	public void setParameterName(String parameterName) {
+		this.parameterName = parameterName;
 	}
 	
 	public String getParameterValue(){
 		return parameterValue;
 	}
 	
-	public void setParameterValue(String _parameterValue) {
-		this.parameterValue = _parameterValue;
+	public void setParameterValue(String parameterValue) {
+		this.parameterValue = parameterValue;
 	}
 	
-	public String getGroupId(){
+	public int getGroupId(){
 		return groupId;
 	}
 	
-	public void setGroupId(String _groupId) {
-		this.groupId = _groupId;
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
 	
 	public String getGroupName(){
 		return groupName;
 	}
 	
-	public void setGroupName(String _groupName) {
-		this.groupName = _groupName;
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 	
 	public String storeManagePage() {
@@ -116,11 +116,25 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 	public String showList(){
 		parameterList = parameterService.scanTable();
 		System.out.println(parameterList.get(0).getParameterName());
+		System.out.println("--------" + parameterList.get(0).getParameterId());
 		System.out.println("showList");
 		return "showList";
 	}
 	
-	public String delParameter{
-		System.out.println("--------" + parameter.getParameterID());
+	public String delParameter(){
+		System.out.println("--------" + parameterList.get(0).getParameterId());
+		boolean flag = this.parameterService.delParameter(parameterList.get(0));
+		if(flag){
+			parameterList = parameterService.scanTable();
+			return "showList";
+		}
+		else{
+			return "error";
+		}
+	}
+	
+	public String updateParameter(){
+		parameterService.updateParamter(parameter);
+		return "showList";
 	}
 }

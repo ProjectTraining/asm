@@ -30,7 +30,8 @@ public class ParameterDaoImpl extends CommonDaoImpl<Parameter> implements
 	
 	@Override
 	public boolean delParameter(Parameter parameter){
-		this.deleteObjectByIds(parameter.getParameterID());
+		System.err.println("parameter~~~~" + parameter.getParameterId());
+		this.deleteObjectByIds(parameter.getParameterId());
 		return true;
 	}
 }
