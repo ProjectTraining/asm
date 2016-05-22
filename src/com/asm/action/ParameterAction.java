@@ -29,6 +29,7 @@ import com.opensymphony.xwork2.ModelDriven;
 @Scope("prototype")
 public class ParameterAction extends ActionSupport implements SessionAware, ModelDriven<Parameter> {
 	private Parameter parameter = new Parameter();
+
 	private List<Parameter> parameterList;
 	@Autowired
 	private ParameterService parameterService;
@@ -45,7 +46,6 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 		// TODO Auto-generated method stub
 		this.session = session;
 	}
-
 	@Override
 	public Parameter getModel() {
 		// TODO Auto-generated method stub
@@ -54,6 +54,22 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 	
 	public List<Parameter> getParameterList(){
 		return parameterList;
+	}
+	
+	public Parameter getParameter() {
+		return parameter;
+	}
+	
+	public void setParameter(Parameter parameter) {
+		this.parameter = parameter;
+	}
+	
+	public ParameterService getParameterService() {
+		return parameterService;
+	}
+	
+	public void setParameterService(ParameterService parameterService) {
+		this.parameterService = parameterService;
 	}
 	
 	public void setParameterList(List<Parameter> parameterList){
@@ -117,18 +133,11 @@ public class ParameterAction extends ActionSupport implements SessionAware, Mode
 	
 	public String showList(){
 		parameterList = parameterService.scanTable();
-		System.out.println(parameterList.get(0).getParameterName());
-		System.out.println("--------" + parameterList.get(0).getParameterId());
-		System.out.println("showList");
 		return "showList";
 	}
 	
 	public String delParameter(){
-		System.out.println(ServletActionContext.getRequest().getParameter("parameter.parameterId"));
-		System.out.println("，，，，，，，" + this.parameterId);
-		System.out.println("，，，，，，，" + parameter.getParameterId());
-		System.out.println("，，，，，，，" + parameterList.get(0).getParameterId());
-		boolean flag = this.parameterService.delParameter(parameterList.get(0));
+		boolean flag = this.parameterService.delParameter(parameter);
 		if(flag){
 			parameterList = parameterService.scanTable();
 			return "showList";

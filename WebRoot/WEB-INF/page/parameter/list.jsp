@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -42,19 +43,18 @@
 			<th>操作</th>
 
 		</tr>
-		<c:forEach items="${parameterList}" var="parameter" varStatus="vs">
+		
+		<s:iterator value="%{parameterList}" id="parameter">
 			<tr>
-				<td align="center">${parameter.parameterName}</td>
-				<td align="center">${parameter.parameterValue}</td>
-				<td align="center">${parameter.groupId}</td>
-				<td align="center">${parameter.groupName}</td>
-				<td align="center"><a
-					href="parameterAction_delParameter.action?parameter.parameterId=${parameter.parameterId}"
-					onclick="return del()">删除</a> 
-				</td>
-				<br>
+				<td><s:property value="#parameter.parameterName" /></td>
+				<td><s:property value="#parameter.parameterValue" /></td>
+				<td><s:property value="#parameter.groupId" /></td>
+				<td><s:property value="#parameter.groupName" /></td>
+				<td align="center"><s:a
+						href="parameterAction_delParameter.action?parameter.parameterId=%{#parameter.parameterId}"
+						onclick="return del()">删除</s:a></td>
 			</tr>
-		</c:forEach>
+		</s:iterator>
 	</table>
 </body>
 </html>
