@@ -1,5 +1,6 @@
 package com.asm.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import com.asm.dao.ParameterDao;
@@ -30,8 +31,34 @@ public class ParameterDaoImpl extends CommonDaoImpl<Parameter> implements
 	
 	@Override
 	public boolean delParameter(Parameter parameter){
-		System.err.println("parameter~~~~" + parameter.getParameterId());
 		this.deleteObjectByIds(parameter.getParameterId());
 		return true;
+	}
+
+	@Override
+	public Parameter getParameterById(String parameterId) {
+		return this.findObjectByID(parameterId);
+	}
+	
+	public List<Parameter> findAll() {
+		String hql = "from Parameter p order by p.parameterName asc";
+		List<Parameter> list = (List<Parameter>) this.getHibernateTemplate().find(hql);
+		return list;
+	}
+	
+	public List<Parameter> queryForPage(final String hql, final int offset, final int length) {
+		List<Parameter> list = findAll();
+		List<Parameter> list1=new ArrayList<Parameter>();
+		for(int i=0;i<offset+length;i++){
+			if(i>=offset){
+				list1.add(list.get(i));
+			}
+		}
+		System.out.println("这一页的记录是："+list1.size());
+		return list1;
+	}
+	
+	public int getAllRowCount(String hql) {
+		return this.getHibernateTemplate().find(hql).size();
 	}
 }

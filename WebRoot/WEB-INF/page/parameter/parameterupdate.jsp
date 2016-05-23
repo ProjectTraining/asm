@@ -23,24 +23,20 @@
 	-->
 
 </head>
+
 <body>
-	<script src="assets/js/jquery.min.js"></script>
-	<div id="addparameter">
-	<script type="text/javascript">
-		function jumpAdd(){
-			window.location = "asm/parameterAction_addParameter.action?timestamp="
-						+ new Date().getTime();
-		}
-	</script>
-	<button id="bAdd" onclick="jumpAdd()">添加新参数</button>
-	</div>
-	<div id="showList">
-		<script type="text/javascript">
-			$("#showList").load(
-					"asm/parameterAction_showList.action?timestamp="
-							+ new Date().getTime());
-		</script>
-	</div>
-	<br>
+	<form name="form1" method="post" action="parameterAction_updateParameter.action">
+		<input name="parameterId" id="parameterId" type="hidden" value="${parameter.parameterId}">
+		<label style="font-size:15px">参数名:</label>
+		<input name="parameterName" id="parameterName" value="${parameter.parameterName}"><br>
+		<label style="font-size:15px">参数值:</label>
+		<input name="parameterValue" id="parameterValue"  value="${parameter.parameterValue}"><br>
+		<label style="font-size:15px">组编号:</label>
+		<input name="groupId" id="groupId" value="${parameter.groupId}"><br>
+		<label style="font-size:15px">组名称:</label>
+		<input name="groupName" id="groupName" value="${parameter.groupName}"><br>
+		<br> 
+		<input type="submit" value="确认">
+	</form>
 </body>
 </html>

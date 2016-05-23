@@ -7,8 +7,10 @@
 	<package name="yjzheng" namespace="/" extends="struts-default,json-default">
 		<action name="parameterAction_*" class="parameterAction"
 			method="{1}">
+			<result name="addParameter">/WEB-INF/page/parameter/parameteradd.jsp</result>
 			<result name="infoHome">/WEB-INF/page/parameter/parameterinfoHome.jsp</result>
 			<result name="showList">/WEB-INF/page/parameter/list.jsp</result>
+			<result name="updateParameter">/WEB-INF/page/parameter/parameterupdate.jsp</result>
 		</action>
 	</package>
 </struts>
