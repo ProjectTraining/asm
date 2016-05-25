@@ -2,6 +2,7 @@ package com.asm.util;
 
 import java.util.List;
 
+import com.asm.domain.AssetSort;
 import com.asm.domain.Dept;
 
 public class PageBean {
@@ -14,6 +15,7 @@ public class PageBean {
 	private boolean isLastPage; // 是否为最后一页
 	private boolean hasPreviousPage; // 是否有前一页
 	private boolean hasNextPage; // 是否有下一页
+	private List<AssetSort> assetSortList;//要返回的某一页的记录列表
 
 	public void init() {
 		this.isFirstPage = isFirstPage;
@@ -133,4 +135,14 @@ public class PageBean {
 	public void setHasNextPage(boolean hasNextPage) {
 		this.hasNextPage = hasNextPage;
 	}
+
+	public List<AssetSort> getAssetSortList() {
+		return assetSortList;
+	}
+
+	public void setAssetSortList(List<AssetSort> assetSortList) {
+		this.assetSortList = assetSortList;
+	}
+	
+	
 }

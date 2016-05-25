@@ -8,7 +8,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    
+    <script type="text/javascript">  
+            function del(){  
+                if(confirm("Are you sure?")){  
+                    return true;  
+                }  
+                return false;  
+            }  
+    </script>
     <title>添加商品入库</title>
     
 	<meta http-equiv="pragma" content="no-cache">
@@ -24,28 +31,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
      <form name="form1" method="post" action="assetSortAction_addSort.action" >
-     	<ul class="name_items">
-     	<li><label for="pwd">资产编号：</label> 
-			<input type="text" placeholder="请输入资产编号"
+     <div align="center"><center><table
+	border="1" width="50%" borderColorDark="#FFFFFF" borderColorLight="#000000"
+	cellspacing="0">
+     	
+     	<tr>
+			<td width="27%" bgcolor="#DDDDFF" align="center">资产编号：</td>
+			<td width="73%" bgcolor="#DDDDFF"><input type="text" placeholder="请输入资产编号"
 				name="assetSortCode"  id="assetSortCode"  size="40"
-				  /></li>
-			<li><label for="user">资产名：</label> 
-			<input type="text" placeholder="请输入资产名" 
+				  /></td>
+		</tr>
+		<tr>
+			<td width="27%" bgcolor="#DDDDFF" align="center">资产名：</td>
+			<td width="73%" bgcolor="#DDDDFF"><input type="text" placeholder="请输入资产名" 
 			name="assetSortName"  id="assetSortName" size="40"
-				 /></li>
-			<li><label for="pwd">上级资产编号：</label> 
-			<input type="text" placeholder="请输入上级资产编号"
+				  /></td>
+		</tr>
+		<tr>
+			<td width="27%" bgcolor="#DDDDFF" align="center">上级资产编号：</td>
+			<td width="73%" bgcolor="#DDDDFF"><input type="text" placeholder="请输入上级资产编号"
 				name="parentId"  id="parentId"  size="40"
-				  /></li>
-			<li><label for="user">上级资产名：</label> 
-			<input type="text" placeholder="请输入上级资产名" 
+				  /></td>
+		</tr>
+		<tr>
+			<td width="27%" bgcolor="#DDDDFF" align="center">上级资产名：</td>
+			<td width="73%" bgcolor="#DDDDFF"><input type="text" placeholder="请输入上级资产名" 
 			name="parentName"  id="parentName" size="40"
-				 /></li>
-			
-				<li><input type="submit" tabindex="3"  value="添加资产"
-			 /></li>
-		</ul>
+				  /></td>
+		</tr>
+		<tr>
+			<td width="30%" bgcolor="#DDDDFF" colspan="2"><div align="center"><center><p><input type="submit" tabindex="3"  onclick ="return del()" value="添加资产"
+			/> <input type="reset" value="清除" name="B2" tabindex="11"/></p></center></div></td>
+		</tr>	
 
-     </form>
+     </table>
+</center></div>
+</form>
   </body>
 </html>
+
+
