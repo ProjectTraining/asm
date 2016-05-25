@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 
 import com.asm.domain.AssetSort;
 import com.asm.service.AssetSortService;
+import com.asm.util.PageBean;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -31,9 +32,23 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 	private String assetSortName;
 	private String parentId;
 	private String parentName;
+	private PageBean pageBean; //封装了分页信息和数据内容的pageBean  
+	private int page = 1; //表示从网页中返回的当前页的值  默认为1 表示默认显示第一页内容 
 	
-	public String home() {
-		assetSortList = this.assetService.findList();
+	public String findByName(){
+		System.out.println("111"+assetSort.getAssetSortName());
+		assetSortList = this.assetService.findSortByName(assetSort.getAssetSortName());
+		
+		if(assetSort!=null){
+			return "list";
+		}else{
+			return "error";
+		}
+		
+	}
+	public String home(){
+		pageBean = assetService.SplitPage(5, page);//获取封装了分页信息和数据的pageBean
+		assetSortList = this.pageBean.getAssetSortList();
 		return "list";
 	}
 	public String addPage(){
@@ -42,18 +57,19 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 	public String addSort() {
 		boolean a = assetService.addSort(assetSort);
 		if(a){
-			assetSortList = this.assetService.findList();
+			pageBean = assetService.SplitPage(5, page);//获取封装了分页信息和数据的pageBean
+			assetSortList = this.pageBean.getAssetSortList();
 			return "list";
 		}else{
 			return "error";
 		}
 	}
 	public String delSort(){
-		System.out.println(assetSort.getAssetSortId());
 		boolean a=this.assetService.delSort(assetSort);
 		System.out.println(a);
 		if(a){
-			assetSortList = this.assetService.findList();
+			pageBean = assetService.SplitPage(5, page);//获取封装了分页信息和数据的pageBean
+			assetSortList = this.pageBean.getAssetSortList();
 			return "list";
 		}else{
 			return "error";
@@ -64,10 +80,10 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 		return "update";
 	}
 	public String updateSort(){
-		System.out.println(assetSort.getAssetSortId()+" "+assetSort.getAssetSortCode());
 		boolean a=this.assetService.updateSort(assetSort);
 		if(a){
-			assetSortList = this.assetService.findList();
+			pageBean = assetService.SplitPage(5, page);//获取封装了分页信息和数据的pageBean
+			assetSortList = this.pageBean.getAssetSortList();
 			return "list";
 		}else{
 			return "error";
@@ -107,9 +123,7 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 		this.assetService = assetService;
 	}
 
-	
 
-	
 
 	public String getParentId() {
 		return parentId;
@@ -147,6 +161,18 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 
 	public void setAssetSort(AssetSort assetSort) {
 		this.assetSort = assetSort;
+	}
+	public PageBean getPageBean() {
+		return pageBean;
+	}
+	public void setPageBean(PageBean pageBean) {
+		this.pageBean = pageBean;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
 	}
 	
 	
