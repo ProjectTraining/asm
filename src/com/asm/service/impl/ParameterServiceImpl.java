@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.asm.dao.ParameterDao;
 import com.asm.domain.Parameter;
 import com.asm.service.ParameterService;
-import com.asm.util.ParameterPageBean;
+import com.asm.util.PageBean;
 
 
 @Transactional(readOnly = false)
@@ -48,13 +48,13 @@ public class ParameterServiceImpl implements ParameterService {
 		return parameterDao.getParameterById(parameterId);
 	}
 	
-	public ParameterPageBean queryForPage(int pageSize, int page) {
+	public PageBean queryForPage(int pageSize, int page) {
 		final String hql = "from Parameter p order by p.parameterName asc"; // 查询语句
 		int allRow = parameterDao.getAllRowCount(hql); // 总记录数
-		int totalPage = ParameterPageBean.countTatalPage(pageSize, allRow); // 总页数
+		int totalPage = PageBean.countTatalPage(pageSize, allRow); // 总页数
 		System.out.println("总共记录数："+totalPage);
-		final int offset = ParameterPageBean.countOffset(pageSize, page); // 当前页开始记录
-		final int currentPage = ParameterPageBean.countCurrentPage(page); // 当前页
+		final int offset = PageBean.countOffset(pageSize, page); // 当前页开始记录
+		final int currentPage = PageBean.countCurrentPage(page); // 当前页
 		int length = 0; // 每页记录数
 		if(currentPage==totalPage){
 			length=allRow-(currentPage-1)*pageSize;
@@ -63,12 +63,13 @@ public class ParameterServiceImpl implements ParameterService {
 		}
 		List<Parameter> list = parameterDao.queryForPage(hql, offset, length); //得到在分页内的数据
 		// 把分页信息保存到Bean当中
-		ParameterPageBean parameterPageBean = new ParameterPageBean();
-		parameterPageBean.setPageSize(pageSize);
-		parameterPageBean.setCurrentPage(currentPage);
-		parameterPageBean.setAllRow(allRow);
-		parameterPageBean.setTotalPage(totalPage);
-		parameterPageBean.setList(list);
-		return parameterPageBean;
+		PageBean pageBean = new PageBean();
+		pageBean.setPageSize(pageSize);
+		pageBean.setCurrentPage(currentPage);
+		pageBean.setAllRow(allRow);
+		pageBean.setTotalPage(totalPage);
+		pageBean.setList(list);
+		pageBean.init();
+		return pageBean;
 	}
 }

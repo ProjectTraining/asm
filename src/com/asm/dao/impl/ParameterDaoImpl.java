@@ -42,6 +42,7 @@ public class ParameterDaoImpl extends CommonDaoImpl<Parameter> implements
 	
 	public List<Parameter> findAll() {
 		String hql = "from Parameter p order by p.parameterName asc";
+		@SuppressWarnings("unchecked")
 		List<Parameter> list = (List<Parameter>) this.getHibernateTemplate().find(hql);
 		return list;
 	}

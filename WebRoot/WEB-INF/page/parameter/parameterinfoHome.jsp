@@ -25,19 +25,10 @@
 </head>
 <body>
 	<script src="assets/js/jquery.min.js"></script>
-	<div id="addparameter">
-	<script type="text/javascript">
-		function jumpAdd(){
-			window.location = "asm/parameterAction_addParameter.action?timestamp="
-						+ new Date().getTime();
-		}
-	</script>
-	<button id="bAdd" onclick="jumpAdd()">添加新参数</button>
-	</div>
 	<div id="showList">
 		<script type="text/javascript">
 			$("#showList").load(
-					"asm/parameterAction_showList.action?timestamp="
+					"asm/parameterAction_Pageforweb.action?timestamp="
 							+ new Date().getTime());
 		</script>
 	</div>

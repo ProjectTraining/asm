@@ -3,14 +3,22 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
 	"http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-<!-- yjzheng create 'parameter package' -->
+<!-- yjzheng -->
 	<package name="yjzheng" namespace="/" extends="struts-default,json-default">
+		<!-- yjzheng parameter action -->
 		<action name="parameterAction_*" class="parameterAction"
 			method="{1}">
 			<result name="addParameter">/WEB-INF/page/parameter/parameteradd.jsp</result>
 			<result name="infoHome">/WEB-INF/page/parameter/parameterinfoHome.jsp</result>
 			<result name="showList">/WEB-INF/page/parameter/list.jsp</result>
 			<result name="updateParameter">/WEB-INF/page/parameter/parameterupdate.jsp</result>
+		</action>
+		
+		<!-- yjzheng assettransfer action -->
+		<action name="transferAction_*" class="parameterAction"
+			method="{1}">
+			<result name="infoHome">/WEB-INF/page/parameter/parameterinfoHome.jsp</result>
+			<result name="showList">/WEB-INF/page/parameter/list.jsp</result>
 		</action>
 	</package>
 </struts>

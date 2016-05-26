@@ -15,7 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.asm.domain.Parameter;
 import com.asm.service.ParameterService;
 import com.asm.util.MD5;
-import com.asm.util.ParameterPageBean;
+import com.asm.util.PageBean;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -44,7 +44,7 @@ public class ParameterAction extends ActionSupport implements SessionAware,
 	private int groupId;
 	private String groupName;
 
-	private ParameterPageBean pageBean; // 封装了分页信息和数据内容的pageBean
+	private PageBean pageBean; // 封装了分页信息和数据内容的pageBean
 	private int page = 1; // 表示从网页中返回的当前页的值 默认为1 表示默认显示第一页内容
 
 	@Override
@@ -125,11 +125,11 @@ public class ParameterAction extends ActionSupport implements SessionAware,
 		this.groupName = groupName;
 	}
 
-	public ParameterPageBean getPageBean() {
+	public PageBean getPageBean() {
 		return pageBean;
 	}
 
-	public void setPageBean(ParameterPageBean pageBean) {
+	public void setPageBean(PageBean pageBean) {
 		this.pageBean = pageBean;
 	}
 

@@ -1,9 +1,9 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<?xml version="1.0" encoding="utf-8" ?>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>  
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
 <title>parameter list page</title>
@@ -36,6 +36,15 @@
 </head>
 
 <body>
+	<div id="addparameter">
+	<script type="text/javascript">
+		function jumpAdd(){
+			window.location = "asm/parameterAction_addParameter.action?timestamp="
+						+ new Date().getTime();
+		}
+	</script>
+	<button id="bAdd" onclick="jumpAdd()">添加新参数</button>
+	</div>
 	<div class="am-g">
 		<div class="am-u-sm-11">
 			<table

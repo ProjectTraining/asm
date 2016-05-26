@@ -16,17 +16,6 @@ public class Parameter implements java.io.Serializable {
 	private int groupId;
 	private String groupName;
 	
-	public Parameter(){
-	}
-	
-	public Parameter(String parameterId, String parameterName, String parameterValue, int groupId, String groupName){
-		this.parameterId = parameterId;
-		this.parameterName = parameterName;
-		this.parameterValue = parameterValue;
-		this.groupId = groupId;
-		this.groupName = groupName;
-	}
-	
 	@Id
 	@GeneratedValue(generator="parameterUUID")
 	@GenericGenerator(name="parameterUUID", strategy="uuid")
