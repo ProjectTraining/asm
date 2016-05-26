@@ -12,5 +12,10 @@
 			<result name="error">/WEB-INF/page/assetSort_information/error.jsp</result>
 			<result name="update">/WEB-INF/page/assetSort_information/updateSort.jsp</result>
 		</action>
+		
+		<action name="allocateAction_*" class="" method="{1}">
+			<result name="list">/WEB-INF/page/allocate/list.jsp</result>
+			<result name="add">/WEB-INF/page/allocate/add.jsp</result>
+		</action>
 	</package>
 </struts>

@@ -1,15 +1,21 @@
 package com.asm.domain;
 
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * Allocate entity. @author MyEclipse Persistence Tools
+ * Allocate entity. 
+ * @author 郑成斌
+ * @time 2016-5-15
  */
 @Entity
 @Table(name = "t_allocate", catalog = "asm")
@@ -18,11 +24,16 @@ public class Allocate implements java.io.Serializable {
 	// Fields
 
 	private String allocateId;
-	private String outUserId;
-	private String outDeptId;
-	private String inConfirmUserId;
-	private String inDeptId;
-	private String assetId;
+//	private String outUserId;
+//	private String outDeptId;
+//	private String inConfirmUserId;
+//	private String inDeptId;
+//	private String assetId;
+	private User userOut;// outUserId;
+	private Dept deptOut;// outDeptId;
+	private User userAccept;// inConfirmUserId;
+	private Dept deptAccept;// inDeptId;
+	private Asset asset;// assetId;
 	private Date outDate;
 	private String outReason;
 	private Integer state;
@@ -34,21 +45,7 @@ public class Allocate implements java.io.Serializable {
 	public Allocate() {
 	}
 
-	/** full constructor */
-	public Allocate(String outUserId, String outDeptId, String inConfirmUserId,
-			String inDeptId, String assetId, Date outDate, String outReason,
-			Integer state, Date inConfirmDate) {
-		this.outUserId = outUserId;
-		this.outDeptId = outDeptId;
-		this.inConfirmUserId = inConfirmUserId;
-		this.inDeptId = inDeptId;
-		this.assetId = assetId;
-		this.outDate = outDate;
-		this.outReason = outReason;
-		this.state = state;
-		this.inConfirmDate = inConfirmDate;
-	}
-
+	
 	@Id
 	@GeneratedValue(generator="allocateUUID")
 	@GenericGenerator(name="allocateUUID", strategy="uuid")
@@ -60,50 +57,61 @@ public class Allocate implements java.io.Serializable {
 		this.allocateId = allocateId;
 	}
 
-	@Column(name = "outUserId", length = 32)
-	public String getOutUserId() {
-		return this.outUserId;
+    @ManyToOne(cascade=CascadeType.REFRESH,optional=true)  
+    @JoinColumn(name = "outUserId",referencedColumnName="userId") 
+	public User getUserOut() {
+		return userOut;
 	}
 
-	public void setOutUserId(String outUserId) {
-		this.outUserId = outUserId;
+
+	public void setUserOut(User userOut) {
+		this.userOut = userOut;
 	}
 
-	@Column(name = "outDeptId", length = 32)
-	public String getOutDeptId() {
-		return this.outDeptId;
+	@ManyToOne(cascade=CascadeType.REFRESH,optional=true)  
+    @JoinColumn(name = "outDeptId",referencedColumnName="deptId") 
+	public Dept getDeptOut() {
+		return deptOut;
 	}
 
-	public void setOutDeptId(String outDeptId) {
-		this.outDeptId = outDeptId;
+
+	public void setDeptOut(Dept deptOut) {
+		this.deptOut = deptOut;
 	}
 
-	@Column(name = "inConfirmUserId", length = 32)
-	public String getInConfirmUserId() {
-		return this.inConfirmUserId;
+	@ManyToOne(cascade=CascadeType.REFRESH,optional=true)  
+    @JoinColumn(name = "inConfirmUserId",referencedColumnName="userId") 
+	public User getUserAccept() {
+		return userAccept;
 	}
 
-	public void setInConfirmUserId(String inConfirmUserId) {
-		this.inConfirmUserId = inConfirmUserId;
+
+	public void setUserAccept(User userAccept) {
+		this.userAccept = userAccept;
 	}
 
-	@Column(name = "inDeptId", length = 32)
-	public String getInDeptId() {
-		return this.inDeptId;
+	@ManyToOne(cascade=CascadeType.REFRESH,optional=true)  
+    @JoinColumn(name = "inDeptId",referencedColumnName="deptId") 
+	public Dept getDeptAccept() {
+		return deptAccept;
 	}
 
-	public void setInDeptId(String inDeptId) {
-		this.inDeptId = inDeptId;
+
+	public void setDeptAccept(Dept deptAccept) {
+		this.deptAccept = deptAccept;
 	}
 
-	@Column(name = "assetId", length = 32)
-	public String getAssetId() {
-		return this.assetId;
+	@ManyToOne(cascade=CascadeType.REFRESH,optional=true)  
+    @JoinColumn(name = "assetId",referencedColumnName="assetId") 
+	public Asset getAsset() {
+		return asset;
 	}
 
-	public void setAssetId(String assetId) {
-		this.assetId = assetId;
+
+	public void setAsset(Asset asset) {
+		this.asset = asset;
 	}
+
 
 	@Column(name = "outDate", length = 19)
 	public Date getOutDate() {
