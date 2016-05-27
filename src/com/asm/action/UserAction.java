@@ -44,14 +44,12 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	private Map<String, Object> session;
 	private List<User> userList;
 	private List<Dept> deptList;
-	private int pageNow = 1;
-	private int pageSize = 10;
+
 	private JSONObject rows;
-	private String storeId;
-	private int state;
-	private JSONObject data;
 	private String stateStr;
 	HashMap<String, String> deptMap = new HashMap<String, String>();
+	
+
 	public String getStateStr() {
 		return stateStr;
 	}
@@ -74,59 +72,7 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		// TODO Auto-generated method stub
 		return user;
 	}
-	
 
-
-	
-
-	
-	
-	public JSONObject getData() {
-		return data;
-	}
-	public void setData(JSONObject data) {
-		this.data = data;
-	}
-	
-
-	public String getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
-	}
-
-	public int getState() {
-		return state;
-	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
-
-	
-	
-
-
-
-
-
-	public int getPageNow() {
-		return pageNow;
-	}
-
-	public void setPageNow(int pageNow) {
-		this.pageNow = pageNow;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
 	public JSONObject getRows() {
 		return rows;
 	}
@@ -222,6 +168,7 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 			list.add(hashMap);
 		}
 		maps.put("Rows", list);
+		maps.put("total", list.size());
 		System.out.println(maps.size());
 		rows = JSONObject.parseObject(JSON.toJSONString(maps));
 		System.out.println(rows.toJSONString());

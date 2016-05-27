@@ -28,7 +28,7 @@ public class AllocateAction extends ActionSupport implements ModelDriven<Allocat
 	private Date outDate;
 	private String outReason;
 	private int state;
-	private Date inConfirmDate;
+	private Date inConfirmDate; 
 	
 	private Allocate allocate = new Allocate();
 	@Autowired

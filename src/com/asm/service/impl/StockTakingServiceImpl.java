@@ -27,29 +27,25 @@ public class StockTakingServiceImpl implements StockTakingService {
 	private StockTakingDao stockTakingDao;
 
 	@Override
-	public List<StockTaking> listStockTaking(String deptId,
+	public List<StockTaking> listStockTaking(String stockTakingId,
 			Date dateBegin, Date dateEnd) {
 		// TODO Auto-generated method stub
 		// 组织查询条件
-		System.out.println("servicebegin");
 		String hqlWhere = "";
 		List<Object> paramsList = new ArrayList<Object>();
 
-		if (null != deptId && !"".equals(deptId)) {
-			hqlWhere += " and o.purchaseDeptId = ? ";
-			paramsList.add(deptId);
+		if (null != stockTakingId && !"".equals(stockTakingId)) {
+			hqlWhere += " and o.stockTakingId = ? ";
+			paramsList.add(stockTakingId);
 		}
 		if (null != dateBegin && null != dateEnd) {
-			hqlWhere += " and o.purchaseDate >=? and o.purchaseDate<= ?";
+			hqlWhere += " and o.stockTakingDate >=? and o.stockTakingDate<= ?";
 			paramsList.add(dateBegin);
 			paramsList.add(dateEnd);
 		}
-		System.out.println("servicebegin2");
 		Object[] params = paramsList.toArray();
 		List<StockTaking> list = stockTakingDao
 				.findCollectionByConditionNopage(hqlWhere, params, null);
-		System.out.println("servicebegin3");
-		System.out.println("size"+list.size());
 		return list;
 	}
 

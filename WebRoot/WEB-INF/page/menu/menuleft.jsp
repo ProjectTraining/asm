@@ -52,10 +52,10 @@ $("#manage").click();
           <li><a href="${pageContext.request.contextPath }/assertAction_home.action" target="mainFrame"><span class="am-icon-th"></span> 资产维修<span class="am-badge am-badge-secondary am-margin-right am-fr">24</span></a></li>
           <li><a href="${pageContext.request.contextPath }/parameterAction_sortHome.action" target="mainFrame"><span class="am-icon-calendar"></span>资产移交</a></li>
           <li><a href="${pageContext.request.contextPath }/parameterAction_infoHome.action" target="mainFrame"><span class="am-icon-bug"></span> 资产确认</a></li>
-          <li><a href="${pageContext.request.contextPath }/stockTakingAction_infoHome.action" class="am-cf" target="mainFrame"><span class="am-icon-check"></span> 资产盘点<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
+          <li><a href="${pageContext.request.contextPath }/stockTakingAction_listPage.action" class="am-cf" target="mainFrame"><span class="am-icon-check"></span> 资产盘点<span class="am-icon-star am-fr am-margin-right admin-icon-yellow"></span></a></li>
         </ul>
       </li>
-      <li><a href="#" target="mainFrame"><span class="am-icon-table"></span>统计报表</a></li>
+      <li><a href="${pageContext.request.contextPath }/chartAction_homePage.action" target="mainFrame"><span class="am-icon-table"></span>统计报表</a></li>
        <li class="admin-parent">
         <a id="manage" class="am-cf" data-am-collapse="{target: '#collapse-sys'}"><span class="am-icon-file"></span> 页面模块 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
         <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-sys">

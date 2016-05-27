@@ -7,7 +7,7 @@ import com.asm.domain.StockTakingItem;
 
 public interface StockTakingItemService {
 
-	public abstract List<StockTakingItem> listStockTakingItem(String assettName,String purchaseId);
+	public abstract List<StockTakingItem> listStockTakingItem(String assettName,String stockTakingId);
 
 	public abstract void saveStockTakingItem(StockTakingItem stockTakingItem);
 
