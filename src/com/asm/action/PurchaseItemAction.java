@@ -41,7 +41,15 @@ public class PurchaseItemAction extends ActionSupport implements ModelDriven<Pur
 	private List<User> userList;
 	private List<AssetSort> assetSortList;
 	private String userId;
-
+private String state;
+	
+	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 
 	private JSONObject rows;
 

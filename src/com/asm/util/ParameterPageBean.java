@@ -2,12 +2,10 @@ package com.asm.util;
 
 import java.util.List;
 
-import org.apache.poi.ss.formula.functions.T;
+import com.asm.domain.Parameter;
 
-import com.asm.domain.Dept;
-
-public class PageBean<Object> {
-	private List<Object> list; // 要返回的某一页的记录列表
+public class ParameterPageBean {
+	private List<Parameter> list; // 要返回的某一页的记录列表
 	private int allRow; // 总记录数
 	private int totalPage; // 总页数
 	private int currentPage; // 当前页
@@ -16,13 +14,6 @@ public class PageBean<Object> {
 	private boolean isLastPage; // 是否为最后一页
 	private boolean hasPreviousPage; // 是否有前一页
 	private boolean hasNextPage; // 是否有下一页
-
-	public void init() {
-		this.isFirstPage = isFirstPage;
-		this.isLastPage = isLastPage;
-		this.hasPreviousPage = hasPreviousPage;
-		this.hasNextPage = hasNextPage;
-	}
 
 	/**
 	 * 计算总页数 静态方法
@@ -64,11 +55,11 @@ public class PageBean<Object> {
 		return curpage;
 	}
 
-	public List<Object> getList() {
+	public List<Parameter> getList() {
 		return list;
 	}
 
-	public void setList(List<Object> list) {
+	public void setList(List<Parameter> list) {
 		this.list = list;
 	}
 

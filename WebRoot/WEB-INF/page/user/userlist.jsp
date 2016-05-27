@@ -104,7 +104,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div position="top" title="" style="padding-left:10px;">
             	<!-- 查询条件部分 -->
             	<div>
-            	 <s:debug></s:debug>
             		<form id="searchForm" name="searchForm" class="l-form liger-form" action="userAction_homePage.action" method="post">
 		            	<table id="searchTable" class="searchTable">
 		            		<tr>

@@ -35,7 +35,7 @@ public class StockTakingItemServiceImpl implements StockTakingItemService {
 		List<Object> paramsList = new ArrayList<Object>();
 
 		if (null != assettName && !"".equals(assettName)) {
-			hqlWhere += " and o.assettName like ?";
+			hqlWhere += " and o.asset.assetName like ?";
 			paramsList.add("%"+assettName+"%");
 		}
 		if (null != stockTakingId && !"".equals(stockTakingId)) {
@@ -44,6 +44,7 @@ public class StockTakingItemServiceImpl implements StockTakingItemService {
 		}
 		
 		Object[] params = paramsList.toArray();
+		System.out.println("hqlWhere"+hqlWhere);
 		List<StockTakingItem> list = stockTakingItemDao
 				.findCollectionByConditionNopage(hqlWhere, params, null);
 		return list;

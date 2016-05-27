@@ -104,9 +104,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    function checkna(){
 	    	var orginalname=$('#orginalname').val();
 			na=form1.userName.value;
-			
 			if(orginalname==na){
-				booluserName = true;
+				booluserName = true;divname.innerHTML='';
+			
 				return;
 			}
 		  	if( na.length<6||na.length>20)  
@@ -130,9 +130,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				if(flag) {
 					divname.innerHTML='<font class="tips_false">该用户名已经存在！</font>';
 					booluserName = false;			
+				}else{
+					divname.innerHTML='';
+					booluserName = true;
 				}
-			}
+				
+				
+				
+					
+      }
+      	
       });
+     
 	  }
 	 
 	var check = function(){
@@ -142,14 +151,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var password= $('#password').val();
 		var state = $('#state').val();
 		var sex= $('#sex').val();
-		 
+		var deptId= $('#deptId').val(); 
 		if(bool==true){
 			$.ajax({
 			cache: false,
 			async: false,
 			type: "POST",
 		dataType: "json",
-			data: {userId:userId,userName:userName,password:password,state:state,sex:sex},
+			data: {userId:userId,userName:userName,password:password,state:state,sex:sex,deptId:deptId},
 			url: "userAction_editUser.action",
 		success: function(flag) {
 				if(flag==true){
@@ -188,6 +197,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<label>用户名：</label>
 					<input type="text" name="userName" id="userName" value="<s:property value="user.userName"/>"  placeholder="请输入用户名"  onblur="checkna()" required/><span class="tips" id="divname">长度6~20个字符</span>
 				</li>
+				
+				<li>
+					<label>部门：</label>
+			
+						<select id="deptId" name="deptId" style="width:80px;height:25px">
+						<s:iterator value="deptList" var="item">
+								<s:if test="%{#item.deptId==user.deptId}">
+					<option value="${item.deptId}" selected="selected">${item.deptName}</option>
+					 </s:if>
+					 <s:else>
+					 <option value="${item.deptId}">${item.deptName}</option>
+					</s:else>	
+						</s:iterator>
+						
+							
+									</select> 
+					
+				</li>
+				<li>
+					<label>角色：</label>
+					
+					<select id="roleId" name="roleId" style="min-width:80px;height:25px">
+						<option value ="1">管理员</option>
+						 <option value ="2">技术员</option>
+ 						 
+					</select>
+		
+				</li>
+				
 				<li>
 					<label>状态：</label>
 					

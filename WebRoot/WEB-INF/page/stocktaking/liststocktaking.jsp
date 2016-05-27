@@ -49,12 +49,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         { display: '操作', isAllowHide:false,width: 80,minWidth:60,render: function (row)
 							    {
 									var html = "";
-									html += "&nbsp;&nbsp;<span title='编辑盘点明细' class='l-icon-view grid-line-btn' onclick=\"viewPurchaseItem('"+row.stockTakingId+"')\">&nbsp;</span>";
-										html += "<span title='确认盘点' class='l-icon-ok grid-line-btn'  onclick=\"changeState('"+row.stockTakingId+"','确认入库成功！','stockTakingAction_changeState.action?stockTakingId=',2)\">&nbsp;</span>";
-										html += "<span title='编辑' class='l-icon-edit grid-line-btn'  onclick=\"edit('"+row.stockTakingId+"')\">&nbsp;</span>";
 								
-									 	html += "<span title='作废' class='l-icon-delete grid-line-btn' onclick=\"changeState('"+row.stockTakingId+"','作废成功！','stockTakingAction_changeState.action?stockTakingId=',0)\">&nbsp;</span>";
+										html += "&nbsp;&nbsp;<span title='编辑盘点明细' class='l-icon-view grid-line-btn' onclick=\"viewPurchaseItem('"+row.stockTakingId+"','"+row.state+"')\">&nbsp;</span>";
 									
+									if(row.state != '0' &&row.state != '2'){
+										html += "<span title='确认盘点' class='l-icon-ok grid-line-btn'  onclick=\"changeState('"+row.stockTakingId+"','确认入库成功！','stockTakingAction_changeState.action?stockTakingId=',2)\">&nbsp;</span>";
+									}
+									if(row.state != '0' &&row.state != '2'){
+										html += "<span title='编辑' class='l-icon-edit grid-line-btn'  onclick=\"edit('"+row.stockTakingId+"')\">&nbsp;</span>";
+									}
+									if(row.state != '2' &&row.state != '0'){
+										html += "<span title='作废' class='l-icon-delete grid-line-btn' onclick=\"changeState('"+row.stockTakingId+"','作废成功！','stockTakingAction_changeState.action?stockTakingId=',0)\">&nbsp;</span>";
+									}
+
 							        return html;
 							    }
 							},   
@@ -90,8 +97,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     rownumbers:true,usePager:true
         });  
     });  
-    var viewPurchaseItem = function(stockTakingId){
-		 	location.href = " <%=request.getContextPath()%>/stockTakingItemAction_listPage.action?stockTakingId="+stockTakingId;
+    var viewPurchaseItem = function(stockTakingId,state){
+		 	location.href = " <%=request.getContextPath()%>/stockTakingItemAction_listPage.action?stockTakingId="+stockTakingId+"&state="+state;
  };
      var edit = function(stockTakingId){
 		 	showDialog('stockTakingAction_editPage.action?stockTakingId='+stockTakingId,'修改盘点',750,500);

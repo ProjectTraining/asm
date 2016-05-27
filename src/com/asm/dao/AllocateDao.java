@@ -1,5 +1,10 @@
 package com.asm.dao;
 
-public interface AllocateDao {
+import java.util.List;
 
+import com.asm.domain.Allocate;
+
+public interface AllocateDao {
+	public abstract List<Allocate> findList();
+	public abstract void add(Allocate allocate);
 }

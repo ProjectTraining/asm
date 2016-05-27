@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -179,14 +180,14 @@ boolpassWord2=false;
 		var password1 = $('#password').val();
 		var state1 = $('#state').val();
 		var sex1 = $('#sex').val();
-		 
+		var deptId = $('#deptId').val();
 		if(bool==true){
 			$.ajax({
 			cache: false,
 			async: false,
 			type: "POST",
 		dataType: "json",
-			data: {userName:userName1,password:password1,state:state1,sex:sex1},
+			data: {userName:userName1,password:password1,state:state1,sex:sex1,deptId:deptId},
 			url: "userAction_register.action",
 		success: function(flag) {
 				if(flag) {
@@ -222,9 +223,30 @@ boolpassWord2=false;
 					<input type="password" name="password2" id="password2" placeholder="请再次输入你的密码" onBlur="checkpsd2()" required/><span class="tips" id="divpassword2">两次密码需要相同</span>
 				</li>
 				<li>
+					<label>部门：</label>
+					<div class="info">
+						<select id="deptId" name="deptId" style="width:80px;height:25px">
+									<s:iterator value="deptList" var="item">
+									
+									<option value="${item.deptId}">${item.deptName}</option>		
+									</s:iterator>
+									</select> 
+					</div>
+				</li>
+				<li>
+					<label>角色：</label>
+					<div class="info">
+					<select id="roleId" name="roleId" style="min-width:80px;height:25px">
+						<option value ="1">管理员</option>
+						 <option value ="2">技术员</option>
+ 						 
+					</select>
+					</div>
+				</li>
+				<li>
 					<label>性别：</label>
 					<div class="info">
-					<select id="sex" name="sex" >
+					<select id="sex" name="sex"  style="min-width:80px;height:25px">
 						<option value ="1">男</option>
 						 <option value ="0">女</option>
  						 
@@ -234,7 +256,7 @@ boolpassWord2=false;
 				<li>
 					<label>员工状态：</label>
 					<div class="info">
-					<select id="state" name="state" >
+					<select id="state" name="state" style="min-width:80px;height:25px" >
 						 <option value ="1">在职</option>
 						 <option value ="0">离职</option>
  						

@@ -51,6 +51,23 @@ public class StockTakingItemAction extends ActionSupport implements ModelDriven<
 	private List<AssetSort> assetSortList;
 	private String stockTakingId;
 	private String assetId;
+	private String state;
+	private String assetName;
+	
+	
+	
+	public String getAssetName() {
+		return assetName;
+	}
+	public void setAssettName(String assetName) {
+		this.assetName = assetName;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 
 	private JSONObject rows;
 
@@ -157,8 +174,10 @@ public class StockTakingItemAction extends ActionSupport implements ModelDriven<
 	
 	}
 	public String list() {
-		System.out.println("资产盘点"+stockTakingId);
-		stockTakingItemList = stockTakingItemService.listStockTakingItem(null,stockTakingId);
+		System.out.println("资产盘点"+stockTakingId+assetName);
+		stockTakingItemList = stockTakingItemService.listStockTakingItem(assetName,stockTakingId);
+		System.out.println("stockTakingItemList"+stockTakingItemList.size());
+		
 		HashMap<String, Object> maps = new HashMap<String, Object>();
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		for (StockTakingItem  stockTakingItem: stockTakingItemList) {
