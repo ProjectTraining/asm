@@ -36,8 +36,10 @@ public class UserServiceImpl implements UserService {
 		String hqlWhere = "";
 		List<Object> paramsList = new ArrayList<Object>();
 		if(null!=userName && !"".equals(userName)){
-				hqlWhere += " and o.userName = ? ";
-				paramsList.add(userName);
+
+				hqlWhere += " and o.userName like ?";
+				paramsList.add("%"+userName+"%");
+
 		}
 		if(null!=deptId && !"".equals(deptId)){
 			hqlWhere += " and o.deptId = ? ";

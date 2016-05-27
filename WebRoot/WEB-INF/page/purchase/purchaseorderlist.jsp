@@ -49,11 +49,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         { display: '操作', isAllowHide:false,width: 80,minWidth:60,render: function (row)
 							    {
 									var html = "";
-									html += "&nbsp;&nbsp;<span title='编辑采购单' class='l-icon-view grid-line-btn' onclick=\"viewPurchaseItem('"+row.purchaseId+"')\">&nbsp;</span>";
+									
+									
+									html += "&nbsp;&nbsp;<span title='编辑采购单' class='l-icon-view grid-line-btn' onclick=\"viewPurchaseItem('"+row.purchaseId+"','"+row.state+"')\">&nbsp;</span>";
+										if(row.state != '0' &&row.state != '2'){
 										html += "<span title='确认入库' class='l-icon-ok grid-line-btn'  onclick=\"changeState('"+row.purchaseId+"','确认入库成功！','purchaseOrderAction_changeState.action?purchaseId=',2)\">&nbsp;</span>";
-										html += "<span title='编辑' class='l-icon-edit grid-line-btn'  onclick=\"edit('"+row.purchaseId+"')\">&nbsp;</span>";
-								
-									 	html += "<span title='作废' class='l-icon-delete grid-line-btn' onclick=\"changeState('"+row.purchaseId+"','作废成功！','purchaseOrderAction_changeState.action?purchaseId=',0)\">&nbsp;</span>";
+									}
+									if(row.state != '0' &&row.state != '2'){
+	html += "<span title='编辑' class='l-icon-edit grid-line-btn'  onclick=\"edit('"+row.purchaseId+"')\">&nbsp;</span>";
+									}
+									if(row.state != '2' &&row.state != '0'){
+										html += "<span title='作废' class='l-icon-delete grid-line-btn' onclick=\"changeState('"+row.purchaseId+"','作废成功！','purchaseOrderAction_changeState.action?purchaseId=',0)\">&nbsp;</span>";
+									}
 									
 							        return html;
 							    }
@@ -92,8 +99,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     rownumbers:true,usePager:true
         });  
     });  
-    var viewPurchaseItem = function(purchaseId){
-		 	location.href = " <%=request.getContextPath()%>/purchaseItemAction_home.action?purchaseOrderId="+purchaseId;
+    var viewPurchaseItem = function(purchaseId,state){
+		 	location.href = " <%=request.getContextPath()%>/purchaseItemAction_home.action?purchaseOrderId="+purchaseId+"&state="+state;
  };
      var edit = function(purchaseId){
 		 	showDialog('purchaseOrderAction_listInfo.action?purchaseId='+purchaseId,'修改采购单',750,500);

@@ -43,6 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript"> 
     $(function(){  
     	var stockTakingId=$('#stockTakingId').val();
+    	var state=$('#state').val();
         MainGrid=$("#MainGrid").ligerGrid({  
                  
                     columns:[  
@@ -50,11 +51,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         { display: '操作', isAllowHide:false,width: 80,minWidth:60,render: function (row)
 							    {
 									var html = "";
-									
+										if(state == '1'){
 										html += "<span title='详细与编辑' class='l-icon-view grid-line-btn'  onclick=\"edit('"+row.stockTakingItemId+"')\">&nbsp;</span>";
 								
 									 	html += "<span title='删除' class='l-icon-delete grid-line-btn' onclick=\"deleteObjFromMainGrid('"+row.stockTakingItemId+"','"+row.__id+"','stockTakingItemAction_remove.action?stockTakingItemId=')\">&nbsp;</span>";
-									
+									}
 							        return html;
 							    }
 							},   
@@ -96,6 +97,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 	showDialog('stockTakingItemAction_editPage.action?stockTakingItemId='+stockTakingItemId,'修改盘点明细',750,500);
  };
   var addNewRecord = function(){
+   var state=$('#state').val();
+  if(state!=1){
+  $.jBox.tip('当前状态下不能增加！');
+  }
 var stockTakingId=$('#stockTakingId').val();
 		 showDialog('stockTakingItemAction_addPage.action?stockTakingId='+stockTakingId,'添加盘点明细',750,500);
 		 };
@@ -123,6 +128,8 @@ var stockTakingId=$('#stockTakingId').val();
             	<div>
             	<input type="hidden" name="stockTakingId"
 					id="stockTakingId" value="${stockTakingId}" />
+					<input type="hidden" name="state"
+					id="state" value="${state}" />
             		<form id="searchForm" name="searchForm" class="l-form liger-form" action="userAction_homePage.action" method="post">
 		            	<table id="searchTable" class="searchTable">
 		            		<tr>
