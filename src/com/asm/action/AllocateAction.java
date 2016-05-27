@@ -12,8 +12,10 @@ import com.asm.domain.Asset;
 import com.asm.domain.Dept;
 import com.asm.domain.User;
 import com.asm.service.AllocateService;
+import com.asm.service.AssetService;
 import com.asm.service.DeptService;
 import com.asm.service.UserService;
+import com.asm.util.ResponseUtil;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -34,16 +36,96 @@ public class AllocateAction extends ActionSupport implements
 	private List<Asset> AssetList;
 	private Allocate allocate = new Allocate();
 
+	private String userOutId;
+	private String userAcceptId;
+	private String deptAcceptId;
+	private String deptOutId;
+	private String assetId;
 	@Autowired
 	private AllocateService allocateService;
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private DeptService deptService;
+	@Autowired
+	private AssetService assetService;
 
 	public String home() {
 		allocateList = this.allocateService.findList();
 		return "list";
+	}
+
+	public String assetOut(){
+		AssetList = this.assetService.list();
+		userList = this.userService.listUser(null, null, null, null);
+		deptList = this.deptService.findAllUsers();
+		return "assetOut";
+	}
+	
+	public void add(){
+		allocate.setDeptAccept(this.deptService.findDeptById(deptAcceptId));
+		allocate.setDeptOut(this.deptService.findDeptById(deptOutId));
+		allocate.setUserAccept(this.userService.findUser(userAcceptId));
+		allocate.setUserOut(this.userService.findUser(userOutId));
+		allocate.setAsset(this.assetService.findAsset(assetId));
+		
+		this.allocateService.add(allocate);
+		try {
+			ResponseUtil.write1(true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public AssetService getAssetService() {
+		return assetService;
+	}
+
+
+	public void setAssetService(AssetService assetService) {
+		this.assetService = assetService;
+	}
+
+
+	public String getUserOutId() {
+		return userOutId;
+	}
+
+	public void setUserOutId(String userOutId) {
+		this.userOutId = userOutId;
+	}
+
+	public String getUserAcceptId() {
+		return userAcceptId;
+	}
+
+	public void setUserAcceptId(String userAcceptId) {
+		this.userAcceptId = userAcceptId;
+	}
+
+	public String getAssetId() {
+		return assetId;
+	}
+
+	public void setAssetId(String assetId) {
+		this.assetId = assetId;
+	}
+
+	public String getDeptAcceptId() {
+		return deptAcceptId;
+	}
+
+	public void setDeptAcceptId(String deptAcceptId) {
+		this.deptAcceptId = deptAcceptId;
+	}
+
+	public String getDeptOutId() {
+		return deptOutId;
+	}
+
+	public void setDeptOutId(String deptOutId) {
+		this.deptOutId = deptOutId;
 	}
 
 	public UserService getUserService() {

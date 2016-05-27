@@ -18,6 +18,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
+<link rel="stylesheet" href="assets/css/amazeui.min.css" />
+<link rel="stylesheet" href="assets/css/admin.css" />
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -30,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<table border="1" width="100%" align="center"
 				class="am-table am-table-bd am-table-striped admin-content-table">
 				<tr>
-					<td colspan="6" align="center">
+					<td colspan="10" align="center">
 						<form name="form" method="post"
 							action="assetSortAction_findByName.action">
 							<button>
@@ -43,26 +45,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</form></td>
 				</tr>
 				<tr>
-					<th>资产调出部门</th>
-					<th>调出部门负责人</th>
+					<th>资产名</th>
+					<th>调出部门</th>
+					<th>调出负责人</th>
 					<th>资产调出时间</th>
-					<th>资产接收部门</th>
-					<th>接收部门负责人</th>
-					<th>接收资产名</th>
+					<th>接收部门</th>
+					<th>接收负责人</th>
 					<th>资产接收时间</th>
 					<th>资产调拨理由</th>
 				</tr>
 				<c:forEach items="${allocateList}" var="allocate" varStatus="vs">
 					<tr>
-						<td align="center">${allocate.deptOut}</td>
-						<td align="center">${allocate.userOut}</td>
+						<td align="center">${allocate.asset.assetName}</td>
+						<td align="center">${allocate.deptOut.deptName}</td>
+						<td align="center">${allocate.userOut.userName}</td>
 						<td align="center">${allocate.outDate}</td>
-						<td align="center">${allocate.deptAccept}</td>
-						<td align="center">${allocate.userAccept}</td>
-						<td align="center">${allocate.asset}</td>
+						<td align="center">${allocate.deptAccept.deptName}</td>
+						<td align="center">${allocate.userAccept.userName}</td>
 						<td align="center">${allocate.inConfirmDate}</td>
 						<td align="center">${allocate.outReason}</td>
-						
 						<br>
 					</tr>
 
@@ -70,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 				<s:iterator value="pageBean">
 					<tr>
-						<td colspan="6" align="center">共<s:property value="allRow" />条记录
+						<td colspan="10" align="center">共<s:property value="allRow" />条记录
 							共<s:property value="totalPage" />页 当前第<s:property
 								value="currentPage" />页<br /> <s:if test="%{currentPage == 1}">    
            第一页  上一页    

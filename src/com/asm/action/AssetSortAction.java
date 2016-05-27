@@ -48,7 +48,7 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 	}
 	public String home(){
 		pageBean = assetService.SplitPage(5, page);//获取封装了分页信息和数据的pageBean
-		assetSortList = this.pageBean.getAssetSortList();
+		assetSortList = this.pageBean.getList();
 		return "list";
 	}
 	public String addPage(){
@@ -58,7 +58,7 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 		boolean a = assetService.addSort(assetSort);
 		if(a){
 			pageBean = assetService.SplitPage(5, page);//获取封装了分页信息和数据的pageBean
-			assetSortList = this.pageBean.getAssetSortList();
+			assetSortList = this.pageBean.getList();
 			return "list";
 		}else{
 			return "error";
@@ -69,7 +69,7 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 		System.out.println(a);
 		if(a){
 			pageBean = assetService.SplitPage(5, page);//获取封装了分页信息和数据的pageBean
-			assetSortList = this.pageBean.getAssetSortList();
+			assetSortList = this.pageBean.getList();
 			return "list";
 		}else{
 			return "error";
@@ -83,7 +83,7 @@ public class AssetSortAction extends ActionSupport implements ModelDriven<AssetS
 		boolean a=this.assetService.updateSort(assetSort);
 		if(a){
 			pageBean = assetService.SplitPage(5, page);//获取封装了分页信息和数据的pageBean
-			assetSortList = this.pageBean.getAssetSortList();
+			assetSortList = this.pageBean.getList();
 			return "list";
 		}else{
 			return "error";

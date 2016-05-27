@@ -16,5 +16,11 @@ public class AllocateDaoImpl extends CommonDaoImpl<Allocate>implements AllocateD
 		List<Allocate> list = (List<Allocate>) find(hql, null);
 		return list;
 	}
+
+	@Override
+	public void add(Allocate allocate) {
+		// TODO Auto-generated method stub
+		this.save(allocate);
+	}
 	
 }

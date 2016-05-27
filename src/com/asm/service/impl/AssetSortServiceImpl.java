@@ -78,7 +78,7 @@ public class AssetSortServiceImpl implements AssetSortService{
 		pageBean.setCurrentPage(currentPage);
 		pageBean.setAllRow(allRow);
 		pageBean.setTotalPage(totalPage);
-		pageBean.setAssetSortList(list);
+		pageBean.setList(list);
 		pageBean.init();
 		return pageBean;
 	}

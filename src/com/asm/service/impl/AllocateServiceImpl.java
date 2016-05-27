@@ -18,5 +18,11 @@ public class AllocateServiceImpl implements AllocateService {
 		// TODO Auto-generated method stub
 		return this.allocateDao.findList();
 	}
+
+	@Override
+	public void add(Allocate allocate) {
+		// TODO Auto-generated method stub
+		this.allocateDao.add(allocate);
+	}
 	
 }
