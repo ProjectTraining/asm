@@ -11,6 +11,6 @@ public interface ParameterDao {
 	public abstract void update(Parameter parameter);
 	public abstract List<Parameter> scan();
 	public abstract boolean delParameter(Parameter parameter);
-	public List<Parameter> queryForPage(final String hql,final int offset,final int length);
-	public int getAllRowCount(String hql);
+	public abstract List<Parameter> queryForPage(final String hql,final int offset,final int length);
+	public abstract int getAllRowCount(String hql);
 }
