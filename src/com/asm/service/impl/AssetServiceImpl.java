@@ -82,5 +82,11 @@ public class AssetServiceImpl implements AssetService {
 		}
 	}
 
+	@Override
+	public List<Asset> list() {
+		// TODO Auto-generated method stub
+		return this.assetDao.findList();
+	}
+
 
 }
