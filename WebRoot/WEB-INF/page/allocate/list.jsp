@@ -2,46 +2,37 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<head>
-<base href="<%=basePath%>">
-
-<title>assetSort list page</title>
-<script type="text/javascript">  
-            function del(){  
-                if(confirm("Are you sure?")){  
-                    return true;  
-                }  
-                return false;  
-            }  
-    </script>
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">
-<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-<meta http-equiv="description" content="This is my page">
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'list.jsp' starting page</title>
+    
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" href="assets/css/amazeui.min.css" />
 <link rel="stylesheet" href="assets/css/admin.css" />
-<!--
+	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 
-</head>
-
-<body>
+  </head>
+  
+ <body>
 	<div class="am-g">
 		<div class="am-u-sm-11">
 			<table border="1" width="100%" align="center"
 				class="am-table am-table-bd am-table-striped admin-content-table">
 				<tr>
-					<td colspan="6" align="center">
+					<td colspan="10" align="center">
 						<form name="form" method="post"
 							action="assetSortAction_findByName.action">
 							<button>
@@ -54,24 +45,25 @@
 						</form></td>
 				</tr>
 				<tr>
-					<th>资产类型编号</th>
-					<th>资产类型名称</th>
-					<th>上级资产类型编号</th>
-					<th>上级资产类型名称</th>
-					<th>可执行操作</th>
-
+					<th>资产名</th>
+					<th>调出部门</th>
+					<th>调出负责人</th>
+					<th>资产调出时间</th>
+					<th>接收部门</th>
+					<th>接收负责人</th>
+					<th>资产接收时间</th>
+					<th>资产调拨理由</th>
 				</tr>
-				<c:forEach items="${assetSortList}" var="assetSort" varStatus="vs">
+				<c:forEach items="${allocateList}" var="allocate" varStatus="vs">
 					<tr>
-						<td align="center">${assetSort.assetSortCode}</td>
-						<td align="center">${assetSort.assetSortName}</td>
-						<td align="center">${assetSort.parentId}</td>
-						<td align="center">${assetSort.parentName}</td>
-						<td align="center"><a
-							href="assetSortAction_delSort.action?assetSort.assetSortId=${assetSort.assetSortId}"
-							onclick="return del()">删除</a> <a
-							href="assetSortAction_updatePage.action?assetSort.assetSortId=${assetSort.assetSortId}">修改</a>
-						</td>
+						<td align="center">${allocate.asset.assetName}</td>
+						<td align="center">${allocate.deptOut.deptName}</td>
+						<td align="center">${allocate.userOut.userName}</td>
+						<td align="center">${allocate.outDate}</td>
+						<td align="center">${allocate.deptAccept.deptName}</td>
+						<td align="center">${allocate.userAccept.userName}</td>
+						<td align="center">${allocate.inConfirmDate}</td>
+						<td align="center">${allocate.outReason}</td>
 						<br>
 					</tr>
 
@@ -79,7 +71,7 @@
 
 				<s:iterator value="pageBean">
 					<tr>
-						<td colspan="6" align="center">共<s:property value="allRow" />条记录
+						<td colspan="10" align="center">共<s:property value="allRow" />条记录
 							共<s:property value="totalPage" />页 当前第<s:property
 								value="currentPage" />页<br /> <s:if test="%{currentPage == 1}">    
            第一页  上一页    
