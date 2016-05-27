@@ -16,7 +16,5 @@ public interface AssetService {
 
 	public abstract boolean updateAsset(Asset asset);
 	
-	public abstract List<Asset> list();
-	
 
 }
