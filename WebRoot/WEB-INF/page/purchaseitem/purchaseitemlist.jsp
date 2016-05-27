@@ -43,6 +43,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript"> 
     $(function(){  
     	var purchaseId=$('#purchaseOrderId').val();
+    	var state=$('#state').val();
+    	alert(state);
         MainGrid=$("#MainGrid").ligerGrid({  
                  
                     columns:[  
@@ -50,11 +52,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         { display: '操作', isAllowHide:false,width: 80,minWidth:60,render: function (row)
 							    {
 									var html = "";
-									
+									if(state == '1'){
 										html += "<span title='详细与编辑' class='l-icon-view grid-line-btn'  onclick=\"edit('"+row.purchaseItemId+"')\">&nbsp;</span>";
 								
 									 	html += "<span title='删除' class='l-icon-delete grid-line-btn' onclick=\"deleteObjFromMainGrid('"+row.purchaseItemId+"','"+row.__id+"','purchaseItemAction_remove.action?purchaseItemId=')\">&nbsp;</span>";
-									
+									}
 							        return html;
 							    }
 							},   
@@ -85,6 +87,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		 	showDialog('purchaseItemAction_editPage.action?purchaseItemId='+purchaseItemId,'修改采购单',750,500);
  };
   var addNewRecord = function(){
+  var state=$('#state').val();
+  if(state!=1){
+  $.jBox.tip('当前状态下不能增加！');
+  }
 var purchaseId=$('#purchaseOrderId').val();
 		 showDialog('purchaseItemAction_addPage.action?purchaseOrderId='+purchaseId,'添加采购单明细',750,500);
 		 };
@@ -112,6 +118,9 @@ var purchaseId=$('#purchaseOrderId').val();
             	<div>
             	<input type="hidden" name="purchaseOrderId"
 					id="purchaseOrderId" value="${purchaseItem.purchaseOrderId}" />
+					
+					<input type="hidden" name="state"
+					id="state" value="${state}" />
             		<form id="searchForm" name="searchForm" class="l-form liger-form" action="userAction_homePage.action" method="post">
 		            	<table id="searchTable" class="searchTable">
 		            		<tr>

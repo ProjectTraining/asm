@@ -44,12 +44,19 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 	private Map<String, Object> session;
 	private List<User> userList;
 	private List<Dept> deptList;
-
+	private String number;
 	private JSONObject rows;
 	private String stateStr;
 	HashMap<String, String> deptMap = new HashMap<String, String>();
 	
 
+	
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
 	public String getStateStr() {
 		return stateStr;
 	}
@@ -88,6 +95,25 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		}
 		return "login";
 	}
+	
+	public String CheckNumber() throws Exception {
+		boolean flag = false;
+		String number=(String) session.get("CHECK_NUMBER_KEY");
+		System.out.println(number);
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String num=request.getParameter("number");
+		System.out.println(num);
+		if (number!=null&&number.equals(num)) {
+			flag = true;
+			ResponseUtil.write1(flag);
+		} else {
+			ResponseUtil.write1(flag);
+		}
+		return null;
+	}
+	
+	
+	
 	public String login() {
 
 		if(user.getUserName()==null||user.getPassword()==null){
@@ -115,6 +141,8 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		return "userlistpage";
 	}
 	public String addPage(){
+		deptList=deptService.findAllUsers();
+		System.out.println("deptsize"+deptList.size());
 		return "addpage";
 	}
 	public String CheckUsername() throws Exception {
@@ -187,6 +215,7 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		return null;
 	}
 	public String listInfo(){
+		deptList =deptService.findAllUsers();
 		user=userService.findUser(user.getUserId());
 		
 		return "listuserinfo";
@@ -206,5 +235,14 @@ public class UserAction extends ActionSupport implements SessionAware,ModelDrive
 		return null;
 	}
 	
-	
+	public String checkUser() throws Exception {
+		boolean flag = false;
+		if (userService.checkUserExist(user.getUserName(), MD5.getMD5(user.getPassword().getBytes()))!=null){
+			flag = true;
+			ResponseUtil.write1(flag);
+		} else {
+			ResponseUtil.write1(flag);
+		}
+		return null;
+	}
 }
