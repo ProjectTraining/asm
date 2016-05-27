@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.asm.domain.Transfer;
 
-public interface TransferDao {
+public interface TransferDao extends CommonDao<Transfer> {
 	public abstract Transfer getTransferById(String transferId);
 	public abstract void save(Transfer transfer);
 	public abstract void update(Transfer transfer);

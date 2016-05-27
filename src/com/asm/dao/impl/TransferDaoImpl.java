@@ -43,6 +43,9 @@ public class TransferDaoImpl extends CommonDaoImpl<Transfer> implements
 	@Override
 	public List<Transfer> queryForPage(String hql, int offset, int length) {
 		List<Transfer> list = findAll();
+		if(list.size() <= 0){
+			return null;
+		}
 		List<Transfer> list1=new ArrayList<Transfer>();
 		for(int i=0;i<offset+length;i++){
 			if(i>=offset){

@@ -39,7 +39,7 @@
 	<div id="addparameter">
 	<script type="text/javascript">
 		function jumpAdd(){
-			window.location = "asm/parameterAction_addParameter.action?timestamp="
+			window.location = "parameterAction_addParameter.action?timestamp="
 						+ new Date().getTime();
 		}
 	</script>

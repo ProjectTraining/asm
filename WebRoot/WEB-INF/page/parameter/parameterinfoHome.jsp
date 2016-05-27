@@ -28,7 +28,7 @@
 	<div id="showList">
 		<script type="text/javascript">
 			$("#showList").load(
-					"asm/parameterAction_Pageforweb.action?timestamp="
+					"parameterAction_Pageforweb.action?timestamp="
 							+ new Date().getTime());
 		</script>
 	</div>

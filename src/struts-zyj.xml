@@ -17,7 +17,13 @@
 		<!-- yjzheng assettransfer action -->
 		<action name="transferAction_*" class="transferAction"
 			method="{1}">
-			<result name="transferShow">/WEB-INF/page/parameter/parameterinfoHome.jsp</result>
+			<result name="showUser">/WEB-INF/page/transfer/addTransfer.jsp</result>
+			<result name="infoHome">/WEB-INF/page/transfer/transferinfoHome.jsp</result>
+		</action>
+		<action name="transferItemAction_*" class="transferItemAction"
+			method="{1}">
+			<result name="showList">/WEB-INF/page/transfer/list.jsp</result>
+			<result name="infoHome">/WEB-INF/page/transfer/transferinfoHome.jsp</result> 
 		</action>
 	</package>
 </struts>

@@ -8,8 +8,8 @@
 
 <title>parameter list page</title>
 	<script type="text/javascript">  
-            function del(){  
-                if(confirm("确定删除?")){
+            function confirm(){  
+                if(confirm("确定?")){
                 	window.location.reload(); 
                     return true;  
                 }  
@@ -36,42 +36,54 @@
 </head>
 
 <body>
-	<div id="addparameter">
+	<div id="addTransfer">
 	<script type="text/javascript">
 		function jumpAdd(){
-			window.location = "asm/transferAction_addTransfer.action?timestamp="
+			window.location = "transferAction_showUser.action?timestamp="
 						+ new Date().getTime();
 		}
 	</script>
-	<button id="bAdd" onclick="jumpAdd()">添加新参数</button>
+	<button id="bAdd" onclick="jumpAdd()">添加新移交信息</button>
 	</div>
 	<div class="am-g">
 		<div class="am-u-sm-11">
 			<table
 				class="am-table am-table-bd am-table-striped admin-content-table">
 				<tr>
-					<th>参数名称</th>
-					<th>参数值</th>
-					<th>参数组别编号</th>
-					<th>参数组别名称</th>
-					<th>操作</th>
+					<th>申请人</th>
+					<th>移交人</th>
+					<th>移交资产</th>
+					<th>申请时间</th>
+					<th>确认时间</th>
+					<th>移交状态</th>
+					<th>移交类型</th>
+					<th>移交结果</th>
+					<th>移交确认</th>
 				</tr>
 
-				<s:iterator value="%{parameterList}" id="parameter">
+				<s:iterator value="%{transferItemList}" id="transferItem">
 					<tr>
-						<td><s:property value="#parameter.parameterName" />
+						<td><s:property value="#transferItem.transfer.transferUser.userName" />
 						</td>
-						<td><s:property value="#parameter.parameterValue" />
+						<td><s:property value="#transferItem.receiverUser.userName" />
 						</td>
-						<td><s:property value="#parameter.groupId" />
+						<td><s:property value="#transferItem.asset.assetName" />
 						</td>
-						<td><s:property value="#parameter.groupName" />
+						<td><s:property value="#transferItem.transfer.transferDate" />
 						</td>
-						<td align="center"><s:a
-								href="parameterAction_delParameter.action?parameter.parameterId=%{#parameter.parameterId}"
-								onclick="return del()">删除</s:a> <s:a
-								href="parameterAction_putPageParameter.action?parameter.parameterId=%{#parameter.parameterId}"
-								onclick="update()">更新</s:a></td>
+						<td><s:property value="#transferItem.receiverDate" />
+						</td>
+						<td><s:property value="#transferItem.transfer.state" />
+						</td>
+						<td><s:property value="#transferItem.transfer.transferType" />
+						</td>
+						<td><s:property value="#transferItem.reveiverResult" />
+						</td>
+						<td align="center">
+						<s:if test="#transferItem.reveiverResult == 1"></s:if>
+						<s:else><a href="transferItemAction_transferConfirm.action?transferItem.transferItemId=<s:property value="#transferItem.transferItemId" />"
+								onclick="return confirm()">确认移交</a></s:else>
+						</td>
 					</tr>
 				</s:iterator>
 			</table>
@@ -85,14 +97,14 @@
 						value="currentPage" />页<br /> <s:if test="%{currentPage == 1}">    
 						           第一页  上一页    
 						         </s:if> <!-- currentPage为当前页 --> <s:else>
-						<a href="parameterAction_Pageforweb.action?page=1">第一页</a>
+						<a href="transferAction_Pageforweb.action?page=1">第一页</a>
 						<a
-							href="parameterAction_Pageforweb.action?page=<s:property value="%{currentPage-1}"/>">上一页</a>
+							href="transferAction_Pageforweb.action?page=<s:property value="%{currentPage-1}"/>">上一页</a>
 					</s:else> <s:if test="%{currentPage != totalPage}">
 						<a
-							href="parameterAction_Pageforweb.action?page=<s:property value="%{currentPage+1}"/>">下一页</a>
+							href="transferAction_Pageforweb.action?page=<s:property value="%{currentPage+1}"/>">下一页</a>
 						<a
-							href="parameterAction_Pageforweb.action?page=<s:property value="totalPage"/>">最后一页</a>
+							href="transferAction_Pageforweb.action?page=<s:property value="totalPage"/>">最后一页</a>
 					</s:if> <s:else>    
 						         下一页  最后一页    
 						         </s:else></td>

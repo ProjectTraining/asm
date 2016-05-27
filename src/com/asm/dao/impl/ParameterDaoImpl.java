@@ -49,6 +49,9 @@ public class ParameterDaoImpl extends CommonDaoImpl<Parameter> implements
 	
 	public List<Parameter> queryForPage(final String hql, final int offset, final int length) {
 		List<Parameter> list = findAll();
+		if(list.size() <= 0){
+			return null;
+		}
 		List<Parameter> list1=new ArrayList<Parameter>();
 		for(int i=0;i<offset+length;i++){
 			if(i>=offset){

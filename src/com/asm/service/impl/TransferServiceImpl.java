@@ -1,5 +1,6 @@
 package com.asm.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.asm.dao.TransferDao;
 import com.asm.domain.Transfer;
+import com.asm.domain.User;
 import com.asm.service.TransferService;
 import com.asm.util.PageBean;
 
@@ -34,7 +36,7 @@ public class TransferServiceImpl implements TransferService {
 	}
 
 	@Override
-	public boolean delParameter(Transfer transfer) {
+	public boolean delTransfer(Transfer transfer) {
 		return transferDao.delTransfer(transfer);
 	}
 
@@ -62,6 +64,34 @@ public class TransferServiceImpl implements TransferService {
 		pageBean.setList(list);
 		pageBean.init();
 		return pageBean;
+	}
+
+	@Override
+	public List<Transfer> listTransfer(String transferId,String transferUserId,String receiverUserId,String state) {
+		String hqlWhere = "";
+		List<Object> paramsList = new ArrayList<Object>();
+		if(null!=transferId && !"".equals(transferId)){
+				hqlWhere += " and o.transferId = ? ";
+				paramsList.add(transferId);
+		}
+		if(null!=transferUserId && !"".equals(transferUserId)){
+			hqlWhere += " and o.transferUserId = ? ";
+			paramsList.add(transferUserId);
+		}
+		if(null!=receiverUserId && !"".equals(receiverUserId)){
+			hqlWhere += " and o.receiverUserId = ? ";
+			paramsList.add(receiverUserId);
+		}
+		if(null!=state && !"".equals(state)){
+			hqlWhere += " and o.state =?";
+
+			System.out.println("ffff"+state);
+			paramsList.add(Integer.parseInt(state));
+		}
+		Object [] params = paramsList.toArray();
+		List<Transfer> list = transferDao.findCollectionByConditionNopage(
+				hqlWhere, params, null);
+		return list;
 	}
 
 }
