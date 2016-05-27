@@ -1,8 +1,11 @@
 package com.asm.domain;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,8 +19,8 @@ public class Repair implements java.io.Serializable {
 	// Fields
 
 	private String repairId;
-	private String repairUserId;
-	private String assetId;
+	private User user;
+	private Asset asset;
 	private String wrongDesc;
 	private float price;
 	private Integer state;
@@ -29,16 +32,7 @@ public class Repair implements java.io.Serializable {
 	public Repair() {
 	}
 
-	/** full constructor */
-	public Repair(String repairUserId, String assetId, String wrongDesc,
-			float price, Integer state, Integer useStateBeforeRepair) {
-		this.repairUserId = repairUserId;
-		this.assetId = assetId;
-		this.wrongDesc = wrongDesc;
-		this.price = price;
-		this.state = state;
-		this.useStateBeforeRepair = useStateBeforeRepair;
-	}
+
 
 	// Property accessors
 	@Id
@@ -52,24 +46,29 @@ public class Repair implements java.io.Serializable {
 		this.repairId = repairId;
 	}
 
-	@Column(name = "repairUserId", length = 32)
-	public String getRepairUserId() {
-		return this.repairUserId;
+	@ManyToOne(cascade=CascadeType.REFRESH,optional=true)  
+    @JoinColumn(name = "repairUserId",referencedColumnName="userId") 
+	 public User getUser() {
+	  return user;
+	 }
+	
+	public void setUser(User user) {
+		this.user = user;
+
 	}
 
-	public void setRepairUserId(String repairUserId) {
-		this.repairUserId = repairUserId;
-	}
-
-	@Column(name = "assetId", length = 32)
-	public String getAssetId() {
-		return this.assetId;
-	}
-
-	public void setAssetId(String assetId) {
-		this.assetId = assetId;
-	}
-
+	 @ManyToOne(cascade=CascadeType.REFRESH,optional=true)  
+	    @JoinColumn(name = "assetId",referencedColumnName="assetId") 
+		public Asset getAsset() {
+			return asset;
+		}
+		public void setAsset(Asset asset) {
+			this.asset = asset;
+		}
+	
+	
+	
+	
 	@Column(name = "wrongDesc", length = 32)
 	public String getWrongDesc() {
 		return this.wrongDesc;

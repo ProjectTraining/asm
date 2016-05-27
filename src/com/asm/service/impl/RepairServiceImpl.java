@@ -1,6 +1,7 @@
 package com.asm.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -9,20 +10,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.asm.dao.AssetDao;
-import com.asm.domain.Asset;
-import com.asm.service.AssetService;
+import com.asm.dao.AssetSortDao;
+import com.asm.dao.RepairDao;
+import com.asm.domain.AssetSort;
+import com.asm.domain.Repair;
+import com.asm.service.RepairService;
 
 
 
 @Transactional(readOnly = true)
-@Service("assetService")
-public class AssetServiceImpl implements AssetService {
+@Service("repairService")
+public class RepairServiceImpl implements RepairService {
 	@Autowired
-	private AssetDao assetDao;
+	private RepairDao repairDao;
+	
+	@Autowired
+	private AssetSortDao assetSortDao;
 	
 	@Override
-	public List<Asset> listAsset(String assettName,String assetId) {
+	public List<Repair> listRepair(String assettName,String purchaseId) {
 		// TODO Auto-generated method stub
 		// 组织查询条件
 		String hqlWhere = "";
@@ -32,28 +38,28 @@ public class AssetServiceImpl implements AssetService {
 			hqlWhere += " and o.assettName like ?";
 			paramsList.add("%"+assettName+"%");
 		}
-		if (null != assetId && !"".equals(assetId)) {
+		if (null != purchaseId && !"".equals(purchaseId)) {
 			hqlWhere += " and o.purchaseOrderId =?";
-			paramsList.add(assetId);
+			paramsList.add(purchaseId);
 		}
 		
 		Object[] params = paramsList.toArray();
-		List<Asset> list = assetDao
+		List<Repair> list = repairDao
 				.findCollectionByConditionNopage(hqlWhere, params, null);
 		return list;
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
-	public void saveAsset(Asset asset) {
+	public void saveRepair(Repair repair) {
 		// TODO Auto-generated method stub
-		assetDao.save(asset);
+		repairDao.save(repair);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public boolean remove(String assetId) {
+	public boolean remove(String repairId) {
 		try {
-			assetDao.deleteObjectByIds(assetId);
+			repairDao.deleteObjectByIds(repairId);
 			return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -63,17 +69,17 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 	@Override
-	public Asset findAsset(String assetId) {
+	public Repair findRepair(String repairId) {
 		// TODO Auto-generated method stub
-		return assetDao.findObjectByID(assetId);
+		return repairDao.findObjectByID(repairId);
 	}
 
 	
 	@Transactional(propagation=Propagation.REQUIRED,readOnly=false)
-	public boolean updateAsset(Asset asset) {
+	public boolean updateRepair(Repair repair) {
 		try {
 		// TODO Auto-generated method stub
-			assetDao.update(asset);
+			repairDao.update(repair);
 		return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -82,5 +88,17 @@ public class AssetServiceImpl implements AssetService {
 		}
 	}
 
+	@Override
+	public List<AssetSort> findAssertSortList() {
+		// TODO Auto-generated method stub
+		String hql = "select distinct c " +
+					"from AssetSort c " +
+					"join fetch c.listAssetSort " +
+					"where c.parentId=?";
+		Object[] params = {"0"};
+		List<AssetSort> list = (List<AssetSort>)assetSortDao.find(hql,params);
+		return list;
+		
+	}
 
 }
