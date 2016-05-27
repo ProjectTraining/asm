@@ -23,30 +23,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-     <form name="form1" method="post" action="assetSortAction_updateSort.action?assetSort.assetSortId=${assetSort.assetSortId}" >
-     	<ul class="name_items">
-     	<li><label for="pwd">资产编号：</label> 
-			<input type="text" value="${assetSort.assetSortCode}"
+  <form name="form1" method="post" action="assetSortAction_updateSort.action?assetSort.assetSortId=${assetSort.assetSortId}" >
+     <div align="center"><center><table
+	border="1" width="50%" borderColorDark="#FFFFFF" borderColorLight="#000000"
+	cellspacing="0">
+     	
+     	<tr>
+			<td width="27%" bgcolor="#DDDDFF" align="center">资产编号：</td>
+			<td width="73%" bgcolor="#DDDDFF"><input type="text" value="${assetSort.assetSortCode}"
 				name="assetSortCode"  id="assetSortCode"  size="40"
-				  /></li>
-			<li><label for="user">资产名：</label> 
-			<input type="text" value="${assetSort.assetSortName}" 
+				  /></td>
+		</tr>
+		<tr>
+			<td width="27%" bgcolor="#DDDDFF" align="center">资产名：</td>
+			<td width="73%" bgcolor="#DDDDFF"><input type="text" value="${assetSort.assetSortName}" 
 			name="assetSortName"  id="assetSortName" size="40"
-				 /></li>
-			<li><label for="pwd">上级资产编号：</label> 
-			<input type="text" value="${assetSort.parentId}"
+				  /></td>
+		</tr>
+		<tr>
+			<td width="27%" bgcolor="#DDDDFF" align="center">上级资产编号：</td>
+			<td width="73%" bgcolor="#DDDDFF"><input type="text" value="${assetSort.parentId}"
 				name="parentId"  id="parentId"  size="40"
-				  /></li>
-			<li><label for="user">上级资产名：</label> 
-			<input type="text" value="${assetSort.parentName}"
+				  /></td>
+		</tr>
+		<tr>
+			<td width="27%" bgcolor="#DDDDFF" align="center">上级资产名：</td>
+			<td width="73%" bgcolor="#DDDDFF"><input type="text" value="${assetSort.parentName}"
 			name="parentName"  id="parentName" size="40"
-				 /></li>
-			
-				<li><input type="submit" tabindex="3"  value="修改资产类型"
-			 /></li>
-		</ul>
+				  /></td>
+		</tr>
+		<tr>
+			<td width="30%" bgcolor="#DDDDFF" colspan="2"><div align="center"><center><p><input type="submit" tabindex="3"  onclick ="return del()" value="修改资产类型"
+			/> <input type="reset" value="清除" name="B2" tabindex="11"/></p></center></div></td>
+		</tr>	
 
-     </form>
-    
+     </table>
+</center></div>
+</form>
   </body>
 </html>
