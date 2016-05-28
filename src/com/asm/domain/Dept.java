@@ -6,7 +6,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
-
+/**
+ * @description 部门
+ * @Author: 赵楠（作者）
+ * @Version: V1.00 （版本号）
+ * @Create Date: 2016-4-12 （创建日期）
+ */
 @Entity
 @Table(name="t_dept")
 public class Dept implements java.io.Serializable{

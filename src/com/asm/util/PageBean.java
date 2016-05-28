@@ -2,10 +2,17 @@ package com.asm.util;
 
 import java.util.List;
 
-import com.asm.domain.Dept;
+import org.apache.poi.ss.formula.functions.T;
 
-public class PageBean {
-	private List<Dept> list; // 要返回的某一页的记录列表
+import com.asm.domain.Dept;
+/**
+ * @description 分页操作
+ * @Author: 赵楠（作者）
+ * @Version: V1.00 （版本号）
+ * @Create Date: 2016-5-15 （创建日期）
+ */
+public class PageBean<Object> {
+	private List<Object> list; // 要返回的某一页的记录列表
 	private int allRow; // 总记录数
 	private int totalPage; // 总页数
 	private int currentPage; // 当前页
@@ -62,11 +69,11 @@ public class PageBean {
 		return curpage;
 	}
 
-	public List<Dept> getList() {
+	public List<Object> getList() {
 		return list;
 	}
 
-	public void setList(List<Dept> list) {
+	public void setList(List<Object> list) {
 		this.list = list;
 	}
 

@@ -12,7 +12,12 @@ import com.asm.dao.deptDao;
 import com.asm.domain.Dept;
 import com.asm.domain.User;
 
-
+/**
+ * @description 部门
+ * @Author: 赵楠（作者）
+ * @Version: V1.00 （版本号）
+ * @Create Date: 2016-4-12 （创建日期）
+ */
 @Repository("deptDao")  // @Repository对应数据访问层Bean,注解是告诉Spring，让Spring创建一个名字叫“deptDao”的DeptDaoImpl实例
 public class deptDaoImpl extends CommonDaoImpl<Dept> implements deptDao{
 
@@ -73,7 +78,10 @@ public class deptDaoImpl extends CommonDaoImpl<Dept> implements deptDao{
 	public List<Dept> queryForPage(final String hql, final int offset, final int length) {
 		List<Dept> list = findAll();
 		List<Dept> list1=new ArrayList<Dept>();
-		for(int i=0;i<offset+length;i++){
+		if(list.size()==0){
+			return list;
+		}
+		for(int i=0;i<offset+length&&i<=list.size();i++){
 			if(i>=offset){
 				list1.add(list.get(i));
 			}

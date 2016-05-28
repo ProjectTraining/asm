@@ -15,7 +15,12 @@ import com.asm.domain.User;
 import com.asm.service.DeptService;
 import com.asm.util.PageBean;
 
-
+/**
+ * @description 部门
+ * @Author: 赵楠（作者）
+ * @Version: V1.00 （版本号）
+ * @Create Date: 2016-4-12 （创建日期）
+ */
 @Transactional(readOnly=false)
 @Service("deptService")
 public class DeptServiceImpl implements DeptService {
@@ -72,11 +77,16 @@ public class DeptServiceImpl implements DeptService {
 	 * @param currentPage 当前页   
 	 * @return 封装了分页信息的bean   
 	 */    
-	public PageBean queryForPage(int pageSize, int page) {
-		final String hql = "from Dept d order by d.deptId asc"; // 查询语句
+	public PageBean queryForPage(String hql,int pageSize, int page) {
 		int allRow = deptdao.getAllRowCount(hql); // 总记录数
 		int totalPage = PageBean.countTatalPage(pageSize, allRow); // 总页数
 		System.out.println("总共记录数："+totalPage);
+		while(page>totalPage){
+			page--;
+		}
+		if(page<=0){
+			page=1;
+		}
 		final int offset = PageBean.countOffset(pageSize, page); // 当前页开始记录
 		final int currentPage = PageBean.countCurrentPage(page); // 当前页
 		int length = 0; // 每页记录数
@@ -87,7 +97,7 @@ public class DeptServiceImpl implements DeptService {
 		}
 		List<Dept> list = deptdao.queryForPage(hql, offset, length); //得到在分页内的数据
 		// 把分页信息保存到Bean当中
-		PageBean pageBean = new PageBean();
+		PageBean<Dept> pageBean = new PageBean();
 		pageBean.setPageSize(pageSize);
 		pageBean.setCurrentPage(currentPage);
 		pageBean.setAllRow(allRow);

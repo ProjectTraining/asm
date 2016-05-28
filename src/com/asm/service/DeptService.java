@@ -5,7 +5,12 @@ import java.util.List;
 import com.asm.domain.Dept;
 import com.asm.util.PageBean;
 
-
+/**
+ * @description 部门
+ * @Author: 赵楠（作者）
+ * @Version: V1.00 （版本号）
+ * @Create Date: 2016-4-12 （创建日期）
+ */
 public interface DeptService {
 	public void regDept(Dept dept);
 
@@ -24,5 +29,5 @@ public interface DeptService {
 	 * @param currentPage 当前页   
 	 * @return 封装了分页信息的bean   
 	 */    
-	public PageBean queryForPage(int pageSize,int page); 
+	public PageBean queryForPage(String hql,int pageSize,int page); 
 }

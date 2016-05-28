@@ -31,5 +31,7 @@ public interface CommonDao<T> {
 			final Object[] params, LinkedHashMap<String, String> orderby);
 
 	public abstract List<T> find(String queryString, Object[] values);
+	public abstract int getAllRowCount(String hql);
+	public abstract List<T> findAll(String hql);
 
 }

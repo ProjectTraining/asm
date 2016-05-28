@@ -5,11 +5,6 @@
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-<script src="script/jquery.1.4.2-min.js" type="text/javascript"></script>
-<script src="script/list.js" type="text/javascript"></script>
-<script src="jBox/jquery.jBox-2.3.min.js" type=text/javascript></script>
-<script src="jBox/jquery.jBox-zh-CN.js" type=text/javascript></script>
-<link type="text/css" rel="stylesheet" href="jBox/skins2/blue/jbox.css" />
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -17,6 +12,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="keywords" content="HTML,CSS,XML,JavaScript">
+<script src="script/jquery.1.4.2-min.js" type="text/javascript"></script>
+<script src="script/list.js" type="text/javascript"></script>
+<script src="jBox/jquery.jBox-2.3.min.js" type=text/javascript></script>
+<script src="jBox/jquery.jBox-zh-CN.js" type=text/javascript></script>
+<link type="text/css" rel="stylesheet" href="jBox/skins2/blue/jbox.css" />
 <style type="text/css">
 body {
 	font: 14px/28px "微软雅黑";
@@ -206,8 +206,8 @@ h3 {
 	<div class="contact">
 		<form id="form1" name="form1" method="post"
 			action="deptAction_Register.action">
-			<input type="hidden" id="deptId" name="deptId" value="${dept.deptId}"><input
-				type="hidden" id="orginalname" name="orginalname"
+			<input type="hidden" id="deptId" name="deptId" value="${dept.deptId}">
+			<input type="hidden" id="orginalname" name="orginalname"
 				value="${dept.deptName}">
 			<ul>
 				<li><label>部门名称：</label> <input type="text" name="deptName"

@@ -3,7 +3,12 @@ package com.asm.dao;
 import java.util.List;
 import com.asm.domain.Dept;
 
-
+/**
+ * @description 部门action
+ * @Author: 赵楠（作者）
+ * @Version: V1.00 （版本号）
+ * @Create Date: 2016-4-12 （创建日期）
+ */
 public interface deptDao extends CommonDao<Dept>{
 	public abstract void saveDept(Dept dept);
     public abstract List<Dept> findAll();

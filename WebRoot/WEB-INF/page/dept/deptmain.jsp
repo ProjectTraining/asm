@@ -31,9 +31,11 @@
                 form.action="deptAction_ListData.action";
                 form.submit();
            }
-            function TargetBtn(flag){ 
+            function TargetBtn(flag,id){ 
              	var form1 = document.getElementById('form1');
-                form1.action="deptAction_"+flag+".action";  // 
+             	var name=document.getElementById(id).value;
+             	//alert(name);
+                form1.action="deptAction_"+flag+".action?deptname="+name;  // 
                 form1.submit();  
             	//window.location.href="/asm/AddDept.jsp";
             }
@@ -48,15 +50,15 @@
 		  <tr>
 		     <td style="height:34px border:1px solid #000">
 		        <s:label>根据部门名称查询：</s:label>
-		        <s:textfield name="dept.deptName" label="部门名称：" value="" ></s:textfield>
+		        <s:textfield id="findDeptName" name="dept.deptName" label="部门名称：" value="" ></s:textfield>
 		     </td>
 		  </tr>
 		  <tr>
 		  	 <td style="width:40%">
-		       <input id='aaa' type="button" name="btn1" value="增加部门"  onclick="TargetBtn('AddDept')"></input>
+		       <input id='addDeptName' type="button" name="btn1" value="增加部门"  onclick="TargetBtn('AddDept')"></input>
 		     </td>
 		     <td style="width:60%">
-		       <s:submit id='bbb' value="查询" onclick="TargetBtn('home')" ></s:submit>
+		       <s:submit id='bbb' value="查询" onclick="TargetBtn('Pageforweb','findDeptName')" ></s:submit>
 		     </td>
 		  </tr>
 		 </table> 
@@ -65,7 +67,7 @@
 				class="am-table am-table-bd am-table-striped admin-content-table">
 				<thead>
 					<tr>
-						<th>部门编号</th>
+					    <th></th>
 						<th>部门名称</th>
 						<th>删除操作</th>
 						<th>修改操作</th>
@@ -74,12 +76,12 @@
 				<tbody>
 				<s:iterator value="#request.list" id="dept">
 					<tr>
-						<td> <s:property value="#dept.deptId"/> </td>
+						<td> <input type="hidden" id="assetPickId" name="assetId" value="${dept.deptId}" /> </td>
 						<td> <s:property value="#dept.deptName"/> </td>
-						<td align="center"><s:a href="deptAction_Remove.action?dept.deptId=%{#dept.deptId}"
+						<td ><s:a href="deptAction_Remove.action?dept.deptId=%{#dept.deptId}"
 						    onclick="return del()">删除</s:a></td>
-				        <td align="center"><s:a
-						      href="deptAction_DeptInfo.action?dept.deptId=%{#dept.deptId}">修改</s:a></td>
+				        <td><s:a
+						      href="deptAction_DeptInfo.action?dept.deptId=%{#dept.deptId}"  onclick="return del()">修改</s:a></td>
 					</tr>
 				</s:iterator>
                 </tbody>

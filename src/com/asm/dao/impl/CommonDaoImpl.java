@@ -18,6 +18,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.asm.dao.CommonDao;
 import com.asm.dao.impl.CommonDaoImpl;
+import com.asm.domain.Dept;
 import com.asm.util.GenericSuperClass;
 
 
@@ -142,5 +143,18 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		}
 		return sbuffer.toString();
 	}
-
+	/**
+	 * 查询所有的记录数
+	 * 
+	 * @param hql
+	 *            查询条件
+	 * @return 总记录数
+	 */
+	public int getAllRowCount(String hql) {
+		return this.getHibernateTemplate().find(hql).size();
+	}
+	public List<T> findAll(String hql) {
+		List<T> list = (List<T>) this.getHibernateTemplate().find(hql);
+		return list;
+	}
 }

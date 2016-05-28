@@ -17,17 +17,17 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.sun.net.httpserver.Authenticator.Success;
 
 import javassist.compiler.ast.StringL;
-
+/**
+ * @description 部门action
+ * @Author: 赵楠（作者）
+ * @Version: V1.00 （版本号）
+ * @Create Date: 2016-4-12 （创建日期）
+ */
 @SuppressWarnings("serial")
 @Controller("deptAction")
 @Scope("prototype")  // 来保证每一个请求有一个单独的Action来处理，避免struts中Action的线程安全问题
 public class DeptAction extends ActionSupport implements SessionAware, ModelDriven<Dept> {
-	/**
-	 * @description 部门action
-     * @Author: 赵楠（作者）
-     * @Version: V1.00 （版本号）
-     * @Create Date: 2016-4-12 （创建日期）
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private Dept dept = new Dept();
 	@Autowired
@@ -37,7 +37,7 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 	private PageBean pageBean; //封装了分页信息和数据内容的pageBean    
 	private List<Dept> request;//用于储存pageBean当中被封装的User信息    
 	private int page = 1; //表示从网页中返回的当前页的值  默认为1 表示默认显示第一页内容  
-	
+	private String deptname;
 	
 	@Override
 	public Dept getModel() {
@@ -60,12 +60,18 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 	public String home() {
 		try {
 			System.out.println("部门按钮正确");
-			System.out.println("dept:"+dept.getDeptName());
 			return SUCCESS;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ERROR;
 		}
+	}
+	/**
+	 * 根据部门名称来查询
+	 * @return
+	 */
+	public String FindDeptByName(){
+		return null;
 	}
 	/**
 	 * 点击增加的按钮的时候，跳转到其他页面。
@@ -101,9 +107,14 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 	}
 
 	public String ListData() {
-		System.out.println("读取数据库中的数据反映到列表中");
-		Map request = (Map) ActionContext.getContext().get("request");
-		request.put("list",this.deptService.findAllUsers());
+		if(deptname!=null){
+			
+		}
+		else {
+			System.out.println("读取数据库中的数据反映到列表中");
+			Map request = (Map) ActionContext.getContext().get("request");
+			request.put("list",this.deptService.findAllUsers());
+		}
 		return "list";
 	}
 	/**
@@ -111,13 +122,28 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 	 * @return
 	 * @throws Exception
 	 */
-	public String Pageforweb()throws Exception{    
-		this.pageBean = deptService.queryForPage(5, page);//获取封装了分页信息和数据的pageBean    
-		this.request = this.pageBean.getList(); //获取数据   
-		Map request = (Map) ActionContext.getContext().get("request");
-		request.put("list",this.request);
+	public String Pageforweb()throws Exception{  
+		if(deptname!=null){
+			System.out.println("查询");
+			deptname = new String(deptname.getBytes("iso-8859-1"), "UTF-8"); 
+			final String hql = "from Dept d where d.deptName like'%"+deptname+"%' order by d.deptId asc"; // 查询语句
+			System.out.println("hql--"+hql);
+			this.pageBean = deptService.queryForPage(hql,5,page);// 获取封装了分页信息和数据的pageBean
+			this.request = this.pageBean.getList(); // 获取数据
+			Map request = (Map) ActionContext.getContext().get("request");
+			request.put("list", this.request);
+		}
+		else {
+			System.out.println("列表");
+			final String hql = "from Dept d order by d.deptId asc"; // 查询语句
+			this.pageBean = deptService.queryForPage(hql,5,page);// 获取封装了分页信息和数据的pageBean
+			this.request = this.pageBean.getList(); // 获取数据
+			Map request = (Map) ActionContext.getContext().get("request");
+			request.put("list", this.request);
+		}
 		return SUCCESS;    
-		} 
+	} 
+	
 	public String Remove() throws Exception {
 		System.out.println("删除ID是--"+dept.getDeptId());
 		System.out.println("删除部门是--"+dept.getDeptName());
@@ -196,5 +222,13 @@ public class DeptAction extends ActionSupport implements SessionAware, ModelDriv
 
 	public void setRequest(List<Dept> request) {
 		this.request = request;
+	}
+
+	public String getDeptname() {
+		return deptname;
+	}
+
+	public void setDeptname(String deptname) {
+		this.deptname = deptname;
 	}
 }
